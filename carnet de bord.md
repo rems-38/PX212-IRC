@@ -7,9 +7,7 @@
 ## Pour la prochaine séance
 **Pour Rémi**
  - Implémentation des opérations de base (partie 4)
- - Etude approfondie de la specification 
+ - Etude approfondie de la specification
 **Pour Guillemot**
  - Mise de place de tests unitaires
- - Etude approfondie de la specification 
-
- 
+ - Etude approfondie de la specification
