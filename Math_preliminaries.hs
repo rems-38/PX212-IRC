@@ -44,3 +44,29 @@ addition (n:nr) (m:mr) = (xor (toZ2Z n) (toZ2Z m)) : (addition nr mr)
 -- addition (Poly []) (Poly []) = (Poly [])
 -- addition (Poly (n:nr)) (Poly (m:mr)) = Poly $ (xor n m) : (addition (Poly nr) (Poly mr))
 -----------------------------------------------------------------
+
+poly_irreductible = [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+
+-----------------------------------------------------------------
+------------------------ Multiplication -------------------------
+-----------------------------------------------------------------
+-- multiplication :: [Integer] -> [Integer] -> [Integer]
+-- multiplication 
+
+
+multi_aux :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
+multi_aux [] _ = []
+multi_aux (n:nr) mr = addition (multi_aux2 n mr) ((Z2Z 0) : (multi_aux nr mr))
+
+
+multi_aux2 :: Z_sur_2Z -> [Z_sur_2Z] -> [Z_sur_2Z]
+multi_aux2 _ [] = []
+multi_aux2 n (m:mr) = (multi (toZ2Z n) (toZ2Z m)) : (multi_aux2 n mr)
+
+multi :: Z_sur_2Z -> Z_sur_2Z -> Z_sur_2Z
+multi _ (Z2Z 0) = (Z2Z 0)
+multi (Z2Z 0) _ = (Z2Z 0)
+multi (Z2Z 1) (Z2Z 1) = (Z2Z 1)
+
+
+-----------------------------------------------------------------
