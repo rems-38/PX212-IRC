@@ -1,4 +1,4 @@
-module Z_sur_nZ where
+module ZsurNZ where
 
 import Group
 
