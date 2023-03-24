@@ -6,8 +6,6 @@ module Math_preliminaries (addition, multiplication) where
 import Group
 import ZsurNZ
 
--- tips Euclide Etendu pour inverse des polynomes
-
 -----------------------------------------------------------------
 -- Définition de Z sur 2Z, instanciation dans la classe groupe --
 -----------------------------------------------------------------
@@ -37,6 +35,8 @@ res_add = [Z2Z 0, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 1] -- x² + x⁴
 -----------------------------------------------------------------
 -------------------------- Addition -----------------------------
 -----------------------------------------------------------------
+-- Notation : Addition -> + entouré
+
 xor :: Z_sur_2Z -> Z_sur_2Z -> Z_sur_2Z
 xor a b | a == b = (Z2Z 0)
         | a /= b = (Z2Z 1)
@@ -54,6 +54,8 @@ res_multi = [Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1] -- 1 + x⁶ + x⁷
 -----------------------------------------------------------------
 ------------------------ Multiplication -------------------------
 -----------------------------------------------------------------
+-- Notation : Multiplication -> •
+
 multiplication :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
 multiplication nr mr = poly_mod (multi_aux nr mr) poly_irreductible
 
@@ -71,7 +73,7 @@ multi (Z2Z 0) _ = (Z2Z 0)
 multi (Z2Z 1) (Z2Z 1) = (Z2Z 1)
 
 poly_mod :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-poly_mod res irr | (length res - 1) > (length irr - 1) =  poly_mod (divise res irr q) irr
+poly_mod res irr | (length res - 1) >= (length irr - 1) =  poly_mod (divise res irr q) irr
                  | otherwise = res
                  where q = create_poly ((length res - 1) - (length irr - 1))
 
