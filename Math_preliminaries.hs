@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use camelCase" #-}
+
 module Math_preliminaries (addition, multiplication) where
 
 import Group
