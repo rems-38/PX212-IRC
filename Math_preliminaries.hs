@@ -28,13 +28,13 @@ instance Group Z_sur_2Z where
 
 newtype GF = Gf [Z_sur_2Z] deriving (Show, Eq)
 
-tab_to_poly :: [Integer] -> GF
-tab_to_poly xs = Gf $ map (\x -> (toZ2Z $ Z2Z x)) xs
+toGF :: [Integer] -> GF
+toGF xs = Gf $ map (toZ2Z . Z2Z) xs
 
-p1_ex = tab_to_poly [1, 1, 1, 0, 1, 0, 1] -- 1 + x + x² + x⁴ + x⁶
-p2_ex = tab_to_poly [1, 1, 0, 0, 0, 0, 0, 1] -- 1 + x + x⁷
+p1_ex = toGF [1, 1, 1, 0, 1, 0, 1] -- 1 + x + x² + x⁴ + x⁶
+p2_ex = toGF [1, 1, 0, 0, 0, 0, 0, 1] -- 1 + x + x⁷
 
-res_add = tab_to_poly [0, 0, 1, 0, 1, 0, 1, 1] -- x² + x⁴ + x⁶ + x⁷
+res_add = toGF [0, 0, 1, 0, 1, 0, 1, 1] -- x² + x⁴ + x⁶ + x⁷
 -----------------------------------------------------------------
 -------------------------- Addition -----------------------------
 -----------------------------------------------------------------
@@ -53,8 +53,8 @@ addition (Gf (n:nr)) (Gf (m:mr)) = Gf (x:r)
                                        (Gf r) = addition (Gf nr) (Gf mr)
 -----------------------------------------------------------------
 
-poly_irreductible = tab_to_poly [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
-res_multi = tab_to_poly [1, 0, 0, 0, 0, 0, 1, 1] -- 1 + x⁶ + x⁷
+poly_irreductible = toGF [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+res_multi = toGF [1, 0, 0, 0, 0, 0, 1, 1] -- 1 + x⁶ + x⁷
 
 -----------------------------------------------------------------
 ------------------------ Multiplication -------------------------
