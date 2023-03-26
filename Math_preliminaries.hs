@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
 
-module Math_preliminaries (addition, multiplication) where
+module Math_preliminaries (GF, addition, multiplication) where
 
 import Group
 import ZsurNZ
@@ -26,68 +26,82 @@ instance Group Z_sur_2Z where
   operation = addMod2
 -----------------------------------------------------------------
 
--- newtype GF = Gf [Z_sur_2Z] deriving (Show)
+newtype GF = Gf [Z_sur_2Z] deriving (Show, Eq)
 
-p1_ex = [Z2Z 1, Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1] -- 1 + x + x² + x⁴ + x⁶
-p2_ex = [Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 1] -- 1 + x + x⁷
+tab_to_poly :: [Integer] -> GF
+tab_to_poly xs = Gf $ map (\x -> (toZ2Z $ Z2Z x)) xs
 
-res_add = [Z2Z 0, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 1] -- x² + x⁴ + x⁶ + x⁷
+p1_ex = tab_to_poly [1, 1, 1, 0, 1, 0, 1] -- 1 + x + x² + x⁴ + x⁶
+p2_ex = tab_to_poly [1, 1, 0, 0, 0, 0, 0, 1] -- 1 + x + x⁷
+
+res_add = tab_to_poly [0, 0, 1, 0, 1, 0, 1, 1] -- x² + x⁴ + x⁶ + x⁷
 -----------------------------------------------------------------
 -------------------------- Addition -----------------------------
 -----------------------------------------------------------------
 -- Notation : Addition -> + entouré
 
 xor :: Z_sur_2Z -> Z_sur_2Z -> Z_sur_2Z
-xor a b | a == b = (Z2Z 0)
-        | a /= b = (Z2Z 1)
+xor a b | a == b = Z2Z 0
+        | a /= b = Z2Z 1
 
-addition :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-addition [] [] = []
-addition nr [] = nr
-addition [] mr = mr
-addition (n:nr) (m:mr) = (xor (toZ2Z n) (toZ2Z m)) : (addition nr mr)
+addition :: GF -> GF -> GF
+addition (Gf []) (Gf []) = Gf []
+addition (Gf nr) (Gf []) = Gf nr
+addition (Gf []) (Gf mr) = Gf mr
+addition (Gf (n:nr)) (Gf (m:mr)) = Gf (x:r)
+                                 where x = xor (toZ2Z n) (toZ2Z m)
+                                       (Gf r) = addition (Gf nr) (Gf mr)
 -----------------------------------------------------------------
 
-poly_irreductible = [Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+poly_irreductible = tab_to_poly [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+res_multi = tab_to_poly [1, 0, 0, 0, 0, 0, 1, 1] -- 1 + x⁶ + x⁷
 
-res_multi = [Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1] -- 1 + x⁶ + x⁷
 -----------------------------------------------------------------
 ------------------------ Multiplication -------------------------
 -----------------------------------------------------------------
 -- Notation : Multiplication -> •
 
-multiplication :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-multiplication nr mr = poly_mod (multi_aux nr mr) poly_irreductible
+multiplication :: GF -> GF -> GF
+multiplication (Gf nr) (Gf mr) = poly_mod (multi_aux (Gf nr) (Gf mr)) poly_irreductible
 
-multi_aux :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-multi_aux [] _ = []
-multi_aux (n:nr) mr = addition (multi_aux2 n mr) ((Z2Z 0) : (multi_aux nr mr))
+multi_aux :: GF -> GF -> GF
+multi_aux (Gf []) _ = Gf []
+multi_aux (Gf (n:nr)) (Gf mr) = addition (multi_aux2 n (Gf mr)) (Gf (x:r))
+                              where x = Z2Z 0
+                                    (Gf r) = multi_aux (Gf nr) (Gf mr)
 
-multi_aux2 :: Z_sur_2Z -> [Z_sur_2Z] -> [Z_sur_2Z]
-multi_aux2 _ [] = []
-multi_aux2 n (m:mr) = (multi (toZ2Z n) (toZ2Z m)) : (multi_aux2 n mr)
+multi_aux2 :: Z_sur_2Z -> GF -> GF
+multi_aux2 _ (Gf []) = Gf []
+multi_aux2 n (Gf (m:mr)) = Gf (x:r)
+                          where x = multi (toZ2Z n) (toZ2Z m)
+                                (Gf r) = multi_aux2 n (Gf mr)
 
 multi :: Z_sur_2Z -> Z_sur_2Z -> Z_sur_2Z
-multi _ (Z2Z 0) = (Z2Z 0)
-multi (Z2Z 0) _ = (Z2Z 0)
-multi (Z2Z 1) (Z2Z 1) = (Z2Z 1)
+multi _ (Z2Z 0) = Z2Z 0
+multi (Z2Z 0) _ = Z2Z 0
+multi (Z2Z 1) (Z2Z 1) = Z2Z 1
 
-poly_mod :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-poly_mod res irr | (length res - 1) >= (length irr - 1) =  poly_mod (divise res irr q) irr
-                 | otherwise = res
+poly_mod :: GF -> GF -> GF
+poly_mod (Gf res) (Gf irr) | (length res - 1) >= (length irr - 1) =  poly_mod (divise (Gf res) (Gf irr) q) (Gf irr)
+                 | otherwise = (Gf res)
                  where q = create_poly ((length res - 1) - (length irr - 1))
 
-create_poly :: Int -> [Z_sur_2Z]
-create_poly 0 = [(Z2Z 1)]
-create_poly n = (Z2Z 0) : (create_poly (n-1))
+create_poly :: Int -> GF
+create_poly 0 = Gf [(Z2Z 1)]
+create_poly n = Gf (x:r)
+                where x = Z2Z 0
+                      (Gf r) = create_poly (n-1)
 
-divise :: [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z] -> [Z_sur_2Z]
-divise p irr q = down_degree (addition p (multi_aux irr q))
+divise :: GF -> GF -> GF -> GF
+divise (Gf p) (Gf irr) (Gf q) = down_degree (addition (Gf p) (multi_aux (Gf irr) (Gf q)))
 
-down_degree :: [Z_sur_2Z] -> [Z_sur_2Z]
-down_degree p = reverse (cut_poly (reverse p))
+down_degree :: GF -> GF
+down_degree (Gf p) = revGf (cut_poly (revGf (Gf p)))
 
-cut_poly :: [Z_sur_2Z] -> [Z_sur_2Z]
-cut_poly (p:pr) | p == (Z2Z 0) = cut_poly pr
-                | otherwise = (p:pr)
+revGf :: GF -> GF
+revGf (Gf p) = Gf $ reverse p
+
+cut_poly :: GF -> GF
+cut_poly (Gf (p:pr)) | p == (Z2Z 0) = (cut_poly (Gf pr))
+                     | otherwise = Gf $ (p:pr)
 -----------------------------------------------------------------
