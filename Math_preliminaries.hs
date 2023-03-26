@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
 
-module Math_preliminaries (GF, addition, multiplication) where
+module Math_preliminaries (GF, toGF, addition, multiplication, pIrr4, pIrr8) where
 
 import Group
 import ZsurNZ
@@ -53,7 +53,8 @@ addition (Gf (n:nr)) (Gf (m:mr)) = Gf (x:r)
                                        (Gf r) = addition (Gf nr) (Gf mr)
 -----------------------------------------------------------------
 
-poly_irreductible = toGF [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+pIrr8 = toGF [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+pIrr4 = toGF [1, 0, 0, 0, 1] -- 1 + x⁴
 res_multi = toGF [1, 0, 0, 0, 0, 0, 1, 1] -- 1 + x⁶ + x⁷
 
 -----------------------------------------------------------------
@@ -61,8 +62,8 @@ res_multi = toGF [1, 0, 0, 0, 0, 0, 1, 1] -- 1 + x⁶ + x⁷
 -----------------------------------------------------------------
 -- Notation : Multiplication -> •
 
-multiplication :: GF -> GF -> GF
-multiplication (Gf nr) (Gf mr) = poly_mod (multi_aux (Gf nr) (Gf mr)) poly_irreductible
+multiplication :: GF -> GF -> GF -> GF
+multiplication (Gf nr) (Gf mr) (Gf p_irr) = poly_mod (multi_aux (Gf nr) (Gf mr)) (Gf p_irr)
 
 multi_aux :: GF -> GF -> GF
 multi_aux (Gf []) _ = Gf []
