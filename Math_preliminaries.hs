@@ -1,8 +1,6 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
 
---test
-
 module Math_preliminaries (GF, toGF, addition, multiplication, pIrr4, pIrr8) where
 
 import Group
