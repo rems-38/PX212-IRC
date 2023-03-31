@@ -1,4 +1,5 @@
--- Test des fonctions addMod2 et oppose2
+-- Test de la fonction addMod2 
+-- Test de la fonction oppose2
 putStrLn "=== Test addMod2 ==="
 addMod2 (Z2Z 1) (Z2Z 1) -- Z2Z 0
 addMod2 (Z2Z 1) (Z2Z 0) -- Z2Z 1
