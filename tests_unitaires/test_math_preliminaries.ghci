@@ -1,0 +1,53 @@
+-- Test des fonctions addMod2
+putStrLn "=== Test addMod2 ==="
+addMod2 (Z2Z 1) (Z2Z 1) -- Z2Z 0
+addMod2 (Z2Z 1) (Z2Z 0) -- Z2Z 1
+addMod2 (Z2Z 0) (Z2Z 0) -- Z2Z 0
+  
+-- Test de la fonction oppose2
+putStrLn "=== Test oppose2 ==="
+oppose2 (Z2Z 1) -- Z2Z 1
+oppose2 (Z2Z 0) -- Z2Z 0
+
+-- Test de la fonction toZ2Z
+putStrLn "=== Test toZ2Z ==="
+toZ2Z (Z2Z 1) -- Z2Z 1
+toZ2Z (Z2Z 0) -- Z2Z 0
+
+-- Test de la fonction toGF
+putStrLn "=== Test toGF ==="
+toGF [1, 0, 1, 1] -- Gf [Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 1], 1 + x² + x³
+toGF [0, 1, 0] -- Gf [Z2Z 0, Z2Z 1, Z2Z 0], x
+toGF [1, 1, 1, 0, 1, 0, 1] -- Gf [Z2Z 1, Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 1, Z2Z 0, Z2Z 1], 1 + x + x² + x⁴ + x⁶
+toGF [1, 1, 0, 0, 0, 0, 0, 1] -- Gf [Z2Z 1, Z2Z 1, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 0, Z2Z 1], 1 + x + x⁷
+
+-- Test de l'instance Group de Z_sur_2Z
+a = Z2Z 1
+b = Z2Z 0
+c = Z2Z 1
+putStrLn "=== Test Group instance for Z_sur_2Z ==="
+putStrLn "Associativité : "
+(a `operation` b) `operation` c == a `operation` (b `operation` c) -- True
+putStrLn "Element neutre : "
+a `operation` unit == a && unit `operation` a == a -- True
+putStrLn "Symétrique : "
+a `operation` inverse a == unit && inverse a `operation` a == unit -- True
+
+-- Test de la fonction toPoly
+putStrLn "=== Test toPoly ==="
+toPoly [1, 1, 1, 0, 1, 0, 1] -- 1 + x + x² + x⁴ + x⁶
+toPoly [1, 1, 0, 0, 0, 0, 0, 1] -- 1 + x + x⁷
+toPoly [0, 1, 0] -- x
+
+-- Test de la fonction addition_poly
+putStrLn "=== Test addition_poly ==="
+addition_poly [1, 1, 1, 0, 1, 0, 1] [1, 1, 0, 0, 0, 0, 0, 1] -- 
+addition_poly [1, 1, 1, 0, 1, 0, 1] [0, 1, 0] -- 
+addition_poly [1, 1, 1, 0, 1, 0, 1] [1, 1, 1, 0, 1, 0, 1] -- 
+
+-- Test de la fonction multiplication_poly
+putStrLn "=== Test multiplication_poly ==="
+multiplication_poly [1, 1, 1, 0, 1, 0, 1] [1, 1, 0, 0, 0, 0, 0, 1] -- 
+multiplication_poly [1, 1, 1, 0, 1, 0, 1] [0, 1, 0] -- 
+multiplication_poly [1, 1, 1, 0, 1, 0, 1] [1, 1, 1, 0, 1, 0, 1] -- 
+

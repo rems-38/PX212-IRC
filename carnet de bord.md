@@ -3,7 +3,6 @@
 ## Contenu de la séance
 - Prise de connaissance du sujet
 - Découverte de l'AES
-
 ## Pour la prochaine séance
 ### Pour Rémi
 - Implémentation des opérations de base (partie 4)
@@ -11,3 +10,33 @@
 ### Pour Guillemot
 - Mise de place de tests unitaires
 - Etude approfondie de la specification
+
+# Travail entre les séances 1 et 2
+- Etude de la partie 4 de la spécification
+- Implémentation des fonctions :
+    - xor : addition modulo 2
+    - oppose2 : opposé modulo 2
+    - toZ2Z : utile pour les notations
+    - toPoly : passage d'un tableau d'entiers à un polynôme
+    - addition_poly : addition de polynômes
+    - multiplication_poly : multiplication de polynômes
+    - (+ toutes les fonctions auxiliaires nécessaires/sous-jacentes)
+- Début d'implémentation de la fonction d'inverse
+
+# Séance 2 - 31/03/2023
+## Contenu de la séance
+- Mise en place du GitLab
+- Ajout des structures algébriques
+- Début de mise en place des fichiers ghci pour les tests
+- Remise en forme de la structure des fichiers du projet
+
+## Pour la prochaine séance
+### Pour Rémi
+- Fin d'implémentation des structures algébriques
+- Instanciation des structures algébriques (pour les polynomes à coefficients dans Z2Z)
+- Adaptation des fonctions réalisées précédemment pour coller avec les nouvelles structures implémentées
+- Etude de la fin du document FIPS
+### Pour Guillemot
+- Fin de mise en place des fichiers de test ghci pour les fonctions mathématiques, ZsurNZ et les structures algébriques
+- Etude de la fin du document FIPS
+- Rédaction d'un document résumant la spécification
