@@ -84,8 +84,8 @@ multi (Z2Z 1) (Z2Z 1) = Z2Z 1
 
 poly_mod :: GF -> GF -> GF
 poly_mod (Gf res) (Gf irr) | (length res - 1) >= (length irr - 1) =  poly_mod (divise (Gf res) (Gf irr) q) (Gf irr)
-                 | otherwise = (Gf res)
-                 where q = create_poly ((length res - 1) - (length irr - 1))
+                           | otherwise = (Gf res)
+                           where q = create_poly ((length res - 1) - (length irr - 1))
 
 create_poly :: Int -> GF
 create_poly 0 = Gf [(Z2Z 1)]
@@ -105,4 +105,45 @@ revGf (Gf p) = Gf $ reverse p
 cut_poly :: GF -> GF
 cut_poly (Gf (p:pr)) | p == (Z2Z 0) = (cut_poly (Gf pr))
                      | otherwise = Gf $ (p:pr)
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+--------------------------- Inverse -----------------------------
+-----------------------------------------------------------------
+-- (1 + x² + x³ + x⁷) * x = 1 mod (1 + x + x³ + x⁴ + x⁸)
+-- [1, 0, 1, 1, 0, 0, 0, 1] * [0, 1] = [1]
+-- 141 * 2 = 282 = 1 [281]    -- modulo 281 car (pToDec pIrr8 - 1)
+
+-- pInv :: GF -> GF
+
+
+pToDec :: GF -> Integer
+pToDec p = pToDec_aux p 0
+
+pToDec_aux :: GF -> Integer -> Integer
+pToDec_aux (Gf []) _ = 0
+pToDec_aux (Gf ((Z2Z x):xs)) i = x*(2^i) + (pToDec_aux (Gf xs) (i+1))
+
+decToP :: Integer -> GF
+decToP n = down_degree $ revGf $ decToP_aux n 7
+
+-- pb avec les polys qui ne commence pas pas 1 (ex: x + x²)
+decToP_aux :: Integer -> Integer -> GF
+decToP_aux n i | n - (2^i) > 0 = Gf (x:r)
+               | n - (2^i) == 0 = Gf [Z2Z 1]
+            --    | i <= 0 = Gf [Z2Z 0]
+               | otherwise = Gf (y:v)
+               where x = Z2Z 1
+                     y = Z2Z 0
+                     (Gf r) = decToP_aux (n - (2^i)) (i-1)
+                     (Gf v) = decToP_aux n (i-1)
+
+
+
+
+
+
+
+
+
 -----------------------------------------------------------------
