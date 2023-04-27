@@ -40,3 +40,8 @@
 - Fin de mise en place des fichiers de test ghci pour les fonctions mathématiques, ZsurNZ et les structures algébriques
 - Etude de la fin du document FIPS
 - Rédaction d'un document résumant la spécification
+
+# Travail entre les séances 2 et 3
+- Fin d'implémentation de toutes les structures algébriques (groupe, anneau, corps)
+- Rajout d'un classe de polynômes irréductibles pour la multiplication de polynômes
+- Instanciation des structures algébriques : Z_sur_2Z (en tant que Corps) et polynomes à coefs. dans Z_sur_2Z (en tant qu'anneau [pour l'instant l'inverse n'a pas été défini])

@@ -8,14 +8,60 @@ import Structure_algebrique
 import Data.Typeable
 
 -----------------------------------------------------------------
+--------------------------- Types -------------------------------
+-----------------------------------------------------------------
+newtype Z_sur_2Z = Z2Z Integer deriving (Show, Eq)
+newtype Poly a = Pol [a] deriving (Show, Eq)
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+-------------------------- Classes ------------------------------
+-----------------------------------------------------------------
+class (Corps a) => IrreduciblePoly a where
+      polyIrr :: Poly a
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
 ------------------------- Constantes ----------------------------
 -----------------------------------------------------------------
--- pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
--- pIrr4 = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
-
-
 toPoly_Z2Z :: [Integer] -> Poly Z_sur_2Z
 toPoly_Z2Z xs = Pol $ map (toZ2Z . Z2Z) xs
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+----------------------- Instanciations --------------------------
+-----------------------------------------------------------------
+instance Groupe Z_sur_2Z where
+      neutre = Z2Z 0
+      unite = Z2Z 1
+      operation = xor
+      inverse = oppose2
+
+instance Anneau Z_sur_2Z where
+      multiplication = multi2
+
+instance Corps Z_sur_2Z where
+      inverseMultiplicatif = inv2
+
+instance Corps a => Groupe (Poly a) where
+      neutre = Pol [neutre] 
+      unite = Pol [unite]
+      operation = addition_poly
+      -- inverse = 
+  
+instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
+      multiplication = multiplication_poly
+
+instance IrreduciblePoly Z_sur_2Z where
+      polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
+      -- pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+      -- pIrr4 = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
 -----------------------------------------------------------------
 
 
@@ -45,36 +91,6 @@ inv2 (Z2Z 1) = Just $ Z2Z 1
 
 toZ2Z :: Z_sur_2Z -> Z_sur_2Z
 toZ2Z (Z2Z n) = Z2Z $ n `mod` 2
------------------------------------------------------------------
-
-
-
------------------------------------------------------------------
--------------------------- Instance -----------------------------
------------------------------------------------------------------
-instance Groupe Z_sur_2Z where
-      neutre = Z2Z 0
-      unite = Z2Z 1
-      operation = xor
-      inverse = oppose2
-
-instance Anneau Z_sur_2Z where
-      multiplication = multi2
-
-instance Corps Z_sur_2Z where
-      inverseMultiplicatif = inv2
-
-instance Corps a => Groupe (Poly a) where
-      neutre = Pol [neutre] 
-      unite = Pol [unite]
-      operation = addition_poly
-      -- inverse = 
-  
--- instance Corps a => Anneau (Poly a) where
---       multiplication = multiplication_poly
-
-instance IrreduciblePoly Z_sur_2Z where
-      polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
 -----------------------------------------------------------------
 
 
@@ -137,6 +153,8 @@ cut_poly :: (Eq a, Corps a) => Poly a -> Poly a
 cut_poly (Pol (p:pr)) | p == neutre = (cut_poly (Pol pr))
                       | otherwise = Pol $ (p:pr)
 -----------------------------------------------------------------
+
+
 
 -----------------------------------------------------------------
 --------------------------- Inverse -----------------------------
