@@ -45,3 +45,4 @@
 - Fin d'implémentation de toutes les structures algébriques (groupe, anneau, corps)
 - Rajout d'un classe de polynômes irréductibles pour la multiplication de polynômes
 - Instanciation des structures algébriques : Z_sur_2Z (en tant que Corps) et polynomes à coefs. dans Z_sur_2Z (en tant qu'anneau [pour l'instant l'inverse n'a pas été défini])
+- Petites corrections dans les fichiers de tests (car changements de nom ou suprresions de fonction)
