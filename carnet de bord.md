@@ -17,7 +17,7 @@
     - xor : addition modulo 2
     - oppose2 : opposé modulo 2
     - toZ2Z : utile pour les notations
-    - toPoly : passage d'un tableau d'entiers à un polynôme
+    - toPoly_Z2Z : passage d'un tableau d'entiers à un polynôme
     - addition_poly : addition de polynômes
     - multiplication_poly : multiplication de polynômes
     - (+ toutes les fonctions auxiliaires nécessaires/sous-jacentes)
