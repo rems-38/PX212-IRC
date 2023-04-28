@@ -10,6 +10,20 @@ import Structure_algebrique
 import Data.Typeable
 import Data.Data
 
+
+-----------------------------------------------------------------
+-------------------------- NB/ToDo ------------------------------
+-----------------------------------------------------------------
+-- GF256 -> Poly Z_sur_2Z de degré <= 7
+-- 
+-- Inverse des polynômes :
+-- presque fini, juste le calul du reste (coef) qui fail pour l'instant
+--
+-- Faire beaucoup de tests unitaires pour check les fonctions dans la partie des inverse
+-----------------------------------------------------------------
+
+
+
 -----------------------------------------------------------------
 --------------------------- Types -------------------------------
 -----------------------------------------------------------------
@@ -165,6 +179,7 @@ revPol :: Corps a => Poly a -> Poly a
 revPol (Pol p) = Pol $ reverse p
 
 cut_poly :: (Eq a, Corps a) => Poly a -> Poly a
+cut_poly (Pol []) = Pol []
 cut_poly (Pol (p:pr)) | p == neutre = (cut_poly (Pol pr))
                       | otherwise = Pol $ (p:pr)
 -----------------------------------------------------------------
@@ -174,50 +189,38 @@ cut_poly (Pol (p:pr)) | p == neutre = (cut_poly (Pol pr))
 -----------------------------------------------------------------
 --------------------------- Inverse -----------------------------
 -----------------------------------------------------------------
--- (1 + x² + x³ + x⁷) * x = 1 mod (1 + x + x³ + x⁴ + x⁸)
--- [1, 0, 1, 1, 0, 0, 0, 1] * [0, 1] = [1]
--- 141 * 2 = 282 = 1 [281]    -- modulo 281 car (pToDec pIrr8 - 1)
+-- Inverse de 1 + x mod 1 + x + x³ + x⁴ + x⁸ = x + x² + x⁴ + x⁵ + x⁶ + x⁷
+-- Inverse de x² + x³ mod 1 + x + x³ + x⁴ + x⁸ = 
 
--- pInv :: Poly a -> Poly a
+inverse_poly :: (IrreduciblePoly a, Eq a, Corps a) => Poly a -> Poly a
+inverse_poly p = calc_restes coefs polys (inverse_poly_aux polyIrr p)
+                  where coefs = ((unite, neutre), (neutre, unite))
+                        polys = (polyIrr, p)
 
-pToDec :: (Enum a, Max a) => Poly a -> Int
-pToDec p = pToDec_aux p 0
+inverse_poly_aux :: (IrreduciblePoly a, Eq a, Corps a) => Poly a -> Poly a -> [Poly a]
+inverse_poly_aux p q | snd p_euclidien == Pol [unite] = [fst p_euclidien]
+                     | otherwise = (fst p_euclidien) : inverse_poly_aux q (snd p_euclidien)
+                      where p_euclidien = div_eucli p q
 
-pToDec_aux :: (Enum a, Max a) => Poly a -> Int -> Int
-pToDec_aux (Pol []) _ = 0
-pToDec_aux (Pol (x:xs)) i = (fromEnum x)*(((nmax x) + 1)^i) + (pToDec_aux (Pol xs) (i+1))
--- use of fromEnum instead of toInteger
--- sinon il faut instancier Z_sur_2Z dans Integral et donc dans Enum et Real
--- ce qui fait 3 instanciations à la place d'une seule
--- fromEnum fait la même chose que toInteger, c'est juste moins explicite
+div_eucli :: (Eq a, Corps a) => Poly a -> Poly a -> (Poly a, Poly a) -- (quotient, reste)
+div_eucli dividende@(Pol d1) diviseur@(Pol d2) | length d1 >= length d2 = (big_quotient, reste)
+                                               | otherwise = (Pol [], Pol [])
+                                                where big_quotient = operation quotien quotient_recursif
+                                                      quotien = create_poly ((length d1 - 1) - (length d2 - 1))
+                                                      new_dividende = divise dividende diviseur quotien
+                                                      quotient_recursif = fst (div_eucli new_dividende diviseur)
+                                                      reste = down_degree $ operation dividende (multi_aux big_quotient diviseur)
 
--- Ici on va avoir un pb
--- Comment savoir dans quel corps on va (ex Z_sur_2Z ou Z_sur_5Z) ?
--- surtout que du coup Haskell accepte pas la fonction car a indeterminé
--- decToP :: (Eq a, Corps a, Max a) => Int -> a -> Poly a
--- decToP n xOfCorps = down_degree $ revPol $ decToP_aux n 7 xOfCorps
-
--- -- pb avec les polys qui ne commence pas pas 1 (ex: x + x²)
--- decToP_aux :: (Corps a, Max a) => Int -> Int -> a -> Poly a
--- decToP_aux n i xOfCorps | n - ((nmax xOfCorps) + 1)^i > 0 = Pol (x:r)
---                         | n - ((nmax xOfCorps) + 1)^i == 0 = Pol [unite]
---                         | i <= 0 = Pol [neutre]
---                         | otherwise = Pol (y:v)
---                         where x = unite
---                               y = neutre
---                               (Pol r) = decToP_aux (n - ((nmax xOfCorps) + 1)^i) (i-1) xOfCorps
---                               (Pol v) = decToP_aux n (i-1) xOfCorps
-
-
-
--- decToP :: (Eq a, Corps a, Max a) => Int -> a -> Poly a
--- decToP 0 _ = Pol [neutre]
--- decToP n xOfCorps = down_degree $ revPol $ decToP_aux n xOfCorps 
-
--- decToP_aux :: (Corps a, Max a) => Int -> a -> Poly a
--- decToP_aux 0 _ = Pol [neutre]
--- decToP_aux n xOfCorps = Pol (x:r)
---                       where x = (toConstr xOfCorps) $ n `mod` (nmax xOfCorps + 1)
---                             (Pol r) = decToP_aux (n `div` (nmax xOfCorps + 1)) xOfCorps
-
+calc_restes :: (IrreduciblePoly a, Eq a, Corps a) => ((Poly a, Poly a), (Poly a, Poly a)) -> (Poly a, Poly a) -> [Poly a] -> Poly a
+calc_restes (_, (_, cb2)) (_, b) [] = multiplication cb2 b
+calc_restes ((ca1, cb1), (ca2, cb2)) (a, b) quotients@(q:qr) = calc_restes ((ca2, cb2), (ca3, cb3)) (a, b) qr
+                                                             where ca3 = operation ca1 (multiplication ca2 q)
+                                                                   cb3 = operation cb1 (multiplication cb2 q)
 -----------------------------------------------------------------
+
+-- pour tester une opé dans la console et pas tout réécrire
+toInv = toPoly_Z2Z [0, 0, 1, 1]
+pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
+q1 = toPoly_Z2Z [1, 0, 1, 1, 1, 1]
+q2 = toPoly_Z2Z [0, 1]
+q3 = toPoly_Z2Z [1, 1]
