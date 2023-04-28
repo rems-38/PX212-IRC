@@ -1,16 +1,19 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 -- module Math_preliminaries (Poly, toPoly_Z2Z, addition, multiplication, pIrr4, pIrr8) where
 module Math_preliminaries where
 
 import Structure_algebrique
 import Data.Typeable
+import Data.Data
 
 -----------------------------------------------------------------
 --------------------------- Types -------------------------------
 -----------------------------------------------------------------
-newtype Z_sur_2Z = Z2Z Integer deriving (Show, Eq)
+newtype Z_sur_2Z = Z2Z Integer deriving (Show, Eq, Num, Ord, Data)
 newtype Poly a = Pol [a] deriving (Show, Eq)
 -----------------------------------------------------------------
 
@@ -21,6 +24,9 @@ newtype Poly a = Pol [a] deriving (Show, Eq)
 -----------------------------------------------------------------
 class (Corps a) => IrreduciblePoly a where
       polyIrr :: Poly a
+
+class (Corps a) => Max a where
+      nmax :: a -> Int 
 -----------------------------------------------------------------
 
 
@@ -62,6 +68,15 @@ instance IrreduciblePoly Z_sur_2Z where
       polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
       -- pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
       -- pIrr4 = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
+
+-- Instanciations de Z_sur_2Z dans Enum pour pouvoir utiliser fromEnum (dans pToDec_aux)
+instance Enum Z_sur_2Z where
+    fromEnum (Z2Z n) = fromEnum n
+    toEnum n = Z2Z (toEnum n `mod` 2)
+    -- /!\ NE PAS SE SERVIR DE toEnum (ça fais de la merde je crois)
+
+instance Max Z_sur_2Z where
+      nmax (Z2Z _) = 1
 -----------------------------------------------------------------
 
 
@@ -163,26 +178,46 @@ cut_poly (Pol (p:pr)) | p == neutre = (cut_poly (Pol pr))
 -- [1, 0, 1, 1, 0, 0, 0, 1] * [0, 1] = [1]
 -- 141 * 2 = 282 = 1 [281]    -- modulo 281 car (pToDec pIrr8 - 1)
 
--- pInv :: Poly -> Poly
+-- pInv :: Poly a -> Poly a
 
--- pToDec :: Poly Z_sur_2Z -> Integer
--- pToDec p = pToDec_aux p 0
+pToDec :: (Enum a, Max a) => Poly a -> Int
+pToDec p = pToDec_aux p 0
 
--- pToDec_aux :: Poly Z_sur_2Z -> Integer -> Integer
--- pToDec_aux (Pol []) _ = 0
--- pToDec_aux (Pol ((Z2Z x):xs)) i = x*(2^i) + (pToDec_aux (Pol xs) (i+1))
+pToDec_aux :: (Enum a, Max a) => Poly a -> Int -> Int
+pToDec_aux (Pol []) _ = 0
+pToDec_aux (Pol (x:xs)) i = (fromEnum x)*(((nmax x) + 1)^i) + (pToDec_aux (Pol xs) (i+1))
+-- use of fromEnum instead of toInteger
+-- sinon il faut instancier Z_sur_2Z dans Integral et donc dans Enum et Real
+-- ce qui fait 3 instanciations à la place d'une seule
+-- fromEnum fait la même chose que toInteger, c'est juste moins explicite
 
--- decToP :: Integer -> Poly Z_sur_2Z
--- decToP n = down_degree $ revPol $ decToP_aux n 7
+-- Ici on va avoir un pb
+-- Comment savoir dans quel corps on va (ex Z_sur_2Z ou Z_sur_5Z) ?
+-- surtout que du coup Haskell accepte pas la fonction car a indeterminé
+-- decToP :: (Eq a, Corps a, Max a) => Int -> a -> Poly a
+-- decToP n xOfCorps = down_degree $ revPol $ decToP_aux n 7 xOfCorps
 
 -- -- pb avec les polys qui ne commence pas pas 1 (ex: x + x²)
--- decToP_aux :: Integer -> Integer -> Poly Z_sur_2Z
--- decToP_aux n i | n - (2^i) > 0 = Pol (x:r)
---                | n - (2^i) == 0 = Pol [Z2Z 1]
---             --    | i <= 0 = Pol [Z2Z 0]
---                | otherwise = Pol (y:v)
---                where x = Z2Z 1
---                      y = Z2Z 0
---                      (Pol r) = decToP_aux (n - (2^i)) (i-1)
---                      (Pol v) = decToP_aux n (i-1)
+-- decToP_aux :: (Corps a, Max a) => Int -> Int -> a -> Poly a
+-- decToP_aux n i xOfCorps | n - ((nmax xOfCorps) + 1)^i > 0 = Pol (x:r)
+--                         | n - ((nmax xOfCorps) + 1)^i == 0 = Pol [unite]
+--                         | i <= 0 = Pol [neutre]
+--                         | otherwise = Pol (y:v)
+--                         where x = unite
+--                               y = neutre
+--                               (Pol r) = decToP_aux (n - ((nmax xOfCorps) + 1)^i) (i-1) xOfCorps
+--                               (Pol v) = decToP_aux n (i-1) xOfCorps
+
+
+
+-- decToP :: (Eq a, Corps a, Max a) => Int -> a -> Poly a
+-- decToP 0 _ = Pol [neutre]
+-- decToP n xOfCorps = down_degree $ revPol $ decToP_aux n xOfCorps 
+
+-- decToP_aux :: (Corps a, Max a) => Int -> a -> Poly a
+-- decToP_aux 0 _ = Pol [neutre]
+-- decToP_aux n xOfCorps = Pol (x:r)
+--                       where x = (toConstr xOfCorps) $ n `mod` (nmax xOfCorps + 1)
+--                             (Pol r) = decToP_aux (n `div` (nmax xOfCorps + 1)) xOfCorps
+
 -----------------------------------------------------------------
