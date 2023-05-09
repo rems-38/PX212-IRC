@@ -52,3 +52,10 @@
 - Documentation du code
 - Réalisation de tests unitaires
 - Commencement des fonctions de chiffrement
+
+# Travail entre les séances 3 et 4
+- Documentation partielle du code (surtout le nouveau code (cipher))
+- Création des types pour le chiffrement (à voir si les choix sont les bons)
+- Codage des fonctions addRoundKey et shiftRows
+- Réalisation des premiers tests unitaires pour les fonctions codées du cipher
+- Réalisation d'un "squelette" du reste du code (fonction de chiffrement + fonctions annexes)

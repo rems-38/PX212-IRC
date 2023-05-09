@@ -1,5 +1,8 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
+
+module Cipher where
+
 import Structure_algebrique
 import Math_preliminaries
 
@@ -9,6 +12,22 @@ import Math_preliminaries
 -----------------------------------------------------------------
 type Byte = Poly Z_sur_2Z -- GF256
 type Block = [Byte]
+-----------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+--------------------------- Cipher ------------------------------
+-----------------------------------------------------------------
+-- Squelette de la fonction de chiffrement
+-- Surement à modifier (notamenet l'appel de word à chaque fois qui doit surement être réduit etc)
+-- Regarder dans la doc comment déterminer le nombre de répétition
+-- Je crois qu'il n'y a pas le cas final (en dehors de la boucle du coup (ie un tour sans mixColumns ?))
+cipher :: Block -> Block -> Block
+cipher input word = cipher_aux (addRoundKey input word) word 10
+
+cipher_aux :: Block -> Block -> Int -> Block
+cipher_aux input word n | n == 0 = input
+                        | otherwise = cipher_aux (addRoundKey (mixColumns (shiftRows (subBytes input))) word) word (n-1)
 -----------------------------------------------------------------
 
 
@@ -29,6 +48,15 @@ addRoundKey b1 b2 = map down_degree (addRoundKey_aux b1 b2)
 
 addRoundKey_aux :: Block -> Block -> Block
 addRoundKey_aux = zipWith operation
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------- subBytes ------------------------------
+-----------------------------------------------------------------
+subBytes :: Block -> Block
+subBytes b = b
 -----------------------------------------------------------------
 
 
@@ -61,4 +89,13 @@ littleShift :: Block -> Int -> Block
 littleShift b n | n == 0 = b
                 | otherwise = rb ++ lb
                 where (lb, rb) = splitAt n b
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------- mixColumns ----------------------------
+-----------------------------------------------------------------
+mixColumns :: Block -> Block
+mixColumns b = b
 -----------------------------------------------------------------
