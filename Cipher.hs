@@ -19,14 +19,14 @@ type Block = [Byte]
 toBlock :: [String] -> Block
 toBlock = map hexPol
 
-cipher_key_ex :: Block
-cipher_key_ex = toBlock ["2b", "7e", "15", "16", "28", "ae", "d2", "a6", "ab", "f7", "15", "88", "09", "cf", "4f", "3c"]
+initTab :: [Int]
+initTab = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 
-input_appendixB :: Block
-input_appendixB = toBlock ["32", "43", "f6", "a8", "88", "5a", "30", "8d", "31", "31", "98", "a2", "e0", "37", "07", "34"]
+after_shiftRows :: [Int]
+after_shiftRows = [1,6,11,16,5,10,15,4,9,14,3,8,13,2,7,12]
 
-result :: Block
-result = toBlock ["19", "3d", "e3", "be", "a0", "f4", "e2", "2b", "9a", "c6", "8d", "2a", "e9", "f8", "48", "08"]
+-- shiftRows initTab == after_shiftRows
+-- True (testé)
 -----------------------------------------------------------------
 
 
@@ -38,4 +38,30 @@ addRoundKey b1 b2 = map down_degree (addRoundKey_aux b1 b2)
 
 addRoundKey_aux :: Block -> Block -> Block
 addRoundKey_aux = zipWith operation
+
+shiftRows :: [Int] -> [Int]
+shiftRows b = switchColRows (shiftRows_aux (switchColRows b) 0)
+
+shiftRows_aux :: [Int] -> Int -> [Int]
+shiftRows_aux b n | n == 4 = []
+                  | otherwise = littleShift (take 4 b) n ++ shiftRows_aux (drop 4 b) (n+1)
+
+-- Échange les colonnes et les lignes d'une matrice 4x4
+-- Ex : [1..16] -> [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]
+switchColRows :: [Int] -> [Int]
+switchColRows b = nthOfList b 1 ++ nthOfList b 2 ++ nthOfList b 3 ++ nthOfList b 4
+
+-- D'après la visualisation en matrice 4x4, ça output la ligne n
+-- Ex : [1, 2, 3, 4, 5, 6, 7, 8] 2 -> [2, 6, 10, 14]
+nthOfList :: [Int] -> Int -> [Int]
+nthOfList [] _ = []
+nthOfList b 0 = []
+nthOfList b n = head (drop (n-1) (take 4 b)) : nthOfList (drop 4 b) n
+
+-- Rotation vers la gauche de n bits
+-- Ex : [1, 2, 3, 4] 2 -> [3, 4, 1, 2]
+littleShift :: [Int] -> Int -> [Int]
+littleShift b n | n == 0 = b
+                | otherwise = rb ++ lb
+                where (lb, rb) = splitAt n b
 -----------------------------------------------------------------
