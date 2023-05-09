@@ -63,7 +63,9 @@ mergePoly (Pol xs) (Pol []) = Pol xs
 mergePoly (Pol xs) (Pol ys) = Pol $ xs ++ ys
 
 hexPol_aux :: Char -> Poly Z_sur_2Z
-hexPol_aux c | length tab == 3 = toPoly_Z2Z (0 : tab)
+hexPol_aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
+             | length tab == 2 = toPoly_Z2Z ([0, 0] ++ tab)
+             | length tab == 3 = toPoly_Z2Z (0 : tab)
              | otherwise = toPoly_Z2Z tab
              where tab = decToBinPol $ charInt c
 
