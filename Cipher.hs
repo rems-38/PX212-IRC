@@ -116,7 +116,10 @@ addRoundKey_aux = zipWith operation
 ------------------------- subBytes ------------------------------
 -----------------------------------------------------------------
 subBytes :: Block -> Block
-subBytes b = b
+subBytes [] = []
+subBytes (b:br) = new_pol : subBytes br
+                where (lb, rb) = splitAt 4 (z2ZToInt (polArray (up_degree b)))
+                      new_pol = hexPol $ sbox !! fromIntegral (binToDec (reverse lb)) !! fromIntegral (binToDec (reverse rb))
 
 sbox :: [[String]]
 sbox = [["63", "ca", "b7", "04", "09", "53", "d0", "51", "cd", "60", "e0", "e7", "ba", "70", "e1", "8c"],
