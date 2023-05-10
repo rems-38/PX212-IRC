@@ -54,6 +54,7 @@
 - Commencement des fonctions de chiffrement
 
 # Travail entre les séances 3 et 4
+- Documentation du rapport FIPS 197
 - Documentation partielle du code (surtout le nouveau code (cipher))
 - Création des types pour le chiffrement (à voir si les choix sont les bons)
 - Codage des fonctions addRoundKey et shiftRows
