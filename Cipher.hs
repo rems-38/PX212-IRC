@@ -9,7 +9,7 @@ import Data.Char
 
 
 -----------------------------------------------------------------
---------------------------- Types -------------------------------
+----------------------------- Types -----------------------------
 -----------------------------------------------------------------
 type Byte = Poly Z_sur_2Z -- GF256
 type Block = [Byte]
@@ -18,23 +18,33 @@ type Block = [Byte]
 
 
 -----------------------------------------------------------------
------------------------- Constantes -----------------------------
+---------------------------- Parser -----------------------------
 -----------------------------------------------------------------
+-- Parser : héxa (plusieurs) -> liste de polynômes
 toBlock :: String -> Block
 toBlock s = map hexPol (words s)
 
+-- Parser : héxa -> polynôme (juste un seul poly donc "5e" (pas de "ae b3"))
 hexPol :: String -> Poly Z_sur_2Z
-hexPol xs = down_degree $ revPol (foldr (mergePoly . hexPol_aux) (Pol []) xs)
+hexPol xs = down_degree $ revPol (foldr (mergePoly . aux) (Pol []) xs)
+          where aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
+                      | length tab == 2 = toPoly_Z2Z ([0, 0] ++ tab)
+                      | length tab == 3 = toPoly_Z2Z (0 : tab)
+                      | otherwise = toPoly_Z2Z tab
+                      where tab = decToBin $ charInt c
 -- peut etre faire hexPol [x,y] (car string 2 élements et du coup ça enlève des fonctions)
 
+-- Parser : polynôme -> héxa (juste un seul poly donc "5e" (pas de "ae b3"))
 polHex :: Byte -> String
 polHex (Pol [0, 0, 0, 0, 0, 0, 0, 0]) = ""
 polHex p = (intChar . binToDec) (z2ZToInt $ reverse rp) : polHex (Pol ([neutre, neutre, neutre, neutre ] ++ lp))
          where (lp, rp) = splitAt 4 (polArray p)
 
+-- Parser : polynome -> liste (pour virer le constructeur)
 polArray :: Poly a -> [a]
 polArray (Pol xs) = xs
 
+-- Parser : liste de Z2Z -> liste de int (pour virer le constructeur)
 z2ZToInt :: [Z_sur_2Z] -> [Integer]
 z2ZToInt [] = []
 z2ZToInt ((Z2Z x):xs) = x : z2ZToInt xs
@@ -45,13 +55,7 @@ mergePoly (Pol []) (Pol ys) = Pol ys
 mergePoly (Pol xs) (Pol []) = Pol xs
 mergePoly (Pol xs) (Pol ys) = Pol $ xs ++ ys
 
-hexPol_aux :: Char -> Poly Z_sur_2Z
-hexPol_aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
-             | length tab == 2 = toPoly_Z2Z ([0, 0] ++ tab)
-             | length tab == 3 = toPoly_Z2Z (0 : tab)
-             | otherwise = toPoly_Z2Z tab
-             where tab = decToBinPol $ charInt c
-
+-- Transforme un char en entier (base héxadécimale)
 charInt :: Char -> Integer
 charInt 'a' = 10
 charInt 'b' = 11
@@ -61,6 +65,7 @@ charInt 'e' = 14
 charInt 'f' = 15
 charInt c = fromIntegral $ digitToInt c
 
+-- Transforme un entier en char (base héxadécimale)
 intChar :: Integer -> Char
 intChar 10 = 'a'
 intChar 11 = 'b'
@@ -70,12 +75,15 @@ intChar 14 = 'e'
 intChar 15 = 'f'
 intChar n = chr (fromIntegral n + 48)
 
-decToBinPol :: Integer -> [Integer]
-decToBinPol 0 = [0]
-decToBinPol n = reverse $ aux n
+-- Transforme un entier en liste de 4 bits (bits de poids faible à droite)
+-- Ex : 5 -> [1, 0, 1]
+decToBin :: Integer -> [Integer]
+decToBin 0 = [0]
+decToBin n = reverse $ aux n
               where aux 0 = []
                     aux n = (n `mod` 2) : aux (n `div` 2)
 
+-- Transforme une liste de 4 bits en entier (bits de poids faible à droite)
 binToDec :: [Integer] -> Integer
 binToDec list = aux list 3
               where aux [] _ = 0
@@ -121,6 +129,7 @@ subBytes (b:br) = new_pol : subBytes br
                 where (lb, rb) = splitAt 4 (z2ZToInt (polArray (up_degree b)))
                       new_pol = hexPol $ sbox !! fromIntegral (binToDec (reverse lb)) !! fromIntegral (binToDec (reverse rb))
 
+-- Sbox donnée dans le FIPS 197
 sbox :: [[String]]
 sbox = [["63", "ca", "b7", "04", "09", "53", "d0", "51", "cd", "60", "e0", "e7", "ba", "70", "e1", "8c"],
         ["7c", "82", "fd", "c7", "83", "d1", "ef", "a3", "0c", "81", "32", "c8", "78", "3e", "f8", "a1"],
@@ -146,11 +155,9 @@ sbox = [["63", "ca", "b7", "04", "09", "53", "d0", "51", "cd", "60", "e0", "e7",
 ------------------------- shiftRows -----------------------------
 -----------------------------------------------------------------
 shiftRows :: Block -> Block
-shiftRows b = switchColRows (shiftRows_aux (switchColRows b) 0)
-
-shiftRows_aux :: Block -> Int -> Block
-shiftRows_aux b n | n == 4 = []
-                  | otherwise = littleShift (take 4 b) n ++ shiftRows_aux (drop 4 b) (n+1)
+shiftRows b = switchColRows (aux (switchColRows b) 0)
+            where aux b n | n == 4 = []
+                          | otherwise = littleShift (take 4 b) n ++ aux (drop 4 b) (n+1)
 
 -- Échange les colonnes et les lignes d'une matrice 4x4
 -- Ex : [1..16] -> [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]

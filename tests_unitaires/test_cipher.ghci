@@ -1,6 +1,6 @@
 -- Test de toBlock
 putStrLn "=== Test toBlock ==="
-toBlock ["32", "ae", "f4"] == [Pol [Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1],Pol [Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1],Pol [Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 1]]
+toBlock "32 ae f4" == [Pol [Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1],Pol [Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1],Pol [Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 1]]
 
 -- Test de addRoundKey
 input_appendixB = toBlock "32 43 f6 a8 88 5a 30 8d 31 31 98 a2 e0 37 07 34"
@@ -8,6 +8,12 @@ cipher_key_ex = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c"
 result = toBlock "19 3d e3 be a0 f4 e2 2b 9a c6 8d 2a e9 f8 48 08"
 putStrLn "=== Test addRoundKey ==="
 addRoundKey input_appendixB cipher_key_ex == result
+
+-- Test de subBytes
+a = toBlock "19 3d e3 be a0 f4 e2 2b 9a c6 8d 2a e9 f8 48 08"
+b = toBlock "d4 27 11 ae e0 bf 98 f1 b8 b4 5d e5 1e 41 52 30"
+putStrLn "=== Test subBytes ==="
+subBytes a == b
 
 -- Test de shiftRows
 a = toBlock "d4 27 11 ae e0 bf 98 f1 b8 b4 5d e5 1e 41 52 30"
