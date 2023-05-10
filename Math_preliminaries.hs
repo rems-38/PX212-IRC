@@ -83,9 +83,10 @@ instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
       multiplication = multiplication_poly
 
 instance IrreduciblePoly Z_sur_2Z where
-      polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
-      -- pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
-      -- pIrr4 = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
+      polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
+      
+instance IrreduciblePoly (Poly Z_sur_2Z) where
+      polyIrr = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
 
 -- Instanciations de Z_sur_2Z dans Enum pour pouvoir utiliser fromEnum (dans pToDec_aux)
 instance Enum Z_sur_2Z where

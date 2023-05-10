@@ -47,6 +47,10 @@
 - Instanciation des structures algébriques : Z_sur_2Z (en tant que Corps) et polynomes à coefs. dans Z_sur_2Z (en tant qu'anneau [pour l'instant l'inverse n'a pas été défini])
 - Petites corrections dans les fichiers de tests (car changements de nom ou suprresions de fonction)
 
+# Séance 3 - 28/04/2023
+## Contenu de la séance
+- Codage de l'inverse (dans Poly a mais pour GF256)
+
 ## Pour la prochaine séance
 ### Pour Rémi
 - Documentation du code
@@ -60,3 +64,18 @@
 - Codage des fonctions addRoundKey et shiftRows
 - Réalisation des premiers tests unitaires pour les fonctions codées du cipher
 - Réalisation d'un "squelette" du reste du code (fonction de chiffrement + fonctions annexes)
+
+# Séance 4 - 10/05/2023
+## Contenu de la séance
+- Conversion d'un polynôme en liste héxa
+- Fonction subBytes
+- Début de la fonction mixColumns
+- Pour cela, début d'implémentation des Poly (Poly ...)
+
+## Pour la prochaine séance
+### Pour Rémi
+- Finalisation de la documentation des fonctions (dans le code)
+- Ajouts de tests unitaires (tache secondaire)
+- Finalisation de l'implémentation des polynomes qui ont pour coef des polynomes à coef dans Z2Z 
+- Finalisation de la fonction mixColumns
+- Commencement de KeyExpansion, du Cipher (fonction globale), ainsi que des fonctions de déchiffrement
