@@ -52,40 +52,6 @@ class (Corps a) => Max a where
 -----------------------------------------------------------------
 toPoly_Z2Z :: [Integer] -> Poly Z_sur_2Z
 toPoly_Z2Z xs = Pol $ map (toZ2Z . Z2Z) xs
-
-hexPol :: String -> Poly Z_sur_2Z
-hexPol xs = down_degree $ revPol (foldr (mergePoly . hexPol_aux) (Pol []) xs)
--- peut etre faire hexPol [x,y] (car string 2 élements et du coup ça enlève des fonctions)
-
-mergePoly :: Poly a -> Poly a -> Poly a
-mergePoly (Pol []) (Pol []) = Pol []
-mergePoly (Pol []) (Pol ys) = Pol ys
-mergePoly (Pol xs) (Pol []) = Pol xs
-mergePoly (Pol xs) (Pol ys) = Pol $ xs ++ ys
-
-hexPol_aux :: Char -> Poly Z_sur_2Z
-hexPol_aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
-             | length tab == 2 = toPoly_Z2Z ([0, 0] ++ tab)
-             | length tab == 3 = toPoly_Z2Z (0 : tab)
-             | otherwise = toPoly_Z2Z tab
-             where tab = decToBinPol $ charInt c
-
-charInt :: Char -> Integer
-charInt 'a' = 10
-charInt 'b' = 11
-charInt 'c' = 12
-charInt 'd' = 13
-charInt 'e' = 14
-charInt 'f' = 15
-charInt c = fromIntegral $ digitToInt c
-
-decToBinPol :: Integer -> [Integer]
-decToBinPol 0 = [0]
-decToBinPol n = reverse $ decToBin_aux n
-
-decToBin_aux :: Integer -> [Integer]
-decToBin_aux 0 = []
-decToBin_aux n = (n `mod` 2) : decToBin_aux (n `div` 2)
 -----------------------------------------------------------------
 
 
@@ -213,6 +179,10 @@ divise (Pol p) (Pol irr) (Pol q) = down_degree (operation (Pol p) (multi_aux (Po
 
 down_degree :: (Eq a, Corps a) => Poly a -> Poly a
 down_degree (Pol p) = revPol (cut_poly (revPol (Pol p)))
+
+up_degree :: (Corps a) => Poly a -> Poly a
+up_degree (Pol p) | length p < 8 = up_degree (Pol $ p ++ [neutre])
+                  | otherwise = Pol p
 
 revPol :: Corps a => Poly a -> Poly a
 revPol (Pol p) = Pol $ reverse p

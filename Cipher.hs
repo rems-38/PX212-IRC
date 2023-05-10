@@ -5,6 +5,7 @@ module Cipher where
 
 import Structure_algebrique
 import Math_preliminaries
+import Data.Char
 
 
 -----------------------------------------------------------------
@@ -12,6 +13,73 @@ import Math_preliminaries
 -----------------------------------------------------------------
 type Byte = Poly Z_sur_2Z -- GF256
 type Block = [Byte]
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------ Constantes -----------------------------
+-----------------------------------------------------------------
+toBlock :: String -> Block
+toBlock s = map hexPol (words s)
+
+hexPol :: String -> Poly Z_sur_2Z
+hexPol xs = down_degree $ revPol (foldr (mergePoly . hexPol_aux) (Pol []) xs)
+-- peut etre faire hexPol [x,y] (car string 2 élements et du coup ça enlève des fonctions)
+
+polHex :: Byte -> String
+polHex (Pol [0, 0, 0, 0, 0, 0, 0, 0]) = ""
+polHex p = (intChar . binToDec) (z2ZToInt $ reverse rp) : polHex (Pol ([neutre, neutre, neutre, neutre ] ++ lp))
+         where (lp, rp) = splitAt 4 (polArray p)
+
+polArray :: Poly a -> [a]
+polArray (Pol xs) = xs
+
+z2ZToInt :: [Z_sur_2Z] -> [Integer]
+z2ZToInt [] = []
+z2ZToInt ((Z2Z x):xs) = x : z2ZToInt xs
+
+mergePoly :: Poly a -> Poly a -> Poly a
+mergePoly (Pol []) (Pol []) = Pol []
+mergePoly (Pol []) (Pol ys) = Pol ys
+mergePoly (Pol xs) (Pol []) = Pol xs
+mergePoly (Pol xs) (Pol ys) = Pol $ xs ++ ys
+
+hexPol_aux :: Char -> Poly Z_sur_2Z
+hexPol_aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
+             | length tab == 2 = toPoly_Z2Z ([0, 0] ++ tab)
+             | length tab == 3 = toPoly_Z2Z (0 : tab)
+             | otherwise = toPoly_Z2Z tab
+             where tab = decToBinPol $ charInt c
+
+charInt :: Char -> Integer
+charInt 'a' = 10
+charInt 'b' = 11
+charInt 'c' = 12
+charInt 'd' = 13
+charInt 'e' = 14
+charInt 'f' = 15
+charInt c = fromIntegral $ digitToInt c
+
+intChar :: Integer -> Char
+intChar 10 = 'a'
+intChar 11 = 'b'
+intChar 12 = 'c'
+intChar 13 = 'd'
+intChar 14 = 'e'
+intChar 15 = 'f'
+intChar n = chr (fromIntegral n + 48)
+
+decToBinPol :: Integer -> [Integer]
+decToBinPol 0 = [0]
+decToBinPol n = reverse $ aux n
+              where aux 0 = []
+                    aux n = (n `mod` 2) : aux (n `div` 2)
+
+binToDec :: [Integer] -> Integer
+binToDec list = aux list 3
+              where aux [] _ = 0
+                    aux (x:xs) n = (x*(2^n)) + aux xs (n-1)
 -----------------------------------------------------------------
 
 
@@ -33,14 +101,6 @@ cipher_aux input word n | n == 0 = input
 
 
 -----------------------------------------------------------------
-------------------------- Constantes ----------------------------
------------------------------------------------------------------
-toBlock :: String -> Block
-toBlock s = map hexPol (words s)
------------------------------------------------------------------
-
-
------------------------------------------------------------------
 ------------------------ addRoundKey ----------------------------
 -----------------------------------------------------------------
 addRoundKey :: Block -> Block -> Block
@@ -57,6 +117,24 @@ addRoundKey_aux = zipWith operation
 -----------------------------------------------------------------
 subBytes :: Block -> Block
 subBytes b = b
+
+sbox :: [[String]]
+sbox = [["63", "ca", "b7", "04", "09", "53", "d0", "51", "cd", "60", "e0", "e7", "ba", "70", "e1", "8c"],
+        ["7c", "82", "fd", "c7", "83", "d1", "ef", "a3", "0c", "81", "32", "c8", "78", "3e", "f8", "a1"],
+        ["77", "c9", "93", "23", "2c", "00", "aa", "40", "13", "4f", "3a", "37", "25", "b5", "98", "89"],
+        ["7b", "7d", "26", "c3", "1a", "ed", "fb", "8f", "ec", "dc", "0a", "6d", "2e", "66", "11", "0d"],
+        ["f2", "fa", "36", "18", "1b", "20", "43", "92", "5f", "22", "49", "8d", "1c", "48", "69", "bf"],
+        ["6b", "59", "3f", "96", "6e", "fc", "4d", "9d", "97", "2a", "06", "d5", "a6", "03", "d9", "e6"],
+        ["6f", "47", "f7", "05", "5a", "b1", "33", "38", "44", "90", "24", "4e", "b4", "f6", "8e", "42"],
+        ["c5", "f0", "cc", "9a", "a0", "5b", "85", "f5", "17", "88", "5c", "a9", "c6", "0e", "94", "68"],
+        ["30", "ad", "34", "07", "52", "6a", "45", "bc", "c4", "46", "c2", "6c", "e8", "61", "9b", "41"],
+        ["01", "d4", "a5", "12", "3b", "cb", "f9", "b6", "a7", "ee", "d3", "56", "dd", "35", "1e", "99"],
+        ["67", "a2", "e5", "80", "d6", "be", "02", "da", "7e", "b8", "ac", "f4", "74", "57", "87", "2d"],
+        ["2b", "af", "f1", "e2", "b3", "39", "7f", "21", "3d", "14", "62", "ea", "1f", "b9", "e9", "0f"],
+        ["fe", "9c", "71", "eb", "29", "4a", "50", "10", "64", "de", "91", "65", "4b", "86", "ce", "b0"],
+        ["d7", "a4", "d8", "27", "e3", "4c", "3c", "ff", "5d", "5e", "95", "7a", "bd", "c1", "55", "54"],
+        ["ab", "72", "31", "b2", "2f", "58", "9f", "f3", "19", "0b", "e4", "ae", "8b", "1d", "28", "bb"],
+        ["76", "c0", "15", "75", "84", "cf", "a8", "d2", "73", "db", "79", "08", "8a", "9e", "df", "16"]]
 -----------------------------------------------------------------
 
 
