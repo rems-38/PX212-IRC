@@ -78,7 +78,6 @@ instance (IrreduciblePoly a, Eq a, Corps a) => Groupe (Poly a) where
       neutre = Pol [neutre]
       unite = Pol [unite]
       operation = addition_poly
-      inverse = inverse_poly
 
 instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
       multiplication = multiplication_poly
@@ -119,9 +118,9 @@ multi2 _ (Z2Z 0) = Z2Z 0
 multi2 (Z2Z 0) _ = Z2Z 0
 multi2 (Z2Z 1) (Z2Z 1) = Z2Z 1
 
-inv2 :: Z_sur_2Z -> Maybe Z_sur_2Z
-inv2 (Z2Z 0) = Nothing
-inv2 (Z2Z 1) = Just $ Z2Z 1
+inv2 :: Z_sur_2Z -> Z_sur_2Z
+inv2 (Z2Z 0) = 0
+inv2 (Z2Z 1) = Z2Z 1
 
 toZ2Z :: Z_sur_2Z -> Z_sur_2Z
 toZ2Z (Z2Z n) = Z2Z $ n `mod` 2

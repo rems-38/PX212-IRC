@@ -6,6 +6,7 @@ module Cipher where
 import Structure_algebrique
 import Math_preliminaries
 import Data.Char
+import Prelude hiding (Word) -- sinon ça confond avec notre type Word (qui est un Poly Byte)
 
 
 -----------------------------------------------------------------
@@ -13,6 +14,25 @@ import Data.Char
 -----------------------------------------------------------------
 type Byte = Poly Z_sur_2Z -- GF256
 type Block = [Byte]
+type Word = Poly Byte
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------- Instanciation -------------------------
+-----------------------------------------------------------------
+instance Corps Byte where
+    inverseMultiplicatif = inverse_poly
+
+-- instance Groupe Word where
+--     neutre = [neutre, neutre, neutre, neutre]
+--     unite = [unite, neutre, neutre, neutre]
+--     operation = addition_poly
+
+-- instance Anneau Word where
+--     multiplication = multiplication_poly
+
 -----------------------------------------------------------------
 
 

@@ -14,5 +14,5 @@ class (Groupe a) => Anneau a where
       multiplication :: a -> a -> a
 
 class (Anneau a) => Corps a where
-      inverseMultiplicatif :: a -> Maybe a
+      inverseMultiplicatif :: a -> a
 -----------------------------------------------------------------
