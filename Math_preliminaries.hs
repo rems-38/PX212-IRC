@@ -29,7 +29,7 @@ import Data.Char
 -----------------------------------------------------------------
 --------------------------- Types -------------------------------
 -----------------------------------------------------------------
-newtype Z_sur_2Z = Z2Z Integer deriving (Show, Eq, Num, Ord, Data)
+newtype Z_sur_2Z = Z2Z Integer deriving (Eq, Num, Ord, Data)
 newtype Poly a = Pol [a] deriving (Show, Eq)
 -----------------------------------------------------------------
 
@@ -55,6 +55,7 @@ toPoly_Z2Z xs = Pol $ map (toZ2Z . Z2Z) xs
 
 hexPol :: String -> Poly Z_sur_2Z
 hexPol xs = down_degree $ revPol (foldr (mergePoly . hexPol_aux) (Pol []) xs)
+-- peut etre faire hexPol [x,y] (car string 2 élements et du coup ça enlève des fonctions)
 
 mergePoly :: Poly a -> Poly a -> Poly a
 mergePoly (Pol []) (Pol []) = Pol []
@@ -92,6 +93,9 @@ decToBin_aux n = (n `mod` 2) : decToBin_aux (n `div` 2)
 -----------------------------------------------------------------
 ----------------------- Instanciations --------------------------
 -----------------------------------------------------------------
+instance Show Z_sur_2Z where
+      show (Z2Z n) = show n
+
 instance Groupe Z_sur_2Z where
       neutre = Z2Z 0
       unite = Z2Z 1
