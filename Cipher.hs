@@ -6,7 +6,6 @@ module Cipher where
 import Structure_algebrique
 import Math_preliminaries
 import Data.Char
-import Prelude hiding (Word) -- sinon ça confond avec notre type Word (qui est un Poly Byte)
 
 
 -----------------------------------------------------------------
@@ -133,10 +132,6 @@ binToDec list = aux list 3
 -----------------------------------------------------------------
 --------------------------- Cipher ------------------------------
 -----------------------------------------------------------------
--- Squelette de la fonction de chiffrement
--- Surement à modifier (notamenet l'appel de word à chaque fois qui doit surement être réduit etc)
--- Regarder dans la doc comment déterminer le nombre de répétition
--- Je crois qu'il n'y a pas le cas final (en dehors de la boucle du coup (ie un tour sans mixColumns ?))
 cipher :: Int -> Block -> Block -> Block
 cipher n input word | n == 128 = cipher_aux (addRoundKey input word) (drop (4 * 4) (keyExpansion word 4 10)) 4 10
                     | n == 192 = cipher_aux (addRoundKey input word) (drop (4 * 6) (keyExpansion word 6 12)) 6 12
@@ -144,8 +139,8 @@ cipher n input word | n == 128 = cipher_aux (addRoundKey input word) (drop (4 * 
                     | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
 
 cipher_aux :: Block -> Block -> Int -> Int -> Block
-cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows (subBytes input)) (take (4 * nk) word)
-                            | otherwise = cipher_aux (addRoundKey (mixColumns (shiftRows (subBytes input))) (take (4 * nk) word)) (drop (4 * nk) word) nk (nr - 1)
+cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows $ subBytes input) (take (4 * nk) word)
+                            | otherwise = cipher_aux (addRoundKey (mixColumns $ shiftRows $ subBytes input) (take (4 * nk) word)) (drop (4 * nk) word) nk (nr - 1)
 -----------------------------------------------------------------
 
 
