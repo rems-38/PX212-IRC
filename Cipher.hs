@@ -202,13 +202,19 @@ littleShift b n | n == 0 = b
 ------------------------- mixColumns ----------------------------
 -----------------------------------------------------------------
 mixColumns :: Block -> Block
-mixColumns b = b
+mixColumns [] = []
+mixColumns b = colToNewPol (take 4 b) 4 ++ mixColumns (drop 4 b)
 
-colTimesa_x :: Block -> Block
-colTimesa_x = map (multiplication a_x_mixColumns)
+colToNewPol :: Block -> Int -> Block
+colToNewPol [] _ = []
+colToNewPol _ 0 = []
+colToNewPol b n = somme (zipWith multiplication (littleShift a_x_mixColumns n) b) : colToNewPol b (n-1)
 
-a_x_mixColumns :: Byte
-a_x_mixColumns = operation (operation (operation (multiplication (hexPol "03") (hexPol "08")) (multiplication (hexPol "01") (hexPol "04"))) (multiplication (hexPol "01") (hexPol "02"))) (hexPol "02")
+somme :: Block -> Byte
+somme = foldr operation neutre
+
+a_x_mixColumns :: Block
+a_x_mixColumns = toBlock "02 03 01 01"
 -----------------------------------------------------------------
 
 
