@@ -84,9 +84,9 @@ instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
 
 instance IrreduciblePoly Z_sur_2Z where
       polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
-      
-instance IrreduciblePoly (Poly Z_sur_2Z) where
-      polyIrr = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
+
+-- instance IrreduciblePoly (Poly Z_sur_2Z) where
+--       polyIrr = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
 
 -- Instanciations de Z_sur_2Z dans Enum pour pouvoir utiliser fromEnum (dans pToDec_aux)
 instance Enum Z_sur_2Z where
@@ -183,6 +183,10 @@ down_degree (Pol p) = revPol (cut_poly (revPol (Pol p)))
 up_degree :: (Corps a) => Poly a -> Poly a
 up_degree (Pol p) | length p < 8 = up_degree (Pol $ p ++ [neutre])
                   | otherwise = Pol p
+
+up_degree4 :: Num a => [a] -> [a]
+up_degree4 p | length p < 4 = up_degree4 (p ++ [0])
+             | otherwise = p
 
 revPol :: Corps a => Poly a -> Poly a
 revPol (Pol p) = Pol $ reverse p

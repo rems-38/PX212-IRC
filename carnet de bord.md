@@ -79,3 +79,6 @@
 - Finalisation de l'implémentation des polynomes qui ont pour coef des polynomes à coef dans Z2Z 
 - Finalisation de la fonction mixColumns
 - Commencement de KeyExpansion, du Cipher (fonction globale), ainsi que des fonctions de déchiffrement
+
+# Travail entre les séances 4 et 5
+- 

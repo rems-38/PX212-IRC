@@ -25,10 +25,10 @@ type Word = Poly Byte
 instance Corps Byte where
     inverseMultiplicatif = inverse_poly
 
-instance Groupe Word where
-    neutre = Pol [neutre, neutre, neutre, neutre]
-    unite = Pol [unite, neutre, neutre, neutre]
-    operation = addition_poly
+-- instance Groupe Word where
+--     neutre = Pol [neutre, neutre, neutre, neutre]
+--     unite = Pol [unite, neutre, neutre, neutre]
+--     operation = addition_poly
 
 -- instance Anneau Word where
 --     multiplication = multiplication_poly
@@ -44,6 +44,13 @@ instance Groupe Word where
 toBlock :: String -> Block
 toBlock s = map hexPol (words s)
 
+blockStr :: Block -> String
+blockStr b = init $ myConcat (map polHex b) -- init enlève le dernier espace
+
+myConcat :: [String] -> String
+myConcat [] = ""
+myConcat (x:xs) = x ++ " " ++ myConcat xs
+
 -- Parser : héxa -> polynôme (juste un seul poly donc "5e" (pas de "ae b3"))
 hexPol :: String -> Poly Z_sur_2Z
 hexPol xs = down_degree $ revPol (foldr (mergePoly . aux) (Pol []) xs)
@@ -56,9 +63,11 @@ hexPol xs = down_degree $ revPol (foldr (mergePoly . aux) (Pol []) xs)
 
 -- Parser : polynôme -> héxa (juste un seul poly donc "5e" (pas de "ae b3"))
 polHex :: Byte -> String
-polHex (Pol [0, 0, 0, 0, 0, 0, 0, 0]) = ""
-polHex p = (intChar . binToDec) (z2ZToInt $ reverse rp) : polHex (Pol ([neutre, neutre, neutre, neutre ] ++ lp))
-         where (lp, rp) = splitAt 4 (polArray p)
+polHex (Pol [-1, -1, -1, -1, -1, -1, -1, -1]) = ""
+polHex p = case lp of
+              [0, 0, 0, 0] -> (intChar . binToDec) (z2ZToInt $ reverse (up_degree4 rp)) : "0"
+              _ -> (intChar . binToDec) (z2ZToInt $ reverse (up_degree4 rp)) : polHex (Pol ([-unite, -unite, -unite, -unite] ++ lp))
+            where (lp, rp) = splitAt 4 (polArray p)
 
 -- Parser : polynome -> liste (pour virer le constructeur)
 polArray :: Poly a -> [a]
@@ -129,18 +138,6 @@ cipher_aux input word n | n == 0 = input
 
 
 -----------------------------------------------------------------
------------------------- addRoundKey ----------------------------
------------------------------------------------------------------
-addRoundKey :: Block -> Block -> Block
-addRoundKey b1 b2 = map down_degree (addRoundKey_aux b1 b2)
-
-addRoundKey_aux :: Block -> Block -> Block
-addRoundKey_aux = zipWith operation
------------------------------------------------------------------
-
-
-
------------------------------------------------------------------
 ------------------------- subBytes ------------------------------
 -----------------------------------------------------------------
 subBytes :: Block -> Block
@@ -206,4 +203,22 @@ littleShift b n | n == 0 = b
 -----------------------------------------------------------------
 mixColumns :: Block -> Block
 mixColumns b = b
+
+colTimesa_x :: Block -> Block
+colTimesa_x = map (multiplication a_x_mixColumns)
+
+a_x_mixColumns :: Byte
+a_x_mixColumns = operation (operation (operation (multiplication (hexPol "03") (hexPol "08")) (multiplication (hexPol "01") (hexPol "04"))) (multiplication (hexPol "01") (hexPol "02"))) (hexPol "02")
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------ addRoundKey ----------------------------
+-----------------------------------------------------------------
+addRoundKey :: Block -> Block -> Block
+addRoundKey b1 b2 = map down_degree (addRoundKey_aux b1 b2)
+
+addRoundKey_aux :: Block -> Block -> Block
+addRoundKey_aux = zipWith operation
 -----------------------------------------------------------------
