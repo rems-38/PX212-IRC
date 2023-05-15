@@ -74,11 +74,13 @@
 
 ## Pour la prochaine séance
 ### Pour Rémi
-- Finalisation de la documentation des fonctions (dans le code)
-- Ajouts de tests unitaires (tache secondaire)
 - Finalisation de l'implémentation des polynomes qui ont pour coef des polynomes à coef dans Z2Z 
 - Finalisation de la fonction mixColumns
 - Commencement de KeyExpansion, du Cipher (fonction globale), ainsi que des fonctions de déchiffrement
+
+### Pour Guillemot
+- Finalisation de la documentation des fonctions (dans le code)
+- Ajouts de tests unitaires (tache secondaire)
 
 # Travail entre les séances 4 et 5
 - 

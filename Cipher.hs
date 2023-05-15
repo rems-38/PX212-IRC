@@ -10,11 +10,21 @@ import Prelude hiding (Word) -- sinon ça confond avec notre type Word (qui est 
 
 
 -----------------------------------------------------------------
+------------------------------ NB -------------------------------
+-----------------------------------------------------------------
+--         Nk Nb Nr
+-- AES-128  4  4 10 
+-- AES-192  6  4 12 
+-- AES-256  8  4 14
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
 ----------------------------- Types -----------------------------
 -----------------------------------------------------------------
 type Byte = Poly Z_sur_2Z -- GF256
 type Block = [Byte]
-type Word = Poly Byte
 -----------------------------------------------------------------
 
 
@@ -227,4 +237,38 @@ addRoundKey b1 b2 = map down_degree (addRoundKey_aux b1 b2)
 
 addRoundKey_aux :: Block -> Block -> Block
 addRoundKey_aux = zipWith operation
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+------------------------- keyExpansion --------------------------
+-----------------------------------------------------------------
+keyExpansion :: Block -> Int -> Int -> Block
+keyExpansion key nk nr = expandWord key nk nr key
+
+expandWord :: Block -> Int -> Int -> Block -> Block
+expandWord key nk nr w | len == 4 * (nr + 1) = w
+                       | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (len - nk)) (addRoundKey_aux afterOp pRcon))
+                       | otherwise = funcRec (w ++ addRoundKey_aux extraction (extract4 w ((len - nk) * nk)))
+                       where len = length w `div` 4
+                             funcRec = expandWord key nk nr
+                             pRcon = rcon (len `div` nk)
+                             afterOp = subWord $ rotWord extraction
+                             extraction = extract4 w (length w - nk)
+
+extract4 :: Block -> Int -> Block
+extract4 w n = take 4 (drop n w)
+
+subWord :: Block -> Block
+subWord = subBytes
+
+rotWord :: Block -> Block
+rotWord [w1, w2, w3, w4] = [w2, w3, w4, w1]
+
+rcon :: Int -> Block
+rcon i = create_poly (i-1) : toBlock "00 00 00"
+
+cipher_key :: Block
+cipher_key = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c"
 -----------------------------------------------------------------
