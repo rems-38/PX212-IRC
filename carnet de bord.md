@@ -83,4 +83,11 @@
 - Ajouts de tests unitaires (tache secondaire)
 
 # Travail entre les séances 4 et 5
-- 
+- Abandon de l'implémentation des polynômes prévues (finalement pas utile pour nous, les fonctions ont pu être faites sans)
+- MixColumns : fonction terminée
+- KeyExpansion : fonction terminée (pas testée)
+- Cipher : fonction terminée
+- Pour l'invCipher, la fonction principale a été faites (il faut juste coder les fonctions annexes en se basant sur celles faites dans le cipher)
+
+# Séance 5 - 16/05/2023
+## Contenu de la séance
