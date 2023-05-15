@@ -194,7 +194,7 @@ revPol (Pol p) = Pol $ reverse p
 cut_poly :: (Eq a, Corps a) => Poly a -> Poly a
 cut_poly (Pol []) = Pol []
 cut_poly (Pol (p:pr)) | p == neutre = cut_poly (Pol pr)
-                      | otherwise = Pol $ (p:pr)
+                      | otherwise = Pol (p:pr)
 -----------------------------------------------------------------
 
 
