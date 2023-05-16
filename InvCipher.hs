@@ -11,16 +11,21 @@ import Cipher
 -----------------------------------------------------------------
 ------------------------- InvCipher -----------------------------
 -----------------------------------------------------------------
--- je crois que le word à besoin d'être parcouru à l'envers et c'est pas encore le cas ici mais j'avais l'idée 
 invCipher :: Int -> Block -> Block -> Block
-invCipher n input word | n == 128 = invCipher_aux (addRoundKey input word) (drop (4 * 4) (keyExpansion word 4 10)) 4 10
-                       | n == 192 = invCipher_aux (addRoundKey input word) (drop (4 * 6) (keyExpansion word 6 12)) 6 12
-                       | n == 256 = invCipher_aux (addRoundKey input word) (drop (4 * 8) (keyExpansion word 8 14)) 8 14
+invCipher n input word | n == 128 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 4 10) (4*4))) (tailn (keyExpansion word 4 10) (4*4)) 4 10
+                       | n == 192 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 6 12) (4*6))) (tailn (keyExpansion word 6 12) (4*6)) 6 12
+                       | n == 256 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 8 14) (4*8))) (tailn (keyExpansion word 8 14) (4*8)) 8 14
                        | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
 
+lastn :: Block -> Int -> Block
+lastn b n = drop (length b - n) b
+
+tailn :: Block -> Int -> Block
+tailn b n = take (length b - n) b
+
 invCipher_aux :: Block -> Block -> Int -> Int -> Block
-invCipher_aux input word nk nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (take (4 * nk) word)
-                               | otherwise = invCipher_aux (invMixColumns (addRoundKey (invSubBytes $ invShiftRows input) (take (4 * nk) word))) (drop (4 * nk) word) nk (nr - 1)
+invCipher_aux input word nk nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (lastn word (4*nk))
+                               | otherwise = invCipher_aux (invMixColumns (addRoundKey (invSubBytes $ invShiftRows input) (lastn word (4*nk)))) (tailn word (4*nk)) nk (nr - 1)
 -----------------------------------------------------------------
 
 

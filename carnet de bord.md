@@ -91,3 +91,5 @@
 
 # Séance 5 - 16/05/2023
 ## Contenu de la séance
+- Codage de invShiftRows, invSubBytes, invMixColumns
+- Optimisation des fonctions shiftRows, subBytes, mixColumns pour que les appels à leur inverse soit beaucoup plus simple (et ne pas coder deux fois la même chose)
