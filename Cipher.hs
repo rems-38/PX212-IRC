@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Cipher where
 
@@ -49,7 +50,7 @@ instance Corps Byte where
 -----------------------------------------------------------------
 ---------------------------- Parser -----------------------------
 -----------------------------------------------------------------
--- Parser : héxa (plusieurs) -> liste de polynômes
+-- Parser : hexa (plusieurs) -> liste de polynômes
 toBlock :: String -> Block
 toBlock s = map hexPol (words s)
 
@@ -60,7 +61,7 @@ myConcat :: [String] -> String
 myConcat [] = ""
 myConcat (x:xs) = x ++ " " ++ myConcat xs
 
--- Parser : héxa -> polynôme (juste un seul poly donc "5e" (pas de "ae b3"))
+-- Parser : hexa -> polynôme (juste un seul poly donc "5e" (pas de "ae b3"))
 hexPol :: String -> Poly Z_sur_2Z
 hexPol xs = down_degree $ revPol (foldr (mergePoly . aux) (Pol []) xs)
           where aux c | length tab == 1 = toPoly_Z2Z ([0, 0, 0] ++ tab)
@@ -93,7 +94,7 @@ mergePoly (Pol []) (Pol ys) = Pol ys
 mergePoly (Pol xs) (Pol []) = Pol xs
 mergePoly (Pol xs) (Pol ys) = Pol $ xs ++ ys
 
--- Transforme un char en entier (base héxadécimale)
+-- Transforme un char en entier (base hexadécimale)
 charInt :: Char -> Integer
 charInt 'a' = 10
 charInt 'b' = 11
@@ -103,7 +104,7 @@ charInt 'e' = 14
 charInt 'f' = 15
 charInt c = fromIntegral $ digitToInt c
 
--- Transforme un entier en char (base héxadécimale)
+-- Transforme un entier en char (base hexadécimale)
 intChar :: Integer -> Char
 intChar 10 = 'a'
 intChar 11 = 'b'
