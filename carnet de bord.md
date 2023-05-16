@@ -93,3 +93,9 @@
 ## Contenu de la séance
 - Codage de invShiftRows, invSubBytes, invMixColumns
 - Optimisation des fonctions shiftRows, subBytes, mixColumns pour que les appels à leur inverse soit beaucoup plus simple (et ne pas coder deux fois la même chose)
+- Finalisation de KeyExpansion (corrections de bugs)
+- Test du Cipher 128 avec les exemples du FIPS 197 (ça marche !)
+- Test de l'invCipher 128 avec les exemples du FIPS 197 (ça marche pas !)
+- Commencement modifications de la fonction invCipher pour résolution de bugs
+- Ajouts de tests unitaires
+- Documentation pdf terminée à 90%
