@@ -214,12 +214,12 @@ littleShift b n | n == 0 = b
 -----------------------------------------------------------------
 mixColumns :: Block -> Block
 mixColumns [] = []
-mixColumns b = colToNewPol (take 4 b) 4 ++ mixColumns (drop 4 b)
+mixColumns b = colToNewPol (take 4 b) 4 a_x_mixColumns ++ mixColumns (drop 4 b)
 
-colToNewPol :: Block -> Int -> Block
-colToNewPol [] _ = []
-colToNewPol _ 0 = []
-colToNewPol b n = somme (zipWith multiplication (littleShift a_x_mixColumns n) b) : colToNewPol b (n-1)
+colToNewPol :: Block -> Int -> Block -> Block
+colToNewPol [] _ a_x = []
+colToNewPol _ 0 a_x = []
+colToNewPol b n a_x = somme (zipWith multiplication (littleShift a_x n) b) : colToNewPol b (n-1) a_x
 
 somme :: Block -> Byte
 somme = foldr operation neutre
