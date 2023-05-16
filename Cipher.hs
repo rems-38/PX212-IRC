@@ -256,14 +256,14 @@ keyExpansion :: Block -> Int -> Int -> Block
 keyExpansion key nk nr = expandWord key nk nr key
 
 expandWord :: Block -> Int -> Int -> Block -> Block
-expandWord key nk nr w | len == 4 * (nr + 1) = w
-                       | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (len - nk)) (addRoundKey_aux afterOp pRcon))
+expandWord key nk nr w | len == 4 * (nr + 1) - 1 = w
+                       | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (length w - (nk*4))) (addRoundKey_aux afterOp pRcon))
                        | otherwise = funcRec (w ++ addRoundKey_aux extraction (extract4 w ((len - nk) * nk)))
                        where len = length w `div` 4
                              funcRec = expandWord key nk nr
                              pRcon = rcon (len `div` nk)
-                             afterOp = subWord $ rotWord extraction
                              extraction = extract4 w (length w - nk)
+                             afterOp = subWord $ rotWord extraction
 
 extract4 :: Block -> Int -> Block
 extract4 w n = take 4 (drop n w)
@@ -275,7 +275,7 @@ rotWord :: Block -> Block
 rotWord [w1, w2, w3, w4] = [w2, w3, w4, w1]
 
 rcon :: Int -> Block
-rcon i = create_poly (i-1) : toBlock "00 00 00"
+rcon i = poly_mod (create_poly (i-1)) polyIrr : toBlock "00 00 00"
 
 cipher_key :: Block
 cipher_key = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c"
