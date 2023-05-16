@@ -183,9 +183,12 @@ sbox = [["63", "ca", "b7", "04", "09", "53", "d0", "51", "cd", "60", "e0", "e7",
 ------------------------- shiftRows -----------------------------
 -----------------------------------------------------------------
 shiftRows :: Block -> Block
-shiftRows b = switchColRows (aux (switchColRows b) 0)
-            where aux b n | n == 4 = []
-                          | otherwise = littleShift (take 4 b) n ++ aux (drop 4 b) (n+1)
+shiftRows b = shiftRows_aux b 0 4 1
+
+shiftRows_aux :: Block -> Int -> Int -> Int -> Block
+shiftRows_aux b start end pas = switchColRows (aux (switchColRows b) start) -- 0
+                              where aux b n | n == end = [] -- 4
+                                            | otherwise = littleShift (take 4 b) n ++ aux (drop 4 b) (n+pas)
 
 -- Échange les colonnes et les lignes d'une matrice 4x4
 -- Ex : [1..16] -> [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]
@@ -213,8 +216,11 @@ littleShift b n | n == 0 = b
 ------------------------- mixColumns ----------------------------
 -----------------------------------------------------------------
 mixColumns :: Block -> Block
-mixColumns [] = []
-mixColumns b = colToNewPol (take 4 b) 4 a_x_mixColumns ++ mixColumns (drop 4 b)
+mixColumns b = mixColumns_aux b a_x_mixColumns
+
+mixColumns_aux :: Block -> Block -> Block
+mixColumns_aux [] a_x = []
+mixColumns_aux b a_x = colToNewPol (take 4 b) 4 a_x ++ mixColumns_aux (drop 4 b) a_x
 
 colToNewPol :: Block -> Int -> Block -> Block
 colToNewPol [] _ a_x = []

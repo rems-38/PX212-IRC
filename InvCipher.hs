@@ -28,12 +28,8 @@ invCipher_aux input word nk nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRo
 -----------------------------------------------------------------
 ------------------------- invShiftRows --------------------------
 -----------------------------------------------------------------
--- invShiftRows reprends exactement la même structure que shiftRows mais le fais à l'envers
--- On commence à n=4 jusqu'à n=0 (au lieu de faire de 0 à 4)
 invShiftRows :: Block -> Block
-invShiftRows b = switchColRows (aux (switchColRows b) 4)
-            where aux b n | n == 0 = []
-                          | otherwise = littleShift (take 4 b) n ++ aux (drop 4 b) (n-1)
+invShiftRows b = shiftRows_aux b 4 0 (-1)
 -----------------------------------------------------------------
 
 
@@ -70,9 +66,8 @@ invSBox = [["52","7c","54","08","72","6c","90","d0","3a","96","47","fc","1f","60
 -----------------------------------------------------------------
 ------------------------- invMixColumns -------------------------
 -----------------------------------------------------------------
--- invMixColumns reprends exactement la même structure que mixColumns mais le fais avec a(x)^-1
 invMixColumns :: Block -> Block
-invMixColumns b = colToNewPol (take 4 b) 4 a_x_invMixColumns ++ mixColumns (drop 4 b)
+invMixColumns b = mixColumns_aux b a_x_invMixColumns
 
 a_x_invMixColumns :: Block
 a_x_invMixColumns = toBlock "0e 0b 0d 09"
