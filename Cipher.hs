@@ -256,7 +256,7 @@ keyExpansion :: Block -> Int -> Int -> Block
 keyExpansion key nk nr = expandWord key nk nr key
 
 expandWord :: Block -> Int -> Int -> Block -> Block
-expandWord key nk nr w | len == 4 * (nr + 1) - 1 = w
+expandWord key nk nr w | len == 4 * (nr + 1) = w
                        | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (length w - (nk*4))) (addRoundKey_aux afterOp pRcon))
                        | otherwise = funcRec (w ++ addRoundKey_aux extraction (extract4 w ((len - nk) * nk)))
                        where len = length w `div` 4

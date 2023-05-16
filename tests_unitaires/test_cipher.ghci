@@ -25,3 +25,14 @@ shiftRows res_sB == res_sR
 res_mC = toBlock "04 66 81 e5 e0 cb 19 9a 48 f8 d3 7a 28 06 26 4c"
 putStrLn "=== Test mixColumns ==="
 mixColumns res_sR == res_mC 
+
+
+
+-- Test Cipher
+output_cipher = toBlock "39 25 84 1d 02 dc 09 fb dc 11 85 97 19 6a 0b 32"
+putStrLn "=== Test Cipher ==="
+cipher 128 input_appendixB cipher_key == output_cipher
+
+-- Test InvCipher
+putStrLn "=== Test InvCipher ==="
+invCipher 128 output_cipher cipher_key == input_appendixB
