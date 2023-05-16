@@ -149,10 +149,13 @@ cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows $ subBytes input)
 ------------------------- subBytes ------------------------------
 -----------------------------------------------------------------
 subBytes :: Block -> Block
-subBytes [] = []
-subBytes (b:br) = new_pol : subBytes br
-                where (lb, rb) = splitAt 4 (z2ZToInt (polArray (up_degree b)))
-                      new_pol = hexPol $ sbox !! fromIntegral (binToDec (reverse lb)) !! fromIntegral (binToDec (reverse rb))
+subBytes b = subBytes_aux b sbox
+
+subBytes_aux :: Block -> [[String]] -> Block
+subBytes_aux [] _ = []
+subBytes_aux (b:br) box = new_pol : subBytes_aux br box
+                        where (lb, rb) = splitAt 4 (z2ZToInt (polArray (up_degree b)))
+                              new_pol = hexPol $ box !! fromIntegral (binToDec (reverse lb)) !! fromIntegral (binToDec (reverse rb))
 
 -- Sbox donnée dans le FIPS 197
 sbox :: [[String]]
