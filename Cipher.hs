@@ -135,14 +135,14 @@ binToDec list = aux list 3
 --------------------------- Cipher ------------------------------
 -----------------------------------------------------------------
 cipher :: Int -> Block -> Block -> Block
-cipher n input word | n == 128 = cipher_aux (addRoundKey input word) (drop (4 * 4) (keyExpansion word 4 10)) 4 10
-                    | n == 192 = cipher_aux (addRoundKey input word) (drop (4 * 6) (keyExpansion word 6 12)) 6 12
-                    | n == 256 = cipher_aux (addRoundKey input word) (drop (4 * 8) (keyExpansion word 8 14)) 8 14
+cipher n input word | n == 128 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 4 10)) 4 10
+                    | n == 192 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 6 12)) 6 12
+                    | n == 256 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 8 14)) 8 14
                     | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
 
 cipher_aux :: Block -> Block -> Int -> Int -> Block
-cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows $ subBytes input) (take (4 * nk) word)
-                            | otherwise = cipher_aux (addRoundKey (mixColumns $ shiftRows $ subBytes input) (take (4 * nk) word)) (drop (4 * nk) word) nk (nr - 1)
+cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows $ subBytes input) (take 16 word)
+                            | otherwise = cipher_aux (addRoundKey (mixColumns $ shiftRows $ subBytes input) (take 16 word)) (drop 16 word) nk (nr - 1)
 -----------------------------------------------------------------
 
 
