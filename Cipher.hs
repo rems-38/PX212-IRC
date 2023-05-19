@@ -276,7 +276,4 @@ rotWord [w1, w2, w3, w4] = [w2, w3, w4, w1]
 
 rcon :: Int -> Block
 rcon i = poly_mod (create_poly (i-1)) polyIrr : toBlock "00 00 00"
-
-cipher_key :: Block
-cipher_key = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c"
 -----------------------------------------------------------------
