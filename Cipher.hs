@@ -130,6 +130,7 @@ binToDec list = aux list 3
 -----------------------------------------------------------------
 
 
+
 -----------------------------------------------------------------
 --------------------------- Cipher ------------------------------
 -----------------------------------------------------------------
@@ -256,13 +257,14 @@ keyExpansion :: Block -> Int -> Int -> Block
 keyExpansion key nk nr = expandWord key nk nr key
 
 expandWord :: Block -> Int -> Int -> Block -> Block
-expandWord key nk nr w | len == 4 * (nr + 1) = w
-                       | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (length w - (nk*4))) (addRoundKey_aux afterOp pRcon))
-                       | otherwise = funcRec (w ++ addRoundKey_aux extraction (extract4 w ((len - nk) * nk)))
+expandWord key nk nr w | len == 4 * (nr + 1) = map down_degree w
+                       | nk == 8 && len `mod` nk == 4 = funcRec (w ++ addRoundKey_aux (extract4 w (length w - (nk * 4))) (subWord (extract4 w (length w - 4)))) -- cas particulier pour AES-256
+                       | len `mod` nk == 0 = funcRec (w ++ addRoundKey_aux (extract4 w (length w - (nk * 4))) (addRoundKey_aux afterOp pRcon))
+                       | otherwise = funcRec (w ++ addRoundKey_aux extraction (extract4 w ((len - nk) * 4)))
                        where len = length w `div` 4
                              funcRec = expandWord key nk nr
                              pRcon = rcon (len `div` nk)
-                             extraction = extract4 w (length w - nk)
+                             extraction = extract4 w (length w - 4)
                              afterOp = subWord $ rotWord extraction
 
 extract4 :: Block -> Int -> Block

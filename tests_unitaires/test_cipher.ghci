@@ -28,6 +28,18 @@ mixColumns res_sR == res_mC
 
 
 
+-- Test KeyExpansion
+key128 = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c"
+key192 = toBlock "8e 73 b0 f7 da 0e 64 52 c8 10 f3 2b 80 90 79 e5 62 f8 ea d2 52 2c 6b 7b"
+key256 = toBlock "60 3d eb 10 15 ca 71 be 2b 73 ae f0 85 7d 77 81 1f 35 2c 07 3b 61 08 d7 2d 98 10 a3 09 14 df f4"
+key128_exp = toBlock "2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c a0 fa fe 17 88 54 2c b1 23 a3 39 39 2a 6c 76 05 f2 c2 95 f2 7a 96 b9 43 59 35 80 7a 73 59 f6 7f 3d 80 47 7d 47 16 fe 3e 1e 23 7e 44 6d 7a 88 3b ef 44 a5 41 a8 52 5b 7f b6 71 25 3b db 0b ad 00 d4 d1 c6 f8 7c 83 9d 87 ca f2 b8 bc 11 f9 15 bc 6d 88 a3 7a 11 0b 3e fd db f9 86 41 ca 00 93 fd 4e 54 f7 0e 5f 5f c9 f3 84 a6 4f b2 4e a6 dc 4f ea d2 73 21 b5 8d ba d2 31 2b f5 60 7f 8d 29 2f ac 77 66 f3 19 fa dc 21 28 d1 29 41 57 5c 00 6e d0 14 f9 a8 c9 ee 25 89 e1 3f 0c c8 b6 63 0c a6"
+key192_exp = toBlock "8e 73 b0 f7 da 0e 64 52 c8 10 f3 2b 80 90 79 e5 62 f8 ea d2 52 2c 6b 7b fe 0c 91 f7 24 02 f5 a5 ec 12 06 8e 6c 82 7f 6b 0e 7a 95 b9 5c 56 fe c2 4d b7 b4 bd 69 b5 41 18 85 a7 47 96 e9 25 38 fd e7 5f ad 44 bb 09 53 86 48 5a f0 57 21 ef b1 4f a4 48 f6 d9 4d 6d ce 24 aa 32 63 60 11 3b 30 e6 a2 5e 7e d5 83 b1 cf 9a 27 f9 39 43 6a 94 f7 67 c0 a6 94 07 d1 9d a4 e1 ec 17 86 eb 6f a6 49 71 48 5f 70 32 22 cb 87 55 e2 6d 13 52 33 f0 b7 b3 40 be eb 28 2f 18 a2 59 67 47 d2 6b 45 8c 55 3e a7 e1 46 6c 94 11 f1 df 82 1f 75 0a ad 07 d7 53 ca 40 05 38 8f cc 50 06 28 2d 16 6a bc 3c e7 b5 e9 8b a0 6f 44 8c 77 3c 8e cc 72 04 01 00 22 02"
+key256_exp = toBlock "60 3d eb 10 15 ca 71 be 2b 73 ae f0 85 7d 77 81 1f 35 2c 07 3b 61 08 d7 2d 98 10 a3 09 14 df f4 9b a3 54 11 8e 69 25 af a5 1a 8b 5f 20 67 fc de a8 b0 9c 1a 93 d1 94 cd be 49 84 6e b7 5d 5b 9a d5 9a ec b8 5b f3 c9 17 fe e9 42 48 de 8e be 96 b5 a9 32 8a 26 78 a6 47 98 31 22 29 2f 6c 79 b3 81 2c 81 ad da df 48 ba 24 36 0a f2 fa b8 b4 64 98 c5 bf c9 be bd 19 8e 26 8c 3b a7 09 e0 42 14 68 00 7b ac b2 df 33 16 96 e9 39 e4 6c 51 8d 80 c8 14 e2 04 76 a9 fb 8a 50 25 c0 2d 59 c5 82 39 de 13 69 67 6c cc 5a 71 fa 25 63 95 96 74 ee 15 58 86 ca 5d 2e 2f 31 d7 7e 0a f1 fa 27 cf 73 c3 74 9c 47 ab 18 50 1d da e2 75 7e 4f 74 01 90 5a ca fa aa e3 e4 d5 9b 34 9a df 6a ce bd 10 19 0d fe 48 90 d1 e6 18 8d 0b 04 6d f3 44 70 6c 63 1e"
+putStrLn "=== Test KeyExpansion ==="
+keyExpansion key128 4 10 == key128_exp
+keyExpansion key192 6 12 == key192_exp
+keyExpansion key256 8 14 == key256_exp
+
 -- Test Cipher 1
 output_cipher = toBlock "39 25 84 1d 02 dc 09 fb dc 11 85 97 19 6a 0b 32"
 putStrLn "=== Test Cipher ==="
@@ -35,24 +47,22 @@ cipher 128 input_appendixB cipher_key == output_cipher
 
 -- Test Cipher 128
 plaintext = toBlock "00 11 22 33 44 55 66 77 88 99 aa bb cc dd ee ff"
-key = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f"
-output = toBlock "69 c4 e0 d8 6a 7b 04 30 d8 cd b7 80 70 b4 c5 5a"
+key_128 = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f"
+output_128 = toBlock "69 c4 e0 d8 6a 7b 04 30 d8 cd b7 80 70 b4 c5 5a"
 putStrLn "=== Test Cipher 128 ==="
-cipher 128 plaintext key == output
+cipher 128 plaintext key_128 == output_128
 
 -- Test Cipher 192
-plaintext = toBlock "00 11 22 33 44 55 66 77 88 99 aa bb cc dd ee ff"
-key = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17"
-output = toBlock "dd a9 7c a4 86 4c df e0 6e af 70 a0 ec 0d 71 91"
+key_192 = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17"
+output_192 = toBlock "dd a9 7c a4 86 4c df e0 6e af 70 a0 ec 0d 71 91"
 putStrLn "=== Test Cipher 192 ==="
---cipher 192 plaintext key == output
+cipher 192 plaintext key_192 == output_192
 
 -- Test Cipher 256
-plaintext = toBlock "00 11 22 33 44 55 66 77 88 99 aa bb cc dd ee ff"
-key = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f"
-output = toBlock "8e a2 b7 ca 51 67 45 bf ea fc 49 90 4b 49 60 89"
+key_256 = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f"
+output_256 = toBlock "8e a2 b7 ca 51 67 45 bf ea fc 49 90 4b 49 60 89"
 putStrLn "=== Test Cipher 256 ==="
---cipher 256 plaintext key == output
+cipher 256 plaintext key_256 == output_256
 
 -- Test InvCipher
 putStrLn "=== Test InvCipher ==="
