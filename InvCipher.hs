@@ -12,20 +12,18 @@ import Cipher
 ------------------------- InvCipher -----------------------------
 -----------------------------------------------------------------
 invCipher :: Int -> Block -> Block -> Block
-invCipher n input word | n == 128 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 4 10) (4*4))) (tailn (keyExpansion word 4 10) (4*4)) 4 10
-                       | n == 192 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 6 12) (4*6))) (tailn (keyExpansion word 6 12) (4*6)) 6 12
-                       | n == 256 = invCipher_aux (addRoundKey input (lastn (keyExpansion word 8 14) (4*8))) (tailn (keyExpansion word 8 14) (4*8)) 8 14
+invCipher n input word | n == 128 = aux (addRoundKey input (last16 (keyExpansion word 4 10))) (tail16 (keyExpansion word 4 10)) 10
+                       | n == 192 = aux (addRoundKey input (last16 (keyExpansion word 6 12))) (tail16 (keyExpansion word 6 12)) 12
+                       | n == 256 = aux (addRoundKey input (last16 (keyExpansion word 8 14))) (tail16 (keyExpansion word 8 14)) 14
                        | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
+                       where aux input word nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (last16 word)
+                                               | otherwise = aux (invMixColumns (addRoundKey (invSubBytes $ invShiftRows input) (last16 word))) (tail16 word) (nr - 1)
 
-lastn :: Block -> Int -> Block
-lastn b n = drop (length b - n) b
+last16 :: Block -> Block
+last16 b= drop (length b - 16) b
 
-tailn :: Block -> Int -> Block
-tailn b n = take (length b - n) b
-
-invCipher_aux :: Block -> Block -> Int -> Int -> Block
-invCipher_aux input word nk nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (lastn word (4*nk))
-                               | otherwise = invCipher_aux (invMixColumns (addRoundKey (invSubBytes $ invShiftRows input) (lastn word (4*nk)))) (tailn word (4*nk)) nk (nr - 1)
+tail16 :: Block -> Block
+tail16 b = take (length b - 16) b
 -----------------------------------------------------------------
 
 

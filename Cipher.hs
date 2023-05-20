@@ -56,10 +56,8 @@ toBlock s = map hexPol (words s)
 
 blockStr :: Block -> String
 blockStr b = init $ myConcat (map polHex b) -- init enlève le dernier espace
-
-myConcat :: [String] -> String
-myConcat [] = ""
-myConcat (x:xs) = x ++ " " ++ myConcat xs
+           where myConcat [] = ""
+                 myConcat (x:xs) = x ++ " " ++ myConcat xs
 
 -- Parser : hexa -> polynôme (juste un seul poly donc "5e" (pas de "ae b3"))
 hexPol :: String -> Poly Z_sur_2Z
@@ -135,14 +133,12 @@ binToDec list = aux list 3
 --------------------------- Cipher ------------------------------
 -----------------------------------------------------------------
 cipher :: Int -> Block -> Block -> Block
-cipher n input word | n == 128 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 4 10)) 4 10
-                    | n == 192 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 6 12)) 6 12
-                    | n == 256 = cipher_aux (addRoundKey input word) (drop 16 (keyExpansion word 8 14)) 8 14
+cipher n input word | n == 128 = aux (addRoundKey input word) (drop 16 (keyExpansion word 4 10)) 10
+                    | n == 192 = aux (addRoundKey input word) (drop 16 (keyExpansion word 6 12)) 12
+                    | n == 256 = aux (addRoundKey input word) (drop 16 (keyExpansion word 8 14)) 14
                     | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
-
-cipher_aux :: Block -> Block -> Int -> Int -> Block
-cipher_aux input word nk nr | nr == 1 = addRoundKey (shiftRows $ subBytes input) (take 16 word)
-                            | otherwise = cipher_aux (addRoundKey (mixColumns $ shiftRows $ subBytes input) (take 16 word)) (drop 16 word) nk (nr - 1)
+                    where aux input word nr | nr == 1 = addRoundKey (shiftRows $ subBytes input) (take 16 word)
+                                            | otherwise = aux (addRoundKey (mixColumns $ shiftRows $ subBytes input) (take 16 word)) (drop 16 word) (nr - 1)
 -----------------------------------------------------------------
 
 
@@ -188,8 +184,8 @@ shiftRows :: Block -> Block
 shiftRows b = shiftRows_aux b 0 4 1
 
 shiftRows_aux :: Block -> Int -> Int -> Int -> Block
-shiftRows_aux b start end pas = switchColRows (aux (switchColRows b) start) -- 0
-                              where aux b n | n == end = [] -- 4
+shiftRows_aux b start end pas = switchColRows (aux (switchColRows b) start)
+                              where aux b n | n == end = []
                                             | otherwise = littleShift (take 4 b) n ++ aux (drop 4 b) (n+pas)
 
 -- Échange les colonnes et les lignes d'une matrice 4x4
@@ -228,9 +224,7 @@ colToNewPol :: Block -> Int -> Block -> Block
 colToNewPol [] _ a_x = []
 colToNewPol _ 0 a_x = []
 colToNewPol b n a_x = somme (zipWith multiplication (littleShift a_x n) b) : colToNewPol b (n-1) a_x
-
-somme :: Block -> Byte
-somme = foldr operation neutre
+                    where somme = foldr operation neutre
 
 a_x_mixColumns :: Block
 a_x_mixColumns = toBlock "02 03 01 01"

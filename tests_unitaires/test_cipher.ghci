@@ -40,16 +40,13 @@ keyExpansion key128 4 10 == key128_exp
 keyExpansion key192 6 12 == key192_exp
 keyExpansion key256 8 14 == key256_exp
 
--- Test Cipher 1
-output_cipher = toBlock "39 25 84 1d 02 dc 09 fb dc 11 85 97 19 6a 0b 32"
-putStrLn "=== Test Cipher ==="
-cipher 128 input_appendixB cipher_key == output_cipher
-
 -- Test Cipher 128
+output_cipher = toBlock "39 25 84 1d 02 dc 09 fb dc 11 85 97 19 6a 0b 32"
 plaintext = toBlock "00 11 22 33 44 55 66 77 88 99 aa bb cc dd ee ff"
 key_128 = toBlock "00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f"
 output_128 = toBlock "69 c4 e0 d8 6a 7b 04 30 d8 cd b7 80 70 b4 c5 5a"
 putStrLn "=== Test Cipher 128 ==="
+cipher 128 input_appendixB cipher_key == output_cipher
 cipher 128 plaintext key_128 == output_128
 
 -- Test Cipher 192
@@ -64,6 +61,15 @@ output_256 = toBlock "8e a2 b7 ca 51 67 45 bf ea fc 49 90 4b 49 60 89"
 putStrLn "=== Test Cipher 256 ==="
 cipher 256 plaintext key_256 == output_256
 
--- Test InvCipher
-putStrLn "=== Test InvCipher ==="
+-- Test InvCipher 128
+putStrLn "=== Test InvCipher 128 ==="
 invCipher 128 output_cipher cipher_key == input_appendixB
+invCipher 128 output_128 key_128 == plaintext
+
+-- Test InvCipher 192
+putStrLn "=== Test InvCipher 192 ==="
+invCipher 192 output_192 key_192 == plaintext
+
+-- Test InvCipher 256
+putStrLn "=== Test InvCipher 256 ==="
+invCipher 256 output_256 key_256 == plaintext
