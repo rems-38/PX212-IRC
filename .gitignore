@@ -1,3 +1,5 @@
 .vscode/
+haskell/*.o
+haskell/*.hi
 c/*.o
 c/*.out

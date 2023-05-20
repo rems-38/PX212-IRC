@@ -1,11 +1,47 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
 
-module AES where
-
 import Cipher
 import InvCipher
-import Data.Char (ord, intToDigit, chr, digitToInt)
+import Data.Char (ord, intToDigit, chr, digitToInt, isHexDigit)
+import System.Environment (getArgs)
+
+
+-----------------------------------------------------------------
+----------------------------- Main ------------------------------
+-----------------------------------------------------------------
+-- Commande pour "make" : `ghc --make AES.hs -o ./AES`
+-- Usage : `./AES -e/-d key msg`
+main :: IO ()
+main = 
+    do
+        args <- getArgs
+        case args of
+            ["encode"] -> do
+                (key, msg) <- askKeyMsg
+                putStrLn "\nEncoded message : "
+                print $ encode key msg
+            ["decode"] -> do
+                (key, msg) <- askKeyMsg
+                putStrLn "\nDecoded message : "
+                print $ decode key msg
+            ["-e", key, msg] -> do
+                putStrLn "\nEncoded message : "
+                putStrLn $ encode key msg
+            ["-d", key, msg] -> do
+                putStrLn "\nDecoded message : "
+                print $ decode key msg
+            _ -> putStrLn "Usage: encode/decode OR -e/-d key msg"
+
+askKeyMsg :: IO (String, String)
+askKeyMsg = do
+    putStrLn "Enter key : "
+    key <- getLine
+    putStrLn "Enter message : "
+    msg <- getLine
+    return (key, msg)
+-----------------------------------------------------------------
+
 
 
 -----------------------------------------------------------------
