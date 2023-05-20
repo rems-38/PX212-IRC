@@ -5,13 +5,20 @@ import Cipher
 import InvCipher
 import Data.Char (ord, intToDigit, chr, digitToInt, isHexDigit)
 import System.Environment (getArgs)
+import Text.ParserCombinators.ReadP
+import Text.Read.Lex (lexChar)
 
 
 -----------------------------------------------------------------
 ----------------------------- Main ------------------------------
 -----------------------------------------------------------------
 -- Commande pour "make" : `ghc --make AES.hs -o ./AES`
--- Usage : `./AES -e/-d key msg`
+-- Usage: `./AES encode/decode` OR `./AES -e/-d key msg`
+-- Quand utilisé avec -d/-e le msg doit être entre double guillemets (pas forcément nécessaire pour la key)
+-- Pas utile quand utilisé avec encode/decode
+-- Ex: ./AES -d 2b7e151628aed2a6abf7158809cf4f3c "?\CANX\137\DC4\STX5\DC3\v\204\ETB\198\138\254c\145" -> "bonjour"
+--     ./AES -e "2b7e151628aed2a6abf7158809cf4f3c" "bonjour" -> "?\CANX\137\DC4\STX5\DC3\v\204\ETB\198\138\254c\145"
+
 main :: IO ()
 main = 
     do
@@ -30,7 +37,7 @@ main =
                 print $ encode key msg
             ["-d", key, msg] -> do
                 putStrLn "\nDecoded message : "
-                print $ decode key msg
+                print $ decode key (fst $ head $ readP_to_S (manyTill lexChar eof) msg)
             _ -> putStrLn "Usage: encode/decode OR -e/-d key msg"
 
 askKeyMsg :: IO (String, String)
@@ -39,7 +46,7 @@ askKeyMsg = do
     key <- getLine
     putStrLn "Enter message : "
     msg <- getLine
-    return (key, msg)
+    return (key, fst $ head $ readP_to_S (manyTill lexChar eof) msg)
 -----------------------------------------------------------------
 
 
