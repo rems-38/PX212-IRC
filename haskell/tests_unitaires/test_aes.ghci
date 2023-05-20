@@ -1,0 +1,10 @@
+-- Test encode --
+input = "bonjour"
+output = "?\CANX\137\DC4\STX5\DC3\v\204\ETB\198\138\254c\145"
+key128 = "2b7e151628aed2a6abf7158809cf4f3c"
+putStrLn "=== Test encode ==="
+encode key128 input == output
+
+-- Test decode --
+putStrLn "=== Test decode ==="
+decode key128 output == input
