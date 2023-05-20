@@ -27,7 +27,7 @@ main =
                 print $ decode key msg
             ["-e", key, msg] -> do
                 putStrLn "\nEncoded message : "
-                putStrLn $ encode key msg
+                print $ encode key msg
             ["-d", key, msg] -> do
                 putStrLn "\nDecoded message : "
                 print $ decode key msg
