@@ -12,11 +12,12 @@ import Cipher
 ------------------------- InvCipher -----------------------------
 -----------------------------------------------------------------
 invCipher :: Int -> Block -> Block -> Block
-invCipher n input word | n == 128 = aux (addRoundKey input (last16 (keyExpansion word 4 10))) (tail16 (keyExpansion word 4 10)) 10
-                       | n == 192 = aux (addRoundKey input (last16 (keyExpansion word 6 12))) (tail16 (keyExpansion word 6 12)) 12
-                       | n == 256 = aux (addRoundKey input (last16 (keyExpansion word 8 14))) (tail16 (keyExpansion word 8 14)) 14
-                       | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
-                       where aux input word nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (last16 word)
+invCipher n input word = aux (addRoundKey input (last16 (keyExpansion word nk nr))) (tail16 (keyExpansion word nk nr)) nr
+                       where (nk, nr) | n == 128 = (4, 10)
+                                      | n == 192 = (6, 12)
+                                      | n == 256 = (8, 14)
+                                      | otherwise = error "Chiffrements possible : AES-128, AES-192, AES-256"
+                             aux input word nr | nr == 1 = addRoundKey (invSubBytes $ invShiftRows input) (last16 word)
                                                | otherwise = aux (invMixColumns (addRoundKey (invSubBytes $ invShiftRows input) (last16 word))) (tail16 word) (nr - 1)
 
 last16 :: Block -> Block
@@ -59,7 +60,7 @@ invSBox = [["52","7c","54","08","72","6c","90","d0","3a","96","47","fc","1f","60
            ["9e","44","0b","49","cc","57","05","03","ce","e8","0e","fe","59","9f","3c","63"],
            ["81","c4","42","6d","5d","a7","b8","01","f0","1c","aa","78","27","93","83","55"],
            ["f3","de","fa","8b","65","8d","b3","13","b4","75","18","cd","80","c9","53","21"],
-           ["d7","e9","c3","d1","b6","9d","45","8a","e6","df","be","5a","e7","9c","99","0c"],
+           ["d7","e9","c3","d1","b6","9d","45","8a","e6","df","be","5a","ec","9c","99","0c"],
            ["fb","cb","4e","25","92","84","06","6b","73","6e","1b","f4","5f","ef","61","7d"]]
 -----------------------------------------------------------------
 

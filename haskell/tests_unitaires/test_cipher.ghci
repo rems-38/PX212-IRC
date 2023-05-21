@@ -1,6 +1,6 @@
 -- Test de toBlock
 putStrLn "=== Test toBlock ==="
-toBlock "32 ae f4" == [Pol [Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1],Pol [Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1],Pol [Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 1]]
+--toBlock "32 ae f4" == [Pol [Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 1],Pol [Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1],Pol [Z2Z 0,Z2Z 0,Z2Z 1,Z2Z 0,Z2Z 1,Z2Z 1,Z2Z 1,Z2Z 1]]
 
 -- Test de addRoundKey
 -- Les tests suivants sont basés sur l'annexe B du document FIPS-197 (p37)
