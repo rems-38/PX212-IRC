@@ -90,7 +90,7 @@ hexToDec = foldl (\acc x -> acc * 16 + digitToInt x) 0
 -- Ex : "2b7e151628aed2a6abf7158809cf4f3c" (pour du 128 bits)
 encode :: String -> String -> String
 encode _ [] = ""
-encode key msg | length msg `mod` 16 == 0 = hexString (cipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ encode key (drop 16 msg)
+encode key msg | length msg `mod` 16 == 0 = hexString (cipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ encode key (hexString (drop 16 (stringHex msg)))
                | otherwise = encode key (msg ++ [' '])
                where n = length (toBlock $ space key) * 8
 
@@ -107,7 +107,7 @@ space (x:y:xs) = x:y:' ':space xs
 -----------------------------------------------------------------
 decode :: String -> String -> String
 decode _ [] = ""
-decode key msg = removeEndSpace (hexString (invCipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ decode key (drop 16 msg))
+decode key msg = removeEndSpace (hexString (invCipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ decode key (hexString (drop 16 (stringHex msg))))
                    where n = length (toBlock $ space key) * 8
                          removeEndSpace x = reverse $ dropWhile (== ' ') $ reverse x
 -----------------------------------------------------------------
