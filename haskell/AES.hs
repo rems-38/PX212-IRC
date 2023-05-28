@@ -92,7 +92,8 @@ encode :: String -> String -> String
 encode _ [] = ""
 encode key msg | length msg `mod` 16 == 0 = hexString (cipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ encode key (hexString (drop 16 (stringHex msg)))
                | otherwise = encode key (msg ++ [' '])
-               where n = length (toBlock $ space key) * 8
+               where n | length key == 32 || length key == 48 || length key == 64 = length (toBlock $ space key) * 8
+                       | otherwise = error "Key must be 128, 192 or 256 bits long"
 
 space :: String -> String
 space [] = []
@@ -108,6 +109,7 @@ space (x:y:xs) = x:y:' ':space xs
 decode :: String -> String -> String
 decode _ [] = ""
 decode key msg = removeEndSpace (hexString (invCipher n (take 16 (stringHex msg)) (toBlock $ space key)) ++ decode key (hexString (drop 16 (stringHex msg))))
-                   where n = length (toBlock $ space key) * 8
+                   where n | length key == 32 || length key == 48 || length key == 64 = length (toBlock $ space key) * 8
+                           | otherwise = error "Key must be 128, 192 or 256 bits long"
                          removeEndSpace x = reverse $ dropWhile (== ' ') $ reverse x
 -----------------------------------------------------------------
