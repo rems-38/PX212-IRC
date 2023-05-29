@@ -78,6 +78,7 @@ instance (IrreduciblePoly a, Eq a, Corps a) => Groupe (Poly a) where
       neutre = Pol [neutre]
       unite = Pol [unite]
       operation = addition_poly
+      inverse = inverse_poly
 
 instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
       multiplication = multiplication_poly
