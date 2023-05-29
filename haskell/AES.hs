@@ -10,16 +10,6 @@ import Text.Read.Lex (lexChar)
 
 
 -----------------------------------------------------------------
------------------------------- NB -------------------------------
------------------------------------------------------------------
--- Je sais pas si c'est l'encodage ou le décodage qui fail mais il se passe des trucs bizarres
--- Genre ça ne marche pas avec toutes les strings, et certains mots placé à certains endroits font bugger le programme
--- Beaucoup de bugs en fait
------------------------------------------------------------------
-
-
-
------------------------------------------------------------------
 ----------------------------- Main ------------------------------
 -----------------------------------------------------------------
 -- Commande pour "make" : `ghc --make AES.hs -o ./AES`

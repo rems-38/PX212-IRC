@@ -34,15 +34,6 @@ type Block = [Byte]
 -----------------------------------------------------------------
 instance Corps Byte where
     inverseMultiplicatif = inverse_poly
-
--- instance Groupe Word where
---     neutre = Pol [neutre, neutre, neutre, neutre]
---     unite = Pol [unite, neutre, neutre, neutre]
---     operation = addition_poly
-
--- instance Anneau Word where
---     multiplication = multiplication_poly
-
 -----------------------------------------------------------------
 
 

@@ -99,3 +99,17 @@
 - Commencement modifications de la fonction invCipher pour résolution de bugs
 - Ajouts de tests unitaires
 - Documentation pdf terminée à 90%
+
+## Pour la prochaine séance
+### Pour Rémi
+- Finalisation de la fonction invCipher
+- Test du Cipher 192 et 256
+- Test de l'invCipher 128, 192 et 256
+
+# Travail entre les séances 5 et 6
+- La fonction d'invCipher a fini d'être codé et tous les bugs ont été corrigés
+- Le fonction de KeyExpansion a été adapté pour AES-192 et AES-256 qui avait des particularités minimes mais nécessaire
+- La fonction Cipher (et InvCipher) a été testé pour AES-192 et AES-256
+- Une implémentation plus concrète a été réalisé : chiffrement et déchiffremnt d'un texte (table ASCII uniquement)
+- Un binaire exécutable est fourni pour avoir accès à notre implémentation AES dans la ligne de commande
+- Le document de fin de jalon (documentation sur les fonctionnalités et les choix techniques) a été rédigé.

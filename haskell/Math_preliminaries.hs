@@ -85,9 +85,6 @@ instance (IrreduciblePoly a, Eq a, Corps a) => Anneau (Poly a) where
 instance IrreduciblePoly Z_sur_2Z where
       polyIrr = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1] -- 1 + x + x³ + x⁴ + x⁸ (ordre)
 
--- instance IrreduciblePoly (Poly Z_sur_2Z) where
---       polyIrr = toPoly_Z2Z [1, 0, 0, 0, 1] -- 1 + x⁴
-
 -- Instanciations de Z_sur_2Z dans Enum pour pouvoir utiliser fromEnum (dans pToDec_aux)
 instance Enum Z_sur_2Z where
     fromEnum (Z2Z n) = fromEnum n
@@ -202,9 +199,6 @@ cut_poly (Pol (p:pr)) | p == neutre = cut_poly (Pol pr)
 -----------------------------------------------------------------
 --------------------------- Inverse -----------------------------
 -----------------------------------------------------------------
--- Inverse de 1 + x mod 1 + x + x³ + x⁴ + x⁸ = x + x² + x⁴ + x⁵ + x⁶ + x⁷
--- Inverse de x² + x³ mod 1 + x + x³ + x⁴ + x⁸ = 
-
 inverse_poly :: (IrreduciblePoly a, Eq a, Corps a) => Poly a -> Poly a
 inverse_poly p = calc_restes coefs polys (inverse_poly_aux polyIrr p)
                   where coefs = ((unite, neutre), (neutre, unite))
@@ -230,10 +224,3 @@ calc_restes ((ca1, cb1), (ca2, cb2)) (a, b) quotients@(q:qr) = calc_restes ((ca2
                                                              where ca3 = operation ca1 (multiplication ca2 q)
                                                                    cb3 = operation cb1 (multiplication cb2 q)
 -----------------------------------------------------------------
-
--- pour tester une opé dans la console et pas tout réécrire
-toInv = toPoly_Z2Z [0, 0, 1, 1]
-pIrr8 = toPoly_Z2Z [1, 1, 0, 1, 1, 0, 0, 0, 1]
-q1 = toPoly_Z2Z [1, 0, 1, 1, 1, 1]
-q2 = toPoly_Z2Z [0, 1]
-q3 = toPoly_Z2Z [1, 1]

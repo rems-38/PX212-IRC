@@ -1,0 +1,28 @@
+# Documentation - Fonctionnalités et choix techniques
+
+## Présentation du projet
+
+Ce projet consiste à réaliser une implémentation du chiffrement AES. L'implémentation se déroule en 2 temps : une première version en Haskell, puis une seconde en C. Ce document ce concentre sur la première version car c'est ce qui a été réalisé à ce jour.
+
+## Fonctionnalités
+
+### Fonctions mathématiques
+
+Les fonctions mathématiques sont implémentées dans le fichier `Math_preliminaries.hs` et les classes utilisées dans le fichier `Structure_algébrique.hs`. Elles servent principalement de socle pour la réalisation de la suite du projet. On y définit notamment les principaux types qu'on va utiliser (tel que les objets qui vont représenter des polynomes). Les principales fonctions réalisées sont l'addition, la multiplication, l'inverse. On y retrouve également beaucoup de "parser" qui permettent de passer d'un type à un autre (par exemple d'un tableau d'entiers à un polynome). Pour représenter les polynômes nous avons pris des tableaux d'entier (où le bit de poids faible est le premier élement du tableau)
+
+### Chiffrement
+
+Le chiffrement AES est implémenté dans le fichier `Cipher.hs`. On y retrouve les fonctions principales du chiffrement : `cipher`, `addRoundKey`, `subBytes`, `shiftRows`, `mixColumns`. Le code est finalement assez simple grâce au gros travail réalisé en amont sur les polynomes. Les implémentations des différentes procédure ne sont finalement pas si compliquée que ça à réaliser une fois qu'on a les idées clair sur ce qui se passe. Le document FISP-197, permet de bien tout comprendre, notamment avec les schémas fournis en annexes qui sont très parlant. Une bonne compréhension de ce qu'on a fait dans la partie mathématiques nous aide à trouver des solutions plus rapide, car ce sont des choses qu'on a déjà codé. On retouve également beaucoup de parser dans le document.
+
+### Déchiffrement
+
+Le déchiffrement AES est implémenté dans le fichier `InvCipher.hs`. On y retrouve les fonctions principales du déchiffrement : `invCipher`, `invAddRoundKey`, `invSubBytes`, `invShiftRows`, `invMixColumns`. Le code est ici pour le coup très épuré car on se base énormémement sur ce qu'on a fait pour le chiffrement. On a juste à adapter la manière d'appelé nos fonctions de chiffrement et ça fonctionne tout seul ! Cette simplicité est notamment du à une écriture très modulaire de notre code, en effet, ayant bien compris les fonctionement des fonctions de chiffrement, on a pu les écrire de manière à ce qu'elles soient facilement réutilisable pour le déchiffrement. C'est notamment pour ceci que le fichier `InvCipher.hs` est si court, tout à déjà été écrit, on procède juste aux bons appels de fonctions.
+
+### Application plus concrète
+
+Nous avons tenu à fournir une implémentation un peu plus concrète de notre chiffrement AES. Pour cela, nous avons réalisé un fichier `AES.hs` qui permet de chiffrer et de déchiffrer un "vrai" texte. On y retrouve une fonction `main` qui nous permet de fournir un exécutable pour l'ensemble du processus. Le code n'est pas si compliqué que ça, on retrouve encore et toujours des parsers, notamment pour passer d'un caractère à sa version en héxadécimale via la table ASCII (et vice-versa). Ensuite on a juste besoin de séparer notre texte en bloc de 16 octets et de les chiffrer un par un. On fait également attention à la fin du texte, ou si le texte est plus court que 16 caractères, pour remedier à cela on rajoute simplement des espaces, qu'on enlèvera ensuite lors du déchiffrement.
+Notre programme final demande donc à l'utilisateur de choisir entre un chiffrement ou un déchiffrement, puis de rentrer le texte à chiffrer/déchiffrer ainsi qu'une clé (en fonction de la longueur de la clé on choisit donc le mode de chiffrement adapté parmi les 3), et enfin on affiche le résultat.
+
+## Problèmes rencontrés
+
+Un des premiers problèmes auquel nous avons été confronté est l'implémentation des fonctions de maths. Il y avait tout un système à comprendre avec les classes et les instanciations qui sont notamment des pratiques que nous n'avions pas eu l'habitude d'utiliser. On était un peu perdu au début car on ne savait pas non plus comment représenté les objets au mieux. De plus, les fonctions qu'on a eu besoin d'implémenter on souvent demandé beaucoup de réfléxion en amont et de travail sur papier pour comprendre comment on pouvait coder ça de la manière la plus efficace et d'un point de vue récursif car codant en Haskell. Cependant, une fois cette partie passée, que l'on était bien immergé dans ce qu l'on avait fait et qu'on avait compris le document FISP-197 en profondeur, le codage du chiffrement n'a pas été des plus compliqué. Nous avons tout de même remarqué un problème qui nous frenait beaucoup : l'absence d'un bon debogueur Haskell. Parce quand on avait des fonctions de chiffrement (ou alors le chiffrement en lui-même) qui ne fonctionnait pas, il n'était pas toujours aisé de comprendre qu'est ce qui ne marchait pas ! Et le fait de devoir tester tous les appels manuellement et de comparer avec des exemples très détaillés de l'annexe qui ont été d'une grande aide, était très fastidieux. Plus on avancait, plus ça devenait embêtant car il y avait de plus d'en plus d'appel et ça devenait long à solutionner. Cela est notamment du au fait que nous n'avons pas réaliser assez de tests pour toutes nos fonctions. En effet, dans un premier temps nous avons plus survolé cette partie de test et cela nous a porté préjudice quand au fur et à mesure, on decouvrait des bugs dans des fonctions qu'on pensait correctes. 
