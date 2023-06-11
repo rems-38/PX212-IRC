@@ -37,17 +37,17 @@ void subBytes (byte state[4 * Nb]) {
 	}
 }
 
-// void switchColRows(byte state[4 * Nb]) {
-// 	byte temp[4 * Nb];
+void switchColRows(byte state[4 * Nb]) {
+	byte temp[4 * Nb];
 
-// 	for (int i = 0; i < 4 * Nb; i++) {
-// 		temp[i] = state[i];
-// 	}
+	for (int i = 0; i < 4 * Nb; i++) {
+		temp[i] = state[i];
+	}
 
-// 	for (int i = 0; i < 4 * Nb; i++) {
-// 		state[i] = temp[(i % 4) * 4 + (i / 4)];
-// 	}
-// }
+	for (int i = 0; i < 4 * Nb; i++) {
+		state[i] = temp[(i % 4) * 4 + (i / 4)];
+	}
+}
 
 // V1 à modifier !!
 void shiftRows (byte state[4 * Nb]) {
@@ -77,6 +77,22 @@ void shiftRows (byte state[4 * Nb]) {
     state[3] = temp;
 }
 
+void mixColumns (byte state[4 * Nb]) {
+	byte temp[4 * Nb];
+	byte a_x_mixColumns[4 * Nb] = {0x02, 0x03, 0x01, 0x01, 0x01, 0x02, 0x03, 0x01, 0x01, 0x01, 0x02, 0x03, 0x03, 0x01, 0x01, 0x02};
+
+	for (int i = 0; i < 4 * Nb; i++) {
+		temp[i] = 0;
+		for (int j = 0; j < 4; j++) {
+			temp[i] ^= multi(a_x_mixColumns[(i * 4 + j) % 16], state[j + ((i / 4) * 4)]);
+		}
+	}
+
+	for (int i = 0; i < 4 * Nb; i++) {
+		state[i] = temp[i];
+	}
+}
+
 void cipher (byte in[4 * Nb], byte out[4 * Nb], word w[Nb * (Nr + 1)]) {
 	byte state[4 * Nb];
 
@@ -90,7 +106,7 @@ void cipher (byte in[4 * Nb], byte out[4 * Nb], word w[Nb * (Nr + 1)]) {
 	for (int round = 0; round < Nr; round++) {
 		subBytes(state);
 		shiftRows(state);
-		// mixColumns(state);
+		mixColumns(state);
 		addRoundKey(state, w, round);
 	}
 
@@ -129,6 +145,13 @@ int main (void){
 	printf("\n");
 
 	shiftRows(in);
+
+	for (int i = 0; i < 4 * Nb; i++) {
+		printf("%x ", in[i]);
+	}
+	printf("\n");
+	
+	mixColumns(in);
 
 	for (int i = 0; i < 4 * Nb; i++) {
 		printf("%x ", in[i]);
