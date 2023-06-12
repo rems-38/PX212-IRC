@@ -204,7 +204,7 @@ void keyExpansion (const byte key[], byte w[], int nk, int nr) {
 }
 
 
-void cipher (byte in[], byte out[], byte w[], int nr) {
+void cipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, 0);
 	for (int round = 1; round < nr; round++) {
 		subBytes(in);
@@ -216,11 +216,9 @@ void cipher (byte in[], byte out[], byte w[], int nr) {
 	subBytes(in);
 	shiftRows(in);
 	addRoundKey(in, w, nr*16);
-
- 	memcpy(out, in, 16);
 }
 
-void invCipher (byte in[], byte out[], byte w[], int nr) {
+void invCipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, nr*16);
 	for (int round = nr-1; round > 0; round--) {
 		invShiftRows(in);
@@ -232,8 +230,6 @@ void invCipher (byte in[], byte out[], byte w[], int nr) {
 	invShiftRows(in);
 	invSubBytes(in);
 	addRoundKey(in, w, 0);
-
- 	memcpy(out, in, 16);
 }
 
 void printByte (byte in[], int length) {
@@ -246,10 +242,6 @@ int main (void){
 	byte in1[16] = {0x00, 0x11, 0x22, 0x33 ,0x44, 0x55, 0x66, 0x77 ,0x88, 0x99, 0xaa, 0xbb ,0xcc, 0xdd, 0xee, 0xff};
 	byte in2[16] = {0x00, 0x11, 0x22, 0x33 ,0x44, 0x55, 0x66, 0x77 ,0x88, 0x99, 0xaa, 0xbb ,0xcc, 0xdd, 0xee, 0xff};
 	byte in3[16] = {0x00, 0x11, 0x22, 0x33 ,0x44, 0x55, 0x66, 0x77 ,0x88, 0x99, 0xaa, 0xbb ,0xcc, 0xdd, 0xee, 0xff};
-	
-	byte out1[16] = {0};
-	byte out2[16] = {0};
-	byte out3[16] = {0};
 
 	byte key128[16] = {0x00, 0x01, 0x02, 0x03 ,0x04, 0x05, 0x06, 0x07 ,0x08, 0x09, 0x0a, 0x0b ,0x0c, 0x0d, 0x0e, 0x0f};
 	byte key192[24] = {0x00, 0x01, 0x02, 0x03 ,0x04, 0x05, 0x06, 0x07 ,0x08, 0x09, 0x0a, 0x0b ,0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 
@@ -266,19 +258,19 @@ int main (void){
 	keyExpansion(key256, w3, 8, 14);
 
 	printByte(in1, 16);
-	cipher(in1, out1, w1, 10);
-	printByte(out1, 16);
-	invCipher(out1, in1, w1, 10);
+	cipher(in1, w1, 10);
+	printByte(in1, 16);
+	invCipher(in1, w1, 10);
 	printByte(in1, 16);
 
-	cipher(in2, out2, w2, 12);
-	printByte(out2, 16);
-	invCipher(out2, in2, w2, 12);
+	cipher(in2, w2, 12);
+	printByte(in2, 16);
+	invCipher(in2, w2, 12);
 	printByte(in2, 16);
 
-	cipher(in3, out3, w3, 14);
-	printByte(out3, 16);
-	invCipher(out3, in3, w3, 14);
+	cipher(in3, w3, 14);
+	printByte(in3, 16);
+	invCipher(in3, w3, 14);
 	printByte(in3, 16);
 
 
