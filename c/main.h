@@ -1,6 +1,5 @@
 typedef unsigned char byte;
 
-void fillTemp(byte in[], byte temp[], int length);
 byte multi(byte a, byte b);
 void addRoundKey(byte state[], byte w[], int round);
 void subBytes(byte state[]);
