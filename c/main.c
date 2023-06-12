@@ -34,15 +34,9 @@ void addRoundKey (byte state[], byte w[], int round) {
 	}
 }
 
-void subBytes (byte state[]) {
+void subBytes (byte state[], const byte box[256]) {
 	for (int i = 0; i < 16; i++) {
-		state[i] = sbox[state[i]];
-	}
-}
-
-void invSubBytes (byte state[]) {
-	for (int i = 0; i < 16; i++) {
-		state[i] = invSbox[state[i]];
+		state[i] = box[state[i]];
 	}
 }
 
@@ -110,7 +104,7 @@ void invShiftRows (byte state[]) {
 	state[15] = temp;
 }
 
-void mixColumns (byte state[], byte polyMix[16]) {
+void mixColumns (byte state[], const byte polyMix[16]) {
 	byte temp[16];
 
 	for (int i = 0; i < 16; i++) {
@@ -194,13 +188,13 @@ void keyExpansion (const byte key[], byte w[], int nk, int nr) {
 void cipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, 0);
 	for (int round = 1; round < nr; round++) {
-		subBytes(in);
+		subBytes(in, sbox);
 		shiftRows(in);
 		mixColumns(in, a_x_mixColumns);
 		addRoundKey(in, w, round*16);
 	}
 
-	subBytes(in);
+	subBytes(in, sbox);
 	shiftRows(in);
 	addRoundKey(in, w, nr*16);
 }
@@ -209,13 +203,13 @@ void invCipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, nr*16);
 	for (int round = nr-1; round > 0; round--) {
 		invShiftRows(in);
-		invSubBytes(in);
+		subBytes(in, invSbox);
 		addRoundKey(in, w, round*16);
 		mixColumns(in, a_x_invMixColumns);
 	}
 
 	invShiftRows(in);
-	invSubBytes(in);
+	subBytes(in, invSbox);
 	addRoundKey(in, w, 0);
 }
 
