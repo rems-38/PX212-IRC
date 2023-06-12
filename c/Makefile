@@ -1,4 +1,4 @@
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -g
 
 main: main.o
 	gcc $(FLAGS) $^ -o $@
