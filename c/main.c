@@ -89,18 +89,16 @@ void mixColumns (byte state[]) {
 	memcpy(state, temp, 16);
 }
 
-// void subWord (word state, byte out[]) { 
-// 	splitWordByte(state, out);
-// 	for(int i = 0; i < Nb; i++) { out[i] = sbox[out[i]]; }
-// }
+void subWord (byte state[4]) { subBytes(state); }
 
-// void rotWord (word state, byte out[]) {
-// 	byte temp[Nb];
-// 	splitWordByte(state, temp);
+void rotWord (byte state[4]) {
+	byte temp[4];
+	
+	for (int i = 1; i < Nb; i++) { temp[i - 1] = state[i]; }
+	temp[3] = state[0];
 
-// 	for (int i = 1; i < Nb; i++) { out[i - 1] = temp [i]; }
-// 	out[3] = temp[0];
-// }
+	memcpy(state, temp, 4);
+}
 
 void rcon(int i, byte out[4]) {
     byte rcon[] = {0x01, 0x00, 0x00, 0x00};
@@ -178,18 +176,23 @@ void printByte (byte in[], int length) {
 
 int main (void){
 	// byte in[4 * Nb] = {0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34};
-	// byte cipher_key[16] = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+	byte cipher_key[16] = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
 	// byte full_key[Nb*(Nr+1)] = {0};
 
-	// printWord(cipher_key);
-	// keyExpansion(cipher_key, full_key);
-	// printWord(full_key);
-
-	byte out[4] = {0};
-	for(int i = 1; i < 11; i++) {
-		rcon(i, out);
-		printByte(out, 4);
-	}
+	byte w4[4] = {0x09, 0xcf, 0x4f, 0x3c};
+	byte w0[4] = {0x2b, 0x7e, 0x15, 0x16};
+	printByte(w4, 4);
+	rotWord(w4);
+	printByte(w4, 4);
+	subWord(w4);
+	printByte(w4, 4);
+	byte pRcon[4];
+	rcon(1, pRcon);
+	printByte(pRcon, 4);
+	for (int i = 0; i < 4; i++) { w4[i] ^= pRcon[i]; }
+	printByte(w4, 4);
+	for (int i = 0; i < 4; i++) { w4[i] ^= w0[i]; }
+	printByte(w4, 4);
 
 	return 1;
 }
