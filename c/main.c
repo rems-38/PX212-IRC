@@ -1,8 +1,6 @@
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef unsigned char byte;
-typedef unsigned int word;
 
 #define Nk 4
 #define Nb 4
@@ -135,19 +133,42 @@ word rcon(int i) {
     return rcon;
 }
 
+void keyExpansion (word key[4], word w[Nb*(Nr+1)]) { // nk en param
+	word temp = 0;
+	
+	for (int i = 0; i < Nk; i++) {
+		w[i] = key[i];
+	}
 
-// void keyExpansion (byte key[4*Nk], word w[Nb*(Nr+1)]) {
-// 	byte temp;
+	for (int i = Nk; i < Nb*(Nr+1); i++) {
+		temp = w[i-1];
+		if (i % Nk == 0) {
+			byte afterRot[Nb];
+			byte afterSub[Nb];
+			word *preSub = 0;
+			word *postSub = 0;
 
-// 	fillTemp(key, w);
+			rotWord(temp, afterRot);
+			joinByteWord(afterRot, preSub);
+			subWord(*preSub, afterSub);
+			joinByteWord(afterSub, postSub);
+			*postSub ^= rcon(i/Nk);
+			
+			temp = *postSub;	
+		}
+		else if (Nk > 6 && i % Nk == 4) {
+			byte afterSub[Nb];
+			word *postSub = 0;
 
-// 	for (int i = Nk; i < Nb*(Nr+1); i++) {
-// 		temp = w[i-1];
-// 		if (i % Nk == 0) { subWord(rotWord(temp)) ^ rcon(i/Nk); }
-// 		else if (Nk > 6 && i % Nk == 4) { subWord(temp); }
-// 		w[i] = w[i-Nk] ^ temp;
-// 	}
-// }
+			subWord(temp, afterSub);
+			joinByteWord(afterSub, postSub);
+			
+			temp = *postSub;
+		}
+		w[i] = w[i-Nk] ^ temp;
+	}
+}
+
 
 void cipher (byte in[4 * Nb], byte out[4 * Nb], word w[Nb * (Nr + 1)]) {
 	byte state[4 * Nb];
@@ -170,11 +191,11 @@ void cipher (byte in[4 * Nb], byte out[4 * Nb], word w[Nb * (Nr + 1)]) {
 }
 
 void printByte (byte in[]) {
-	for (int i = 0; i < sizeof(in); i++) { printf("%x ", in[i]); }
+	for (int i = 0; i < sizeof(in)/sizeof(byte); i++) { printf("%x ", in[i]); }
 	printf("\n");
 }
 void printWord (word in[]) {
-	for (int i = 0; i < sizeof(in); i++) { printf("%x ", in[i]); }
+	for (int i = 0; i < sizeof(in)/(sizeof(word)/2); i++) { printf("%x ", in[i]); }
 	printf("\n");
 }
 
@@ -182,37 +203,12 @@ void printWord (word in[]) {
 
 int main (void){
 	// byte in[4 * Nb] = {0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34};
-	word key[Nb * (Nr + 1)] = {0x2b7e1516, 0x28aed2a6, 0xabf71588, 0x09cf4f3c};
-	
-	// printByte(in);
-	// addRoundKey(in, key, 0);
-	// printByte(in);
-	// subBytes(in);
-	// printByte(in);
-	// shiftRows(in);
-	// printByte(in);
-	// mixColumns(in);
-	// printByte(in);
-	
-	printWord(key);
-	
-	byte temp[4];	
-	rotWord(key[3], temp);
-	key[4] = 0;
-	joinByteWord(temp, &key[4]);
+	word cipher_key[4] = {0x2b7e1516, 0x28aed2a6, 0xabf71588, 0x09cf4f3c};
+	word full_key[Nb*(Nr+1)] = {0};
 
-	printWord(key);
-
-	byte temp2[4];
-	subWord(key[4], temp2);
-	key[4] = 0;
-	joinByteWord(temp2, &key[4]);
-
-	printWord(key);
-
-	key[4] ^= rcon(1);
-
-	printWord(key);
+	printWord(cipher_key);
+	keyExpansion(cipher_key, full_key);
+	printWord(full_key);
 
 	return 1;
 }

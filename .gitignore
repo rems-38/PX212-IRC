@@ -3,3 +3,5 @@ haskell/*.o
 haskell/*.hi
 c/*.o
 c/main
+c/*.h
+c/*.h.gch
