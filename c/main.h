@@ -13,5 +13,5 @@ void rcon(int i, byte out[4]);
 void splitArr(const byte in[], byte out[], int start, int end);
 void mergeArr(const byte in[], byte out[], int start, int end);
 void keyExpansion(const byte key[], byte w[], int nk, int nr);
-void cipher(byte in[], byte out[], byte w[]);
+void cipher(byte in[], byte out[], byte w[], int nr);
 void printByte(byte in[], int length);
