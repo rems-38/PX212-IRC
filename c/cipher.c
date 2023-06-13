@@ -93,7 +93,7 @@ void rcon(int i, byte out[4]) {
 	memcpy(out, rcon, 4);
 }
 
-void keyExpansion (const byte key[], byte w[], int nk, int nr) {
+void keyExpansion (byte key[], byte w[], int nk, int nr) {
 	byte ending[4] = {0};
 	byte starting[4] = {0};
 	byte pRcon[4] = {0};
