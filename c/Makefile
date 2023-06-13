@@ -1,22 +1,23 @@
-FLAGS = -Wall -Wextra -g
+FLAGS = -Wall -Wextra -g -fsanitize=address -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=bounds-strict -fsanitize=bool -fsanitize=enum
+LINK = -lasan -lubsan
 
 aes: aes.o cipher.o tools.o
 	gcc $(FLAGS) $^ -o $@
 
 aes.o: aes.c cipher.h
-	gcc $(FLAGS) -c $^
+	gcc $(LINK) -c $^
 
 tests: tests.o cipher.o tools.o
 	gcc $(FLAGS) $^ -o $@
 
 tests.o: tests.c cipher.h
-	gcc $(FLAGS) -c $^
+	gcc $(LINK) -c $^
 
 cipher.o: cipher.c cipher.h
-	gcc $(FLAGS) -c $^
+	gcc $(LINK) -c $^
 
 tools.o: tools.c tools.h
-	gcc $(FLAGS) -c $^
+	gcc $(LINK) -c $^
 
 clean:
 	rm *.o *.h.gch aes tests
