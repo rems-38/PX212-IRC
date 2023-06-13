@@ -1,11 +1,14 @@
 FLAGS = -Wall -Wextra -g
 
-main: main.o
+aes: aes.o
 	gcc $(FLAGS) $^ -o $@
 
-main.o: main.c main.h
+aes.o: aes.c cipher.h
+	gcc $(FLAGS) -c $^
+
+cipher.o: cipher.c cipher.h
 	gcc $(FLAGS) -c $^
 
 
 clean:
-	rm *.o main
+	rm *.o *.h.gch main
