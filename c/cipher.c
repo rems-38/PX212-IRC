@@ -15,59 +15,41 @@ void subBytes (byte state[], const byte box[256]) {
 	}
 }
 
-// V1 à modifier !!
-void shiftRows (byte state[]) {
+void shiftOneRow(byte state[], int row, int direction, int shift) {
     byte temp;
-
-	// Row 0 don't change 
-    // Shift row 1
-    temp = state[1];
-    state[1] = state[5];
-    state[5] = state[9];
-    state[9] = state[13];
-    state[13] = temp;
-
-    // Shift row 2
-    temp = state[2];
-    state[2] = state[10];
-    state[10] = temp;
-    temp = state[6];
-    state[6] = state[14];
-    state[14] = temp;
-
-    // Shift row 3
-    temp = state[15];
-    state[15] = state[11];
-    state[11] = state[7];
-    state[7] = state[3];
-    state[3] = temp;
+    if (direction > 0) {  // décalage à droite
+        for (int i = 3; i >= shift; i--) {
+            temp = state[i*4+row];
+            state[i*4+row] = state[(i-shift)*4+row];
+            state[(i-shift)*4+row] = temp;
+        }
+    } else {  // décalage à gauche
+        for (int i = 0; i < 4 - shift; i++) {
+            temp = state[i*4+row];
+            state[i*4+row] = state[(i+shift)*4+row];
+            state[(i+shift)*4+row] = temp;
+        }
+    }
 }
 
-void invShiftRows (byte state[]) {
-	byte temp;
+void shiftRows(byte state[]) {
+    // On ne change pas la ligne 0
+    // On décale la ligne 1 à gauche de 1
+    shiftOneRow(state, 1, -1, 1);
+    // On décale la ligne 2 à gauche de 2
+    shiftOneRow(state, 2, -1, 2);
+    // On décale la ligne 3 à droite de 1
+    shiftOneRow(state, 3, 1, 1);
+}
 
-	// Row 0 don't change 
-	// Shift row 1
-	temp = state[13];
-	state[13] = state[9];
-	state[9] = state[5];
-	state[5] = state[1];
-	state[1] = temp;
-
-	// Shift row 2
-	temp = state[2];
-	state[2] = state[10];
-	state[10] = temp;
-	temp = state[6];
-	state[6] = state[14];
-	state[14] = temp;
-
-	// Shift row 3
-	temp = state[3];
-	state[3] = state[7];
-	state[7] = state[11];
-	state[11] = state[15];
-	state[15] = temp;
+void invShiftRows(byte state[]) {
+    // On ne change pas la ligne 0
+    // On décale la ligne 1 à droite de 1
+    shiftOneRow(state, 1, 1, 1);
+    // On décale la ligne 2 à droite de 2
+    shiftOneRow(state, 2, 1, 2);
+    // On décale la ligne 3 à gauche de 1
+    shiftOneRow(state, 3, -1, 1);
 }
 
 void mixColumns (byte state[], const byte polyMix[16]) {
