@@ -13,7 +13,7 @@ const byte a_x_invMixColumns_test[16] = {0x0e, 0x0b, 0x0d, 0x09, 0x09, 0x0e, 0x0
 void testByteXor(void) {
     byte a[] = {0x0F, 0x1A, 0x2B, 0x3C};
     byte b[] = {0x0F, 0x1B, 0x2B, 0x3D};
-    byte expected[] = {0x00, 0x01, 0x00, 0x01}; // résultat de a XOR b
+    byte expected[] = {0x00, 0x01, 0x00, 0x01};
 
     byteXor(a, b, 4);
 
@@ -29,7 +29,7 @@ void testByteXor(void) {
 void testMulti(void) {
     byte a = 0x57;
     byte b = 0x83;
-    byte expected = 0xc1; // résultat de a * b
+    byte expected = 0xc1;
 
     byte res = multi(a, b);
 
@@ -309,7 +309,6 @@ void testKeyExpansion(void) {
             return;
         }
     }
-
     printf("keyExpansion: OK\n");
 }
 
