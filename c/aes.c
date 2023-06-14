@@ -101,17 +101,16 @@ int aes_decrypt (char *data, int size, char *key, int keysize) {
     return 0;
 }
 
-/*
+
 int main (void) {
-    char input[16] = "coucouaezrtgfrst";
-    printf("%s\n", input);
-
-    aes_encrypt(input, 16, "masuperclechiffredelamor", 24);
-    printf("%s\n", input);
-
-    aes_decrypt(input, 16, "masuperclechiffredelamor", 24);
-    printf("%s\n", input);
+    char in[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key[] = "xnlonrauzwvfqzbpiiewzlblonalhyxf";
+    
+    printf("input : %s\n", in);
+    aes_encrypt(in, strlen(in), key, strlen(key));
+    printf("encrytped : %s\n", in);
+    aes_decrypt(in, strlen(in), key, strlen(key));
+    printf("decrytped : %s\n", in);
 
     return 1;
 }
-*/

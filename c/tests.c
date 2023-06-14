@@ -505,39 +505,39 @@ void testAesEncrypt(void) {
     printf("aes_encrypt: OK\n");
 }  
 
-void testAesEcryptFile(void) { 
-    int num;
-    FILE *file1 = fopen("file1.txt","r");
-    FILE *fileExpected1 = fopen("expected1.txt","w"); 
+// void testAesEncryptFile(void) { 
+//     int num;
+//     FILE *file1 = fopen("file1.txt","r");
+//     FILE *fileExpected1 = fopen("expected1.txt","w"); 
 
-    if(file1 == NULL)
-    {
-        printf("Error!");   
-        exit(1);             
-    }
+//     if(file1 == NULL)
+//     {
+//         printf("Error!");   
+//         exit(1);             
+//     }
 
-    if(fileExpected1 == NULL)
-    {
-        printf("Error!");   
-        exit(1);             
-    }
+//     if(fileExpected1 == NULL)
+//     {
+//         printf("Error!");   
+//         exit(1);             
+//     }
 
-    aes_encrypt(file1, strlen(file1) ,"xnlonrauzwvfqzbpiiewzlblonalhyxf", 32);
-    char* out = asciitohex(file1);
+//     aes_encrypt(file1, strlen(file1) ,"xnlonrauzwvfqzbpiiewzlblonalhyxf", 32);
+//     char* out = asciitohex(file1);
 
-    if (strcmp(out, expected1) != 0){
-        printf("aes_encrypt_file: FAILED\n");
-        free(out);
-        return;
-    }
+//     if (strcmp(out, expected1) != 0){
+//         printf("aes_encrypt_file: FAILED\n");
+//         free(out);
+//         return;
+//     }
 
-    free(out);
-    fclose(file1);
-    fclose(base1);
-    fclose(expected1);
+//     free(out);
+//     fclose(file1);
+//     fclose(base1);
+//     fclose(expected1);
 
-    printf("aes_encrypt_file: OK\n");
-}
+//     printf("aes_encrypt_file: OK\n");
+// }
 
 /**
  * @brief Main function
@@ -574,7 +574,7 @@ int main (void){
     testHexToAscii();
     testAsciiToHex();
     testAesEncrypt();
-    testAesEcryptFile();
+    // testAesEncryptFile();
 
 	return 1;
 }

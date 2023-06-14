@@ -134,3 +134,5 @@
 - Ajouts des tests unitaires correspondant
 - Cleanage de l'ensemble du code.
 - Réalisation de la documentation de l'ensemble des fichiers et des fonctions.
+- Génération de la documentation `doc_code_c.pdf` avec Doxygen.
+- Tag de la V1 du projet.
