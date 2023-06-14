@@ -488,7 +488,7 @@ void testAesEncrypt(void) {
     printf("aes_encrypt: OK\n");
 }  
 
-void testAesEcryptFile(void) {
+void testAesEcryptFile(void) { 
     int num;
     FILE *file1 = fopen("file1.txt","r");
     FILE *fileExpected1 = fopen("expected1.txt","w"); 
