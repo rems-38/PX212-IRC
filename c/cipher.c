@@ -1,8 +1,22 @@
+/** @file cipher.c
+ *  @brief Cipher method 
+ * 
+ *  Contient tous les fonctions nécessaires au chiffrement (et au déchiffrement)
+ *  d'un bloc de 16 octets avec une clé.
+ *
+ *  @author Mazzone Rémi (rems-38)
+ *  @author Moussu Guillemot (guillemotmoussu)
+ *  @bug No known bugs.
+ */
+
+
+/* -- Includes -- */
 #include "tools.h"
 #include "const.h"
 #include <string.h>
 
 
+/* -- Functions -- */
 void addRoundKey (byte state[], byte w[], int round) {
 	for (int i = 0; i < 16; i++) {
 		state[i] ^= w[round + i];

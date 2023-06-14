@@ -1,3 +1,16 @@
+/** @file aes.c
+ *  @brief AES encryption and decryption protocol
+ *
+ *  Contient les fonctions de chiffrement et de déchiffrement AES
+ *  pour des données de taille multiple de 16 octets.
+ *
+ *  @author Mazzone Rémi (rems-38)
+ *  @author Moussu Guillemot (guillemotmoussu)
+ *  @bug No known bugs.
+ */
+
+
+/* -- Includes -- */
 #include "cipher.h"
 #include "tools.h"
 #include <stdio.h>
@@ -5,6 +18,7 @@
 #include <string.h>
 
 
+/* -- Functions -- */
 byte *keyprocess(char *key, int keysize, int *nr) {
     int nk = keysize / 4;
     *nr = nk + 6;

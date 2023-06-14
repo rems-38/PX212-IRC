@@ -1,9 +1,25 @@
+/** @file tools.c
+ *  @brief Tools method
+ * 
+ *  Contient un emsemble de fonctions utiles pour tout le reste de notre code
+ * 	Ex: affichage, séparation de tableau...
+ *
+ *  @author Mazzone Rémi (rems-38)
+ *  @author Moussu Guillemot (guillemotmoussu)
+ *  @bug No known bugs.
+ */
+
+
+/* -- Includes -- */
 #include <string.h>
 #include <stdio.h>
 
+
+/* -- Defines -- */
 typedef unsigned char byte;
 
 
+/* -- Functions -- */
 void byteXor(byte a[], const byte b[], int length) {
 	for (int i = 0; i < length; i++) {
 		a[i] ^= b[i];
