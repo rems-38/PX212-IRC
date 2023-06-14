@@ -107,9 +107,30 @@
 - Test de l'invCipher 128, 192 et 256
 
 # Travail entre les séances 5 et 6
-- La fonction d'invCipher a fini d'être codé et tous les bugs ont été corrigés
+- La fonction d'invCipher a fini d'être codée et tous les bugs ont été corrigés
 - Le fonction de KeyExpansion a été adapté pour AES-192 et AES-256 qui avait des particularités minimes mais nécessaire
 - La fonction Cipher (et InvCipher) a été testé pour AES-192 et AES-256
 - Une implémentation plus concrète a été réalisé : chiffrement et déchiffremnt d'un texte (table ASCII uniquement)
 - Un binaire exécutable est fourni pour avoir accès à notre implémentation AES dans la ligne de commande
 - Le document de fin de jalon (documentation sur les fonctionnalités et les choix techniques) a été rédigé.
+- Le code C a été commencé (multiplication + addRoundKey)
+
+# Séance 6 - 12/06/2023
+## Contenu de la séance
+- L'ensemble de l'AES a été codé en C (jusqu'au fonction de Cipher + invCipher)
+- Tout a été testé pour AES-128, AES-192 et AES-256, et tout fonctionne comme il faut
+
+# Séance 7 - 13/06/2023
+## Contenu de la séance
+- Commencement des fonctions demandées (aes_encrypt et aes_decrypt)
+- Ajout des options de compilation et de likage demandées : aucun problème lors de la compilation puis lors de l'éxécution après cet ajout. C'est plutôt une bonne nouvelle car ça veut dire que notre code est conforme
+- Premier essaie de mesure de performance via les outils `valgrind` et `kcachegrind` : beaucoup de temps dans la multiplication (ces problèmes seront résolus ultérieurement lors de la partie optimisation)
+- Tentative de Benchmark
+- Réalisation de tests unitaires pour toutes les fonctions codées en C précédemment
+
+# Séance 8 - 14/06/2023
+## Contenu de la séance
+- Fin des fonctions aes_encrypt et aes_decrypt
+- Ajouts des tests unitaires correspondant
+- Cleanage de l'ensemble du code.
+- Réalisation de la documentation de l'ensemble des fichiers et des fonctions.
