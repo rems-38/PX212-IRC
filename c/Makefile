@@ -7,10 +7,10 @@ aes: aes.o cipher.o tools.o
 aes.o: aes.c cipher.h
 	gcc $(LINK) -c $^
 
-tests: tests.o cipher.o tools.o
+tests: tests.o cipher.o tools.o aes.o
 	gcc $(FLAGS) $^ -o $@
 
-tests.o: tests.c cipher.h
+tests.o: tests.c cipher.h aes.h
 	gcc $(LINK) -c $^
 
 cipher.o: cipher.c cipher.h

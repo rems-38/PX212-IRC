@@ -1,5 +1,6 @@
 #include "cipher.h"
 #include "tools.h"
+#include "aes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -358,7 +359,6 @@ void testCipher(void) {
             return;
         }
     }
-
     printf("cipher: OK\n");
 }
 
@@ -408,8 +408,118 @@ void testInvCipher(void) {
             return;
         }
     }
-
     printf("invCipher: OK\n");
+}
+
+void testHexToAscii(void) {
+    char* in = "48656c6c6f20576f726c6421";
+    char* expected = "Hello World!";
+    char* out = hextoascii(in);
+
+    if (strcmp(out, expected) != 0){
+        printf("hexToAscii: FAILED\n");
+        return;
+    }
+
+    free(out);
+
+    printf("hexToAscii: OK\n");
+}
+
+void testAsciiToHex(void) {
+    char* in = "Hello World!";
+    char* expected = "48656c6c6f20576f726c6421";
+    char* out = asciitohex(in);
+
+    if (strcmp(out, expected) != 0){
+        printf("asciiToHex: FAILED\n");
+        return;
+    }
+
+    free(out);
+
+    printf("asciiToHex: OK\n");
+}
+
+void testAesEncrypt(void) {
+    char base1[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in1[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key[] = "vwuhikdwvlkhsbbg";
+    char expected1[] = "fd969cf58423dc7cd142696e6ac1f6a45ed2154a1ddd91522fe581cd5b20ef36344f7d4d0ed85c487e93bad0fd7be83df2e0d1b7302ab6e2b1714c65808982c09df815b17b4da3bb1d2d84c5bef91929444952e828f9ba0cc9ac86914f94dcd31da0700409307bed479b4c28a46da08f636b5b904bd5a63583455d49beb20f84";
+    aes_encrypt(in1, strlen(in1), key, strlen(key));
+    char* out = asciitohex(in1);
+
+    char base2[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in2[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key2[] = "mjwfjsyoiwljrvzxrgwbwguy";
+    char expected2[] = "26b9440a094ffb44104149600233c36f1be250a1cd817d1a3249171a0c70158b871e598f4b7b9477eafba85fb627f466e64854a7c71a556abf0b2e07fa2e9066160be9d72e4901b925c417468caf6106b17a1baf29f3d05a2fcf40b7be2689b9a73da512e60d3fc9dae044ef638f6d7b2439ef515e8d270998c2a382f2cc225e";
+    aes_encrypt(in2, strlen(in2), key2, strlen(key2));
+    char* out2 = asciitohex(in2);
+
+    char base3[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in3[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key3[] = "xnlonrauzwvfqzbpiiewzlblonalhyxf";
+    char expected3[] = "38f3a7efcc2c48f0f043ae86c5b9827ca135ef91ba4a2c090b07ac6d7fe854efdb6c8cfa3a3aa46c02a205a88581a19dbc92839a296fedcbc243d78815a59284b25da6b054645080b1961f6214c375b3344583bb956c0c02141684bee0b9af37c0057af2778a7ebbc4a004a3838e41cedf28aad5c5d2f8db6e3b9a8a5830562a";
+    aes_encrypt(in3, strlen(in3), key3, strlen(key3));
+    char* out3 = asciitohex(in3);
+
+    if (strcmp(out, expected1) != 0){
+        printf("aes_encrypt: FAILED\n");
+        free(out);
+        return;
+    }
+
+    if (strcmp(out2, expected2) != 0){
+        printf("aes_encrypt: FAILED\n");
+        free(out2);
+        return;
+    }
+
+    if (strcmp(out3, expected3) != 0){
+        printf("aes_encrypt: FAILED\n");
+        free(out3);
+        return;
+    }
+
+    free(out);
+    free(out2);
+    free(out3);
+
+    printf("aes_encrypt: OK\n");
+}  
+
+void testAesEcryptFile(void) {
+    int num;
+    FILE *file1 = fopen("file1.txt","r");
+    FILE *fileExpected1 = fopen("expected1.txt","w"); 
+
+    if(file1 == NULL)
+    {
+        printf("Error!");   
+        exit(1);             
+    }
+
+    if(fileExpected1 == NULL)
+    {
+        printf("Error!");   
+        exit(1);             
+    }
+
+    aes_encrypt(file1, strlen(file1) ,"xnlonrauzwvfqzbpiiewzlblonalhyxf", 32);
+    char* out = asciitohex(file1);
+
+    if (strcmp(out, expected1) != 0){
+        printf("aes_encrypt_file: FAILED\n");
+        free(out);
+        return;
+    }
+
+    free(out);
+    fclose(file1);
+    fclose(base1);
+    fclose(expected1);
+
+    printf("aes_encrypt_file: OK\n");
 }
 
 int main (void){
@@ -432,9 +542,15 @@ int main (void){
     testRcon();
     testKeyExpansion();
 
-    printf("\n----- Test du chiffrement AES-128 -----\n");
+    printf("\n----- Test du chiffrement AES -----\n");
     testCipher();
     testInvCipher();
-    
+
+    printf("\n----- Test de l\'API -----\n");
+    testHexToAscii();
+    testAsciiToHex();
+    testAesEncrypt();
+    testAesEcryptFile();
+
 	return 1;
 }

@@ -18,12 +18,22 @@ byte *keyprocess(char *key, int keysize, int *nr) {
 char* hextoascii(const char* in) {
     if (strlen(in) % 2 != 0) { return NULL; }
 
-    char *out = malloc(strlen(in) / 2);
+    char *out = malloc(strlen(in) / 2 + 1);
 
     for (size_t i = 0; i < strlen(in) / 2; i++) {
         sscanf(&in[i * 2], "%2hhx", &out[i]);
     }
+    out[strlen(in) / 2] = '\0';
+    return out;
+}
 
+char* asciitohex(const char* in) {
+    char *out = malloc(strlen(in) * 2 + 1);
+
+    for (size_t i = 0; i < strlen(in); i++) {
+        sprintf(&out[i * 2], "%02x", (unsigned char)in[i]);
+    }
+    out[strlen(in) * 2] = '\0';
     return out;
 }
 
@@ -77,7 +87,7 @@ int aes_decrypt (char *data, int size, char *key, int keysize) {
     return 0;
 }
 
-
+/*
 int main (void) {
     char input[16] = "coucouaezrtgfrst";
     printf("%s\n", input);
@@ -90,3 +100,4 @@ int main (void) {
 
     return 1;
 }
+*/
