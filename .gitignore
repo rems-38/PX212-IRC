@@ -4,3 +4,4 @@ haskell/*.hi
 c/*.o
 c/main
 c/*.h.gch
+c/callgrind*
