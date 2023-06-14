@@ -1,0 +1,211 @@
+\hypertarget{tools_8c}{}\doxysection{Référence du fichier c/tools.c}
+\label{tools_8c}\index{c/tools.c@{c/tools.c}}
+
+
+Tools method.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+\doxysubsection*{Définitions de type}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \mbox{\hyperlink{tools_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{tools_8c_a4b416ddeb2e8c87de157442c2f2cf7f6}{byte\+Xor}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} a\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} b\mbox{[}$\,$\mbox{]}, int length)
+\begin{DoxyCompactList}\small\item\em XOR operation between two byte arrays. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} \mbox{\hyperlink{tools_8c_a7b6e3e551eddedaeb7fea32a19353b2d}{multi}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} a, \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} b)
+\begin{DoxyCompactList}\small\item\em Multiplication in GF(2$^\wedge$8) for two bytes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tools_8c_a6ddc68471223d103c04b5b101e0da580}{print\+Byte}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} in\mbox{[}$\,$\mbox{]}, int length)
+\begin{DoxyCompactList}\small\item\em Print a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tools_8c_a0e872c7674e8ae14a37136a66d25168c}{switch\+Col\+Rows}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Switch the columns and the rows of a 4x4 matrix. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tools_8c_a325b9e54c336734b6cd47f938c83ce69}{split\+Arr}} (const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} in\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} out\mbox{[}$\,$\mbox{]}, int start, int end)
+\begin{DoxyCompactList}\small\item\em Split an array into another one. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tools_8c_a68ff3fd53498a5bad4692fffd381bc74}{merge\+Arr}} (const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} in\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} out\mbox{[}$\,$\mbox{]}, int start, int end)
+\begin{DoxyCompactList}\small\item\em Merge an array into another one (use for append an array) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Tools method. 
+
+Contient un emsemble de fonctions utiles pour tout le reste de notre code Ex\+: affichage, séparation de tableau...
+
+\begin{DoxyAuthor}{Auteur}
+Mazzone Rémi (rems-\/38) 
+
+Moussu Guillemot (guillemotmoussu) 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Bogue}
+\item[\mbox{\hyperlink{bug__bug000007}{Bogue}}]No known bugs. \end{DoxyRefDesc}
+
+
+\doxysubsection{Documentation des définitions de type}
+\mbox{\Hypertarget{tools_8c_a0c8186d9b9b7880309c27230bbb5e69d}\label{tools_8c_a0c8186d9b9b7880309c27230bbb5e69d}} 
+\index{tools.c@{tools.c}!byte@{byte}}
+\index{byte@{byte}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{byte}{byte}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}
+
+
+
+Définition à la ligne 19 du fichier tools.\+c.
+
+
+
+\doxysubsection{Documentation des fonctions}
+\mbox{\Hypertarget{tools_8c_a4b416ddeb2e8c87de157442c2f2cf7f6}\label{tools_8c_a4b416ddeb2e8c87de157442c2f2cf7f6}} 
+\index{tools.c@{tools.c}!byteXor@{byteXor}}
+\index{byteXor@{byteXor}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{byteXor()}{byteXor()}}
+{\footnotesize\ttfamily void byte\+Xor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{a\mbox{[}$\,$\mbox{]},  }\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{b\mbox{[}$\,$\mbox{]},  }\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+
+XOR operation between two byte arrays. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em a} & First byte array \\
+\hline
+{\em b} & Second byte array \\
+\hline
+{\em length} & Length of the arrays \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+
+
+Définition à la ligne 23 du fichier tools.\+c.
+
+\mbox{\Hypertarget{tools_8c_a68ff3fd53498a5bad4692fffd381bc74}\label{tools_8c_a68ff3fd53498a5bad4692fffd381bc74}} 
+\index{tools.c@{tools.c}!mergeArr@{mergeArr}}
+\index{mergeArr@{mergeArr}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{mergeArr()}{mergeArr()}}
+{\footnotesize\ttfamily void merge\+Arr (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{in\mbox{[}$\,$\mbox{]},  }\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{out\mbox{[}$\,$\mbox{]},  }\item[{int}]{start,  }\item[{int}]{end }\end{DoxyParamCaption})}
+
+
+
+Merge an array into another one (use for append an array) 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em in} & The array to merge \\
+\hline
+{\em out} & The array to fill \\
+\hline
+{\em start} & The start index (for the \char`\"{}out\char`\"{} array) \\
+\hline
+{\em end} & The end index (for the \char`\"{}out\char`\"{} array) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+
+
+Définition à la ligne 64 du fichier tools.\+c.
+
+\mbox{\Hypertarget{tools_8c_a7b6e3e551eddedaeb7fea32a19353b2d}\label{tools_8c_a7b6e3e551eddedaeb7fea32a19353b2d}} 
+\index{tools.c@{tools.c}!multi@{multi}}
+\index{multi@{multi}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{multi()}{multi()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} multi (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{a,  }\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{b }\end{DoxyParamCaption})}
+
+
+
+Multiplication in GF(2$^\wedge$8) for two bytes. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em a} & First byte \\
+\hline
+{\em b} & Second byte \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+The result of the multiplication 
+\end{DoxyReturn}
+
+
+Définition à la ligne 29 du fichier tools.\+c.
+
+\mbox{\Hypertarget{tools_8c_a6ddc68471223d103c04b5b101e0da580}\label{tools_8c_a6ddc68471223d103c04b5b101e0da580}} 
+\index{tools.c@{tools.c}!printByte@{printByte}}
+\index{printByte@{printByte}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{printByte()}{printByte()}}
+{\footnotesize\ttfamily void print\+Byte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{in\mbox{[}$\,$\mbox{]},  }\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+
+Print a byte array. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em in} & The byte array to print \\
+\hline
+{\em length} & The length of the array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+
+
+Définition à la ligne 43 du fichier tools.\+c.
+
+\mbox{\Hypertarget{tools_8c_a325b9e54c336734b6cd47f938c83ce69}\label{tools_8c_a325b9e54c336734b6cd47f938c83ce69}} 
+\index{tools.c@{tools.c}!splitArr@{splitArr}}
+\index{splitArr@{splitArr}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{splitArr()}{splitArr()}}
+{\footnotesize\ttfamily void split\+Arr (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{in\mbox{[}$\,$\mbox{]},  }\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{out\mbox{[}$\,$\mbox{]},  }\item[{int}]{start,  }\item[{int}]{end }\end{DoxyParamCaption})}
+
+
+
+Split an array into another one. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em in} & The array to split \\
+\hline
+{\em out} & The array to fill \\
+\hline
+{\em start} & The start index (for the \char`\"{}in\char`\"{} array) \\
+\hline
+{\em end} & The end index (for the \char`\"{}in\char`\"{} array) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+
+
+Définition à la ligne 57 du fichier tools.\+c.
+
+\mbox{\Hypertarget{tools_8c_a0e872c7674e8ae14a37136a66d25168c}\label{tools_8c_a0e872c7674e8ae14a37136a66d25168c}} 
+\index{tools.c@{tools.c}!switchColRows@{switchColRows}}
+\index{switchColRows@{switchColRows}!tools.c@{tools.c}}
+\doxysubsubsection{\texorpdfstring{switchColRows()}{switchColRows()}}
+{\footnotesize\ttfamily void switch\+Col\+Rows (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Switch the columns and the rows of a 4x4 matrix. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em state} & The matrix to switch \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+
+
+Définition à la ligne 48 du fichier tools.\+c.
+

@@ -1,0 +1,118 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{\numberline {1}Liste des bogues}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Index des fichiers}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Liste des fichiers}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Documentation des fichiers}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Référence du fichier c/aes.c}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Description détaillée}{5}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Documentation des fonctions}{6}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}aes\_decrypt()}{6}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}aes\_encrypt()}{6}{subsubsection.3.1.2.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.3}asciitohex()}{7}{subsubsection.3.1.2.3}%
+\contentsline {subsubsection}{\numberline {3.1.2.4}hextoascii()}{7}{subsubsection.3.1.2.4}%
+\contentsline {subsubsection}{\numberline {3.1.2.5}keyprocess()}{7}{subsubsection.3.1.2.5}%
+\contentsline {section}{\numberline {3.2}Référence du fichier c/aes.h}{8}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Description détaillée}{8}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Documentation des définitions de type}{8}{subsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}byte}{9}{subsubsection.3.2.2.1}%
+\contentsline {subsection}{\numberline {3.2.3}Documentation des fonctions}{9}{subsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}aes\_decrypt()}{9}{subsubsection.3.2.3.1}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}aes\_encrypt()}{9}{subsubsection.3.2.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.3.3}asciitohex()}{10}{subsubsection.3.2.3.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.4}hextoascii()}{10}{subsubsection.3.2.3.4}%
+\contentsline {subsubsection}{\numberline {3.2.3.5}keyprocess()}{10}{subsubsection.3.2.3.5}%
+\contentsline {section}{\numberline {3.3}Référence du fichier c/cipher.c}{11}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Description détaillée}{12}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Documentation des fonctions}{12}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}addRoundKey()}{12}{subsubsection.3.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.3.2.2}cipher()}{12}{subsubsection.3.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.3}invCipher()}{13}{subsubsection.3.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.3.2.4}invShiftRows()}{13}{subsubsection.3.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.3.2.5}keyExpansion()}{14}{subsubsection.3.3.2.5}%
+\contentsline {subsubsection}{\numberline {3.3.2.6}mixColumns()}{14}{subsubsection.3.3.2.6}%
+\contentsline {subsubsection}{\numberline {3.3.2.7}rcon()}{15}{subsubsection.3.3.2.7}%
+\contentsline {subsubsection}{\numberline {3.3.2.8}rotWord()}{15}{subsubsection.3.3.2.8}%
+\contentsline {subsubsection}{\numberline {3.3.2.9}shiftOneRow()}{15}{subsubsection.3.3.2.9}%
+\contentsline {subsubsection}{\numberline {3.3.2.10}shiftRows()}{16}{subsubsection.3.3.2.10}%
+\contentsline {subsubsection}{\numberline {3.3.2.11}subBytes()}{16}{subsubsection.3.3.2.11}%
+\contentsline {subsubsection}{\numberline {3.3.2.12}subWord()}{17}{subsubsection.3.3.2.12}%
+\contentsline {section}{\numberline {3.4}Référence du fichier c/cipher.h}{17}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Description détaillée}{18}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Documentation des définitions de type}{18}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}byte}{18}{subsubsection.3.4.2.1}%
+\contentsline {subsection}{\numberline {3.4.3}Documentation des fonctions}{18}{subsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}addRoundKey()}{18}{subsubsection.3.4.3.1}%
+\contentsline {subsubsection}{\numberline {3.4.3.2}cipher()}{19}{subsubsection.3.4.3.2}%
+\contentsline {subsubsection}{\numberline {3.4.3.3}invCipher()}{19}{subsubsection.3.4.3.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.4}invShiftRows()}{19}{subsubsection.3.4.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.3.5}keyExpansion()}{20}{subsubsection.3.4.3.5}%
+\contentsline {subsubsection}{\numberline {3.4.3.6}mixColumns()}{20}{subsubsection.3.4.3.6}%
+\contentsline {subsubsection}{\numberline {3.4.3.7}rcon()}{21}{subsubsection.3.4.3.7}%
+\contentsline {subsubsection}{\numberline {3.4.3.8}rotWord()}{21}{subsubsection.3.4.3.8}%
+\contentsline {subsubsection}{\numberline {3.4.3.9}shiftOneRow()}{22}{subsubsection.3.4.3.9}%
+\contentsline {subsubsection}{\numberline {3.4.3.10}shiftRows()}{22}{subsubsection.3.4.3.10}%
+\contentsline {subsubsection}{\numberline {3.4.3.11}subBytes()}{22}{subsubsection.3.4.3.11}%
+\contentsline {subsubsection}{\numberline {3.4.3.12}subWord()}{23}{subsubsection.3.4.3.12}%
+\contentsline {section}{\numberline {3.5}Référence du fichier c/const.h}{23}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Description détaillée}{24}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Documentation des définitions de type}{24}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}byte}{24}{subsubsection.3.5.2.1}%
+\contentsline {subsection}{\numberline {3.5.3}Documentation des variables}{25}{subsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.3.1}a\_x\_invMixColumns}{25}{subsubsection.3.5.3.1}%
+\contentsline {subsubsection}{\numberline {3.5.3.2}a\_x\_mixColumns}{25}{subsubsection.3.5.3.2}%
+\contentsline {subsubsection}{\numberline {3.5.3.3}invSbox}{25}{subsubsection.3.5.3.3}%
+\contentsline {subsubsection}{\numberline {3.5.3.4}sbox}{26}{subsubsection.3.5.3.4}%
+\contentsline {section}{\numberline {3.6}Référence du fichier c/tests.c}{26}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Description détaillée}{27}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Documentation des fonctions}{27}{subsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}main()}{28}{subsubsection.3.6.2.1}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}testAddRoundKey()}{28}{subsubsection.3.6.2.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}testAesEcryptFile()}{28}{subsubsection.3.6.2.3}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}testAesEncrypt()}{28}{subsubsection.3.6.2.4}%
+\contentsline {subsubsection}{\numberline {3.6.2.5}testAsciiToHex()}{28}{subsubsection.3.6.2.5}%
+\contentsline {subsubsection}{\numberline {3.6.2.6}testByteXor()}{29}{subsubsection.3.6.2.6}%
+\contentsline {subsubsection}{\numberline {3.6.2.7}testCipher()}{29}{subsubsection.3.6.2.7}%
+\contentsline {subsubsection}{\numberline {3.6.2.8}testHexToAscii()}{29}{subsubsection.3.6.2.8}%
+\contentsline {subsubsection}{\numberline {3.6.2.9}testInvCipher()}{29}{subsubsection.3.6.2.9}%
+\contentsline {subsubsection}{\numberline {3.6.2.10}testInvMixColums()}{29}{subsubsection.3.6.2.10}%
+\contentsline {subsubsection}{\numberline {3.6.2.11}testInvShiftRows()}{29}{subsubsection.3.6.2.11}%
+\contentsline {subsubsection}{\numberline {3.6.2.12}testKeyExpansion()}{30}{subsubsection.3.6.2.12}%
+\contentsline {subsubsection}{\numberline {3.6.2.13}testMergeArr()}{30}{subsubsection.3.6.2.13}%
+\contentsline {subsubsection}{\numberline {3.6.2.14}testMixColums()}{30}{subsubsection.3.6.2.14}%
+\contentsline {subsubsection}{\numberline {3.6.2.15}testMulti()}{30}{subsubsection.3.6.2.15}%
+\contentsline {subsubsection}{\numberline {3.6.2.16}testRcon()}{30}{subsubsection.3.6.2.16}%
+\contentsline {subsubsection}{\numberline {3.6.2.17}testRotWord()}{30}{subsubsection.3.6.2.17}%
+\contentsline {subsubsection}{\numberline {3.6.2.18}testShiftRows()}{31}{subsubsection.3.6.2.18}%
+\contentsline {subsubsection}{\numberline {3.6.2.19}testSplitArr()}{31}{subsubsection.3.6.2.19}%
+\contentsline {subsubsection}{\numberline {3.6.2.20}testSubBytes()}{31}{subsubsection.3.6.2.20}%
+\contentsline {subsubsection}{\numberline {3.6.2.21}testSubWord()}{31}{subsubsection.3.6.2.21}%
+\contentsline {subsubsection}{\numberline {3.6.2.22}testSwitchColRows()}{31}{subsubsection.3.6.2.22}%
+\contentsline {subsection}{\numberline {3.6.3}Documentation des variables}{31}{subsection.3.6.3}%
+\contentsline {subsubsection}{\numberline {3.6.3.1}a\_x\_invMixColumns\_test}{32}{subsubsection.3.6.3.1}%
+\contentsline {subsubsection}{\numberline {3.6.3.2}a\_x\_mixColumns\_test}{32}{subsubsection.3.6.3.2}%
+\contentsline {subsubsection}{\numberline {3.6.3.3}invSbox\_test}{32}{subsubsection.3.6.3.3}%
+\contentsline {subsubsection}{\numberline {3.6.3.4}sbox\_test}{33}{subsubsection.3.6.3.4}%
+\contentsline {section}{\numberline {3.7}Référence du fichier c/tools.c}{33}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Description détaillée}{34}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Documentation des définitions de type}{34}{subsection.3.7.2}%
+\contentsline {subsubsection}{\numberline {3.7.2.1}byte}{34}{subsubsection.3.7.2.1}%
+\contentsline {subsection}{\numberline {3.7.3}Documentation des fonctions}{34}{subsection.3.7.3}%
+\contentsline {subsubsection}{\numberline {3.7.3.1}byteXor()}{34}{subsubsection.3.7.3.1}%
+\contentsline {subsubsection}{\numberline {3.7.3.2}mergeArr()}{35}{subsubsection.3.7.3.2}%
+\contentsline {subsubsection}{\numberline {3.7.3.3}multi()}{35}{subsubsection.3.7.3.3}%
+\contentsline {subsubsection}{\numberline {3.7.3.4}printByte()}{35}{subsubsection.3.7.3.4}%
+\contentsline {subsubsection}{\numberline {3.7.3.5}splitArr()}{36}{subsubsection.3.7.3.5}%
+\contentsline {subsubsection}{\numberline {3.7.3.6}switchColRows()}{36}{subsubsection.3.7.3.6}%
+\contentsline {section}{\numberline {3.8}Référence du fichier c/tools.h}{37}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Description détaillée}{37}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Documentation des définitions de type}{37}{subsection.3.8.2}%
+\contentsline {subsubsection}{\numberline {3.8.2.1}byte}{37}{subsubsection.3.8.2.1}%
+\contentsline {subsection}{\numberline {3.8.3}Documentation des fonctions}{38}{subsection.3.8.3}%
+\contentsline {subsubsection}{\numberline {3.8.3.1}byteXor()}{38}{subsubsection.3.8.3.1}%
+\contentsline {subsubsection}{\numberline {3.8.3.2}mergeArr()}{38}{subsubsection.3.8.3.2}%
+\contentsline {subsubsection}{\numberline {3.8.3.3}multi()}{39}{subsubsection.3.8.3.3}%
+\contentsline {subsubsection}{\numberline {3.8.3.4}printByte()}{39}{subsubsection.3.8.3.4}%
+\contentsline {subsubsection}{\numberline {3.8.3.5}splitArr()}{39}{subsubsection.3.8.3.5}%
+\contentsline {subsubsection}{\numberline {3.8.3.6}switchColRows()}{40}{subsubsection.3.8.3.6}%
+\contentsline {chapter}{Index}{41}{section*.15}%
