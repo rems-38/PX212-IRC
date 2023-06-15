@@ -140,3 +140,4 @@
 # Séance 9 - 15/06/2023
 ## Contenu de la séance
 - Ajout de la fonctionnalité de mode de cryptage CBC (tout le projet était en ECB par défaut jusqu'à présent)
+- Ajout du décryptage CBC
