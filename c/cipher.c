@@ -35,8 +35,8 @@ void addRoundKey (byte state[], byte w[], int round) {
 	}
 }
 
-void subBytes (byte state[], const byte box[256]) {
-	for (int i = 0; i < 16; i++) {
+void subBytes (byte state[], const byte box[256], int length) {
+	for (int i = 0; i < length; i++) {
 		state[i] = box[state[i]];
 	}
 }
@@ -59,22 +59,14 @@ void shiftOneRow(byte state[], int row, int direction, int shift) {
 }
 
 void shiftRows(byte state[]) {
-    // On ne change pas la ligne 0
-    // On décale la ligne 1 à gauche de 1
     shiftOneRow(state, 1, -1, 1);
-    // On décale la ligne 2 à gauche de 2
     shiftOneRow(state, 2, -1, 2);
-    // On décale la ligne 3 à droite de 1
     shiftOneRow(state, 3, 1, 1);
 }
 
 void invShiftRows(byte state[]) {
-    // On ne change pas la ligne 0
-    // On décale la ligne 1 à droite de 1
     shiftOneRow(state, 1, 1, 1);
-    // On décale la ligne 2 à droite de 2
     shiftOneRow(state, 2, 1, 2);
-    // On décale la ligne 3 à gauche de 1
     shiftOneRow(state, 3, -1, 1);
 }
 
@@ -112,12 +104,6 @@ void mixColumns (byte state[], const int inv) {
 	memcpy(state, temp, 16);
 }
 
-void subWord (byte state[4]) { 
-	for (int i = 0; i < 4; i++) {
-		state[i] = sbox[state[i]];
-	}
-}
-
 void rotWord (byte state[4]) {
 	byte temp[4];
 	
@@ -151,11 +137,11 @@ void keyExpansion (byte key[], byte w[], int nk, int nr) {
 
 		if (i % nk == 0) {
 			rotWord(ending);
-			subWord(ending);
+			subBytes(ending, sbox, 4);
 			rcon(i/nk, pRcon);
 			byteXor(ending, pRcon, 4);
 		}
-		else if (nk > 6 && i % nk == 4) { subWord(ending); }
+		else if (nk > 6 && i % nk == 4) { subBytes(ending, sbox, 4); }
 
 		splitArr(w, starting, (i-nk)*4, (i-nk)*4+4);
 		byteXor(starting, ending, 4);
@@ -168,13 +154,13 @@ void keyExpansion (byte key[], byte w[], int nk, int nr) {
 void cipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, 0);
 	for (int round = 1; round < nr; round++) {
-		subBytes(in, sbox);
+		subBytes(in, sbox, 16);
 		shiftRows(in);
 		mixColumns(in, 0);
 		addRoundKey(in, w, round*16);
 	}
 
-	subBytes(in, sbox);
+	subBytes(in, sbox, 16);
 	shiftRows(in);
 	addRoundKey(in, w, nr*16);
 }
@@ -183,12 +169,12 @@ void invCipher (byte in[], byte w[], int nr) {
 	addRoundKey(in, w, nr*16);
 	for (int round = nr-1; round > 0; round--) {
 		invShiftRows(in);
-		subBytes(in, invSbox);
+		subBytes(in, invSbox, 16);
 		addRoundKey(in, w, round*16);
 		mixColumns(in, 1);
 	}
 
 	invShiftRows(in);
-	subBytes(in, invSbox);
+	subBytes(in, invSbox, 16);
 	addRoundKey(in, w, 0);
 }

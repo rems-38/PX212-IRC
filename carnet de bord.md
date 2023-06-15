@@ -155,7 +155,8 @@
     |------------------|-----------------|----------------|-------------------|----------------|
     | ECB | 212.88s | 0.24Mo/s | 203.64s | 0.25Mo/s |
     | CBC | 207.51s | 0.25Mo/s | 202.68s | 0.25Mo/s |
-- Résultat de kcachegrind :
+    
+    Résultat de kcachegrind :
 
 <p align="center"><img src="./img_CdB/first_kcachegrind.png" height="400"></p>
 
@@ -164,4 +165,9 @@
     |------------------|-----------------|----------------|-------------------|----------------|
     | ECB | 12.13s | 4.23Mo/s | 17.08s | 3.00Mo/s |
     | CBC | 16.00s | 3.20Mo/s | 18.14s | 2.83Mo/s |
+    
     Résultat de l'optimisation : nous sommes (environ) 17x plus rapide.
+    
+    Résultat de kcachegrind :
+
+<p align="center"><img src="./img_CdB/opti_multi_kcachegrind.png" height="400"></p>
