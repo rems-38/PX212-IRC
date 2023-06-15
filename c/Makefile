@@ -4,7 +4,7 @@ LINK = -lasan -lubsan
 
 COMPIL ?= gcc
 OPTMIZE ?= yes
-CALLGRIND ?= yes
+CALLGRIND ?= no
 
 ifeq ($(COMPIL), clang)
 	CC = clang
