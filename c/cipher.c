@@ -79,7 +79,7 @@ byte multiTab(byte a, byte b) {
 		case 0x0b: return table0b[b]; break;
 		case 0x0d: return table0d[b]; break;
 		case 0x0e: return table0e[b]; break;	
-		default: break;
+		default: return 0x00; break;
 	}
 }
 
