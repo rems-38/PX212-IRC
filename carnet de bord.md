@@ -136,3 +136,8 @@
 - Réalisation de la documentation de l'ensemble des fichiers et des fonctions.
 - Génération de la documentation `doc_code_c.pdf` avec Doxygen.
 - Tag de la V1 du projet.
+
+# Séance 9 - 15/06/2023
+## Contenu de la séance
+- Ajout de la fonctionnalité de mode de cryptage CBC (tout le projet était en ECB par défaut jusqu'à présent)
+- Ajout du décryptage CBC
