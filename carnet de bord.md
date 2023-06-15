@@ -181,9 +181,13 @@
     
     Résultat de l'optimisation : nous sommes (environ) 1.5x plus rapide.
 
-- Réalisation du calcul de l'entropie. Résultat
+- Réalisation du calcul de l'entropie. Résultat :
 
-    | Fichier | Entropie (bits) |
+    | Fichier | Entropie |
     |------------------|-----------------|
     | bitmap_original.bmp | 3.637326 |
+    | bitmap_original_crypted_ecb.bmp | 6.555531 |
+    | bitmap_original_crypted_cbc.bmp | 7.999937 |
     | bitmap_file_2.bmp | 7.874685 |
+    | bitmap_file_2_crypted_ecb.bmp | 7.999997 |
+    | bitmap_file_2_crypted_cbc.bmp | 7.999997 |

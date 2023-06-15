@@ -1,0 +1,1 @@
+void entropie(char *filename);

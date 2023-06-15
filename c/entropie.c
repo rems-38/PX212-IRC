@@ -15,13 +15,13 @@
 typedef unsigned char byte;
 
 
-int main(int argc, char *argv[]) {
+void entropie(char *filename) {
     double proba[256] = {0};
 
-    FILE *f = fopen(argv[1], "r");
+    FILE *f = fopen(filename, "r");
     if (f == NULL) {
         printf("Error opening file\n");
-        return 0;
+        return;
     }
     unsigned char info[54];
     fread(info, sizeof(unsigned char), 54, f);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     unsigned char* data = malloc(size);
     if (data == NULL) {
         printf("Error allocating memory\n");
-        return 0;
+        return;
     }
     fread(data, sizeof(unsigned char), size, f);
 
@@ -47,10 +47,8 @@ int main(int argc, char *argv[]) {
         sum += proba[i];
     }
 
-    printf("Entropie : %f\n", sum);
+    printf("Entropie (%s): %f\n", filename, sum);
 
     fclose(f);
     free(data);
-
-    return sum;
 }

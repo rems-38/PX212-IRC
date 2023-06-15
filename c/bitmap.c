@@ -11,6 +11,7 @@
 #include "cipher.h"
 #include "tools.h"
 #include "aes.h"
+#include "entropie.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -92,10 +93,13 @@ int main(int argc, char** argv)
     printf("ECB :\n");
     chiffrerBMP(argv[1], "bitmap_files/encrypt_ecb.bmp", 0);
     dechiffrerBMP("bitmap_files/encrypt_ecb.bmp", "bitmap_files/decrypt_ecb.bmp", 0);
-    
+    entropie(argv[1]);
+    entropie("bitmap_files/encrypt_ecb.bmp");
+
     printf("\n\nCBC :\n");
     chiffrerBMP(argv[1], "bitmap_files/encrypt_cbc.bmp", 1);
     dechiffrerBMP("bitmap_files/encrypt_cbc.bmp", "bitmap_files/decrypt_cbc.bmp", 1);
-    
+    entropie("bitmap_files/encrypt_cbc.bmp");
+
     return 0;
 }

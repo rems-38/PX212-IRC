@@ -37,10 +37,10 @@ tests: tests.o cipher.o tools.o aes.o
 tests.o: tests.c cipher.h aes.h
 	$(CC) $(LINK) -c $^
 
-bitmap: bitmap.o cipher.o tools.o aes.o
-	$(CC) $(FLAGS) $^ -o $@
+bitmap: bitmap.o cipher.o tools.o aes.o entropie.o
+	$(CC) $(FLAGS) $^ -o $@ -lm
 
-bitmap.o: bitmap.c cipher.h aes.h
+bitmap.o: bitmap.c cipher.h aes.h entropie.h
 	$(CC) $(LINK) -c $^
 
 entropie: entropie.o
