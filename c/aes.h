@@ -44,15 +44,17 @@ char* asciitohex(const char* in);
  *  @param size The size of the data (multiple of 16 bytes)
  *  @param key The key to encrypt the data
  *  @param keysize The size of the key (16, 24, 32 bytes)
+ *  @param cbc Enable the CBC mode (1 enabled and 0 for ECB mode)
  *  @return 0 if success, 1 if error
  */
-int aes_encrypt (char *data, int size, char *key, int keysize);
+int aes_encrypt (char *data, int size, char *key, int keysize, int cbc);
 
 /** @brief Decrypt data with AES
  *  @param data The data to decrypt
  *  @param size The size of the data (multiple of 16 bytes)
  *  @param key The key to decrypt the data
  *  @param keysize The size of the key (16, 24, 32 bytes)
+ *  @param cbc Enable the CBC mode (1 enabled and 0 for ECB mode)
  *  @return 0 if success, 1 if error
  */
-int aes_decrypt (char *data, int size, char *key, int keysize);
+int aes_decrypt (char *data, int size, char *key, int keysize, int cbc);

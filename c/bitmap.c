@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int size) {
     FILE *f = fopen(filename, "wb");
@@ -33,11 +34,14 @@ void crypterBMP(char* filename) {
     unsigned char* data = malloc(size);
     
     fread(data, sizeof(unsigned char), size, f);
-    
-    aes_encrypt(data, size, "0123456789abcdef", 16);
+
+    clock_t start = clock();
+    aes_encrypt((char*)data, size, "00112233445566778899aabbccddeeff", 32, 0);
+    double elapsed_time = (double)(clock() - start) / CLOCKS_PER_SEC;
+    printf("Temps de chiffrement : %f\nVitesse : %f\n", elapsed_time, size / elapsed_time);
 
     ecrireBMP("bitmap_files/bitmap_file_encrypted.bmp", info, data, size);
-   
+
     fclose(f);
     free(data);
 }
