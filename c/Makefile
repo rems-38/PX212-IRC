@@ -42,4 +42,4 @@ tools.o: tools.c tools.h
 	gcc $(LINK) -c $^
 
 clean:
-	rm *.o *.h.gch aes tests callgrind callgrind.out bitmap bitmap_files/*_encrypted.bmp bitmap_files/*_decrypted.bmp
+	rm *.o *.h.gch aes tests callgrind callgrind.out bitmap
