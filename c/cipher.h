@@ -25,9 +25,10 @@ void addRoundKey(byte state[], byte w[], int round);
 /** @brief Substitute the bytes of the state with a box
  *  @param state The current state (16 bytes)
  *  @param box Either the S-Box or the inverse S-Box (256 bytes)
+ *  @param length The length of the state (16 for subBytes and 4 for subWord)
  *  @return Void
  */
-void subBytes(byte state[], const byte box[256]);
+void subBytes(byte state[], const byte box[256], int length);
 
 /** @brief Shift one row of the state
  *  @param state The current state (16 bytes)
@@ -52,16 +53,10 @@ void invShiftRows(byte state[]);
 
 /** @brief Mix the columns of the state
  *  @param state The current state (16 bytes)
- *  @param polyMix Either the "a_x-Mix-Columns" or "a_x-Inverse-Mix-Columns" (16 bytes)
+ *  @param inv 1 for the Inverse Mix Columns, 0 for the Mix Columns
  *  @return Void
  */
-void mixColumns(byte state[], const byte polyMix[16]);
-
-/** @brief Equivalent of subBytes for a 4 byte state 
- *  @param state The current word (4 bytes)
- *  @return Void
- */
-void subWord(byte state[4]);
+void mixColumns(byte state[], const int inv);
 
 /** @brief 1 byte rigth rotation of a 4 byte state
  *  @param state The current word (4 bytes)
