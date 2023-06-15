@@ -52,9 +52,10 @@ char* asciitohex(const char* in) {
 }
 
 
-int aes_encrypt (char *data, int size, char *key, int keysize) {
+int aes_encrypt (char *data, int size, char *key, int keysize, int cbc) {
     if (size % 16 != 0) { return 1; }
     if (keysize != 16 && keysize != 24 && keysize != 32) { return 1; }
+    byte initVect[16] = {0};
     
     byte *encrypted_data = malloc(size);
     if (encrypted_data == NULL) { return 1; }
@@ -65,8 +66,12 @@ int aes_encrypt (char *data, int size, char *key, int keysize) {
     for (int i = 0; i < size / 16; i++) {
         byte temp[16];
         splitArr((byte*)data, temp, i*16, i*16+16);
+
+        if (cbc) { byteXor(temp, initVect, 16); }
+
         cipher(temp, w, nr);
         mergeArr(temp, encrypted_data, i*16, i*16+16);
+        mergeArr(temp, initVect, 0, 16);
     }
 
     memcpy(data, encrypted_data, size);
@@ -77,7 +82,7 @@ int aes_encrypt (char *data, int size, char *key, int keysize) {
 }
 
 
-int aes_decrypt (char *data, int size, char *key, int keysize) {
+int aes_decrypt (char *data, int size, char *key, int keysize, int cbc) {
     if (size % 16 != 0) { return 1; }
     if (keysize != 16 && keysize != 24 && keysize != 32) { return 1; }
     
@@ -103,14 +108,26 @@ int aes_decrypt (char *data, int size, char *key, int keysize) {
 
 
 int main (void) {
-    char in[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char test_ebc[] = "JLTLxsIDTsZYmcbd-qbqsJnEZUpJxyRLryKYzbKLUwWHbFHe";
+    char result_ebc[] = "f414520e82bfa2071369fa74bebf308bcb098883f020bcf93b6648b152b2ee508a869c26f368d7d53ebf05cf06ab13a9"; 
+    char test_cbc[] = "JLTLxsIDTsZYmcbd-qbqsJnEZUpJxyRLryKYzbKLUwWHbFHe";
+    char result_cbc[] = "f414520e82bfa2071369fa74bebf308bf8519fa9747f7fa5a40493d19d389d73d52d518ebc38a20aaa3cfd9e8a527ad6";
     char key[] = "xnlonrauzwvfqzbpiiewzlblonalhyxf";
     
-    printf("input : %s\n", in);
-    aes_encrypt(in, strlen(in), key, strlen(key));
-    printf("encrytped : %s\n", in);
-    aes_decrypt(in, strlen(in), key, strlen(key));
-    printf("decrytped : %s\n", in);
+    printf("test ebc : %s\n", test_ebc);
+    aes_encrypt(test_ebc, strlen(test_ebc), key, strlen(key), 0);
+    char *output_ecb = asciitohex(test_ebc);
+    printf("ebc-ed : %s\n", output_ecb);
+    printf("result ok : %d\n", strcmp(output_ecb, result_ebc) == 0);
+    free(output_ecb);
+
+    printf("test cbc : %s\n", test_cbc);
+    aes_encrypt(test_cbc, strlen(test_cbc), key, strlen(key), 1);
+    char *output_cbc = asciitohex(test_cbc);
+    printf("cbc-ed : %s\n", output_cbc);
+    printf("result ok : %d\n", strcmp(output_cbc, result_cbc) == 0);
+    free(output_cbc); 
+
 
     return 1;
 }
