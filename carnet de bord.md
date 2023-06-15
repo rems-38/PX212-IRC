@@ -171,3 +171,12 @@
     Résultat de kcachegrind :
 
 <p align="center"><img src="./img_CdB/opti_multi_kcachegrind.png" height="400"></p>
+
+- Utilisation de CLANG pour la compilation (plus rapide que GCC) :
+
+    | Mode de cryptage | Chiffrement (s) | Vitesse (Mo/s) | Déchiffrement (s) | Vitesse (Mo/s) |
+    |------------------|-----------------|----------------|-------------------|----------------|
+    | ECB | 8.13s | 6.29Mo/s | 12.13s | 4.23Mo/s |
+    | CBC | 8.35s | 6.14Mo/s | 13.03s | 3.94Mo/s |
+    
+    Résultat de l'optimisation : nous sommes (environ) 1.5x plus rapide.
