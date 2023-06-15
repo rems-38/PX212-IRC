@@ -6,7 +6,7 @@
 #include <string.h>
 
 void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int size) {
-    FILE *f = fopen(filename, "w");
+    FILE *f = fopen(filename, "wb");
     if (f == NULL) {
         printf("Error opening file\n");
         return;
@@ -19,7 +19,7 @@ void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int siz
 }
 
 void crypterBMP(char* filename) {
-    FILE *f = fopen(filename, "r");
+    FILE *f = fopen(filename, "rb");
     if (f == NULL) {
         printf("Error opening file\n");
         return;
@@ -28,20 +28,16 @@ void crypterBMP(char* filename) {
     unsigned char info[54];
     fread(info, sizeof(unsigned char), 54, f);
 
-    int width = *(int*)&info[18];
-    int height = *(int*)&info[22];
-    int size = 3 * width * height;
+    int size = *(int*)&info[34];
 
     unsigned char* data = malloc(size);
     
     fread(data, sizeof(unsigned char), size, f);
-    printf("Size: %d & %d\n", size, size % 16);
     
-    ecrireBMP("bitmap_files/bitmap_file_encrypted.bmp", info, data, size);
-    
-    aes_encrypt((char*)data, size, "00112233445566778899aabbccddeeff", 32);
-    
+    aes_encrypt(data, size, "0123456789abcdef", 16);
 
+    ecrireBMP("bitmap_files/bitmap_file_encrypted.bmp", info, data, size);
+   
     fclose(f);
     free(data);
 }
@@ -49,6 +45,5 @@ void crypterBMP(char* filename) {
 int main(void)
 {
     crypterBMP("bitmap_files/bitmap_original.bmp");
-
     return 0;
 }
