@@ -504,51 +504,167 @@ void testAesEncrypt(void) {
     printf("aes_encrypt: OK\n");
 }  
 
-// void testAesEncryptFile(void) { 
-//     int num;
-//     FILE *file1 = fopen("file1.txt","r");
-//     FILE *fileExpected1 = fopen("expected1.txt","w"); 
+long getFileSize(FILE* file) {
+    long size;
+    fseek(file, 0, SEEK_END); // déplace le curseur à la fin du fichier
+    size = ftell(file); // obtient la position actuelle du curseur (qui est maintenant la taille du fichier)
+    rewind(file); // remet le curseur au début du fichier
+    return size;
+}
 
-//     if(file1 == NULL)
-//     {
-//         printf("Error!");   
-//         exit(1);             
-//     }
-
-//     if(fileExpected1 == NULL)
-//     {
-//         printf("Error!");   
-//         exit(1);             
-//     }
-
-//     aes_encrypt(file1, strlen(file1) ,"xnlonrauzwvfqzbpiiewzlblonalhyxf", 32);
-//     char* out = asciitohex(file1);
-
-//     if (strcmp(out, expected1) != 0){
-//         printf("aes_encrypt_file: FAILED\n");
-//         free(out);
-//         return;
-//     }
-
-//     free(out);
-//     fclose(file1);
-//     fclose(base1);
-//     fclose(expected1);
-
-//     printf("aes_encrypt_file: OK\n");
-// }
-
-void printTab(void) {
-    unsigned char arr[] = {0x02, 0x03, 0x0b, 0x0d, 0x0e, 0x09};
-    unsigned char results[256];
-    
-    printf("{");
-    for (int i = 0; i < 256; i++) {
-        results[i] = multi(i, 0x09);
-        printf("0x%02x", results[i]);
-        if (i != 255) printf(", ");
+char* readFromFile(const char* filename) {
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Erreur d'ouverture du fichier !");   
+        exit(1);
     }
-    printf("}\n");
+
+    long fileSize = getFileSize(file);
+    char* buffer = (char*) malloc(fileSize + 1); // allouer de la mémoire pour le buffer
+
+    if (buffer == NULL) {
+        printf("Erreur d'allocation mémoire !");   
+        exit(1);
+    }
+    
+    size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);
+
+    if (bytesRead != fileSize) {
+        printf("Erreur de lecture du fichier\n");
+        free(buffer);
+        return NULL;
+    }
+
+    buffer[bytesRead] = '\0';
+
+    fclose(file);
+
+    return buffer;
+}
+
+void writeFile(const char* filename, const char* content) {
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Erreur d'ouverture du fichier !");   
+        exit(1);
+    }
+
+    size_t bytesWritten = fwrite(content, sizeof(char), strlen(content), file);
+
+    if (bytesWritten != strlen(content)) {
+        printf("Erreur d'écriture du fichier\n");
+        exit(1);
+    }
+
+    fclose(file);
+}
+
+void testAesEncryptFile(void) { 
+    const char* file1 = "txt_files/file1.txt";
+    const char* expected1 = "txt_files/expected1.txt";
+    char* content_file1 = readFromFile(file1);
+    char* content_expected1 = readFromFile(expected1);
+
+    if (content_file1 == NULL) {
+        printf("Erreur !");
+        exit(1);
+    }
+    if (content_expected1 == NULL) {
+        printf("Erreur !");
+        exit(1);
+    }
+
+    aes_encrypt(content_file1, strlen(content_file1), "xnlonrauzwvfqzbpiiewzlblonalhyxf", 32, 0);
+    char* out = asciitohex(content_file1);
+
+    writeFile("txt_files/out1.txt", out);
+
+    if (strcmp(out, content_expected1) != 0) {
+        printf("aes_encrypt_file: FAILED\n");
+        free(out);
+        free(content_file1);
+        free(content_expected1);
+        return;
+    }
+
+    free(out);
+    free(content_file1);
+    free(content_expected1);
+
+    printf("aes_encrypt_file: OK\n");
+}
+
+void testAesDecrypt(void) {
+    char base1[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in1[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key1[] = "vwuhikdwvlkhsbbg";
+    aes_encrypt(in1, strlen(in1), key1, strlen(key1),0);
+
+    char base2[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in2[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key2[] = "mjwfjsyoiwljrvzxrgwbwguy";
+    aes_encrypt(in2, strlen(in2), key2, strlen(key2),0);
+
+    char base3[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char in3[] = "ajljvuwnytllseidbexmzckufqgsahgdzgvkvrtgudwnxezcxtmzftmckpajvfclzcjxuuwydbbhngbfexhgtmgrpyhvruhopragjcfzlteumkiftijrahgibgdqtozw";
+    char key3[] = "xnlonrauzwvfqzbpiiewzlblonalhyxf";
+    aes_encrypt(in3, strlen(in3), key3, strlen(key3),0);
+
+    aes_decrypt(in1, strlen(in1), key1, strlen(key1),0);
+    aes_decrypt(in2, strlen(in2), key2, strlen(key2),0);
+    aes_decrypt(in3, strlen(in3), key3, strlen(key3),0);
+
+    if (strcmp(in1, base1) != 0){
+        printf("aes_decrypt: FAILED\n");
+        return;
+    }
+
+    if (strcmp(in2, base2) != 0){
+        printf("aes_decrypt: FAILED\n");
+        return;
+    }
+
+    if (strcmp(in3, base3) != 0){
+        printf("aes_decrypt: FAILED\n");
+        return;
+    }
+
+    printf("aes_decrypt: OK\n");
+}
+
+void testAesDecryptFile(void) {
+    const char* input1 = "txt_files/out1.txt";
+    const char* base1 = "txt_files/file1.txt";
+    char* content_input1 = readFromFile(input1);
+    char* content_expected1 = readFromFile(base1);
+
+    if (content_input1 == NULL) {
+        printf("Erreur !");
+        exit(1);
+    }
+    if (content_expected1 == NULL) {
+        printf("Erreur !");
+        exit(1);
+    }
+
+    char* out = hextoascii(content_input1);
+    aes_decrypt(out, strlen(out), "xnlonrauzwvfqzbpiiewzlblonalhyxf", 32, 0);
+    
+    writeFile("txt_files/decrypted1.txt", out);
+
+    if (strcmp(out, content_expected1) != 0) {
+        printf("aes_decrypt_file: FAILED\n");
+        free(out);
+        free(content_input1);
+        free(content_expected1);
+        return;
+    }
+
+    free(out);
+    free(content_input1);
+    free(content_expected1);
+
+    printf("aes_decrypt_file: OK\n");
 }
 
 /**
@@ -586,9 +702,11 @@ int main (void){
     testHexToAscii();
     testAsciiToHex();
     testAesEncrypt();
-    // testAesEncryptFile();
+    testAesDecrypt();
 
-    printTab();
+    printf("\n----- Test sur des fichiers -----\n");
+    testAesEncryptFile();
+    testAesDecryptFile();
 
 	return 1;
 }
