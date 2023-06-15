@@ -157,4 +157,11 @@
     | CBC | 207.51s | 0.25Mo/s | 202.68s | 0.25Mo/s |
 - Résultat de kcachegrind :
 
-![](./img_CdB/first_kcachegrind.png)
+<p align="center"><img src="./img_CdB/first_kcachegrind.png" height="400"></p>
+
+- Optimisation pour mixColumns (création de tables de multiplication générées préalablement). Statistique pour le fichier de 53.7Mo :
+    | Mode de cryptage | Chiffrement (s) | Vitesse (Mo/s) | Déchiffrement (s) | Vitesse (Mo/s) |
+    |------------------|-----------------|----------------|-------------------|----------------|
+    | ECB | 12.13s | 4.23Mo/s | 17.08s | 3.00Mo/s |
+    | CBC | 16.00s | 3.20Mo/s | 18.14s | 2.83Mo/s |
+    Résultat de l'optimisation : nous sommes (environ) 17x plus rapide.

@@ -78,13 +78,34 @@ void invShiftRows(byte state[]) {
     shiftOneRow(state, 3, -1, 1);
 }
 
-void mixColumns (byte state[], const byte polyMix[16]) {
-	byte temp[16];
+byte multiTab(byte a, byte b) {
+	switch (a) {
+		case 0x01: return a; break;
+		case 0x02: return table02[b]; break;
+		case 0x03: return table03[b]; break;
+		case 0x09: return table09[b]; break;
+		case 0x0b: return table0b[b]; break;
+		case 0x0d: return table0d[b]; break;
+		case 0x0e: return table0e[b]; break;	
+		default: break;
+	}
+}
 
-	for (int i = 0; i < 16; i++) {
-		temp[i] = 0;
-		for (int j = 0; j < 4; j++) {
-			temp[i] ^= multi(polyMix[(i * 4 + j) % 16], state[j + ((i / 4) * 4)]);
+void mixColumns (byte state[], const int inv) {
+	byte temp[16] = {0};
+
+	for (int i = 0; i < 4; i++) {
+		if (inv) {
+			temp[i*4] = multiTab(0x0e, state[i*4]) ^ multiTab(0x0b, state[i*4+1]) ^ multiTab(0x0d, state[i*4+2]) ^ multiTab(0x09, state[i*4+3]);
+			temp[i*4+1] = multiTab(0x09, state[i*4]) ^ multiTab(0x0e, state[i*4+1]) ^ multiTab(0x0b, state[i*4+2]) ^ multiTab(0x0d, state[i*4+3]);
+			temp[i*4+2] = multiTab(0x0d, state[i*4]) ^ multiTab(0x09, state[i*4+1]) ^ multiTab(0x0e, state[i*4+2]) ^ multiTab(0x0b, state[i*4+3]);
+			temp[i*4+3] = multiTab(0x0b, state[i*4]) ^ multiTab(0x0d, state[i*4+1]) ^ multiTab(0x09, state[i*4+2]) ^ multiTab(0x0e, state[i*4+3]);
+		}
+		else {
+			temp[i*4] = multiTab(0x02, state[i*4]) ^ multiTab(0x03, state[i*4+1]) ^ state[i*4+2] ^ state[i*4+3];
+			temp[i*4+1] = state[i*4] ^ multiTab(0x02, state[i*4+1]) ^ multiTab(0x03, state[i*4+2]) ^ state[i*4+3];
+			temp[i*4+2] = state[i*4] ^ state[i*4+1] ^ multiTab(0x02, state[i*4+2]) ^ multiTab(0x03, state[i*4+3]);
+			temp[i*4+3] = multiTab(0x03, state[i*4]) ^ state[i*4+1] ^ state[i*4+2] ^ multiTab(0x02, state[i*4+3]);
 		}
 	}
 
@@ -149,7 +170,7 @@ void cipher (byte in[], byte w[], int nr) {
 	for (int round = 1; round < nr; round++) {
 		subBytes(in, sbox);
 		shiftRows(in);
-		mixColumns(in, a_x_mixColumns);
+		mixColumns(in, 0);
 		addRoundKey(in, w, round*16);
 	}
 
@@ -164,7 +185,7 @@ void invCipher (byte in[], byte w[], int nr) {
 		invShiftRows(in);
 		subBytes(in, invSbox);
 		addRoundKey(in, w, round*16);
-		mixColumns(in, a_x_invMixColumns);
+		mixColumns(in, 1);
 	}
 
 	invShiftRows(in);

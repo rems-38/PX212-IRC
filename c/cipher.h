@@ -52,10 +52,10 @@ void invShiftRows(byte state[]);
 
 /** @brief Mix the columns of the state
  *  @param state The current state (16 bytes)
- *  @param polyMix Either the "a_x-Mix-Columns" or "a_x-Inverse-Mix-Columns" (16 bytes)
+ *  @param inv 1 for the Inverse Mix Columns, 0 for the Mix Columns
  *  @return Void
  */
-void mixColumns(byte state[], const byte polyMix[16]);
+void mixColumns(byte state[], const int inv);
 
 /** @brief Equivalent of subBytes for a 4 byte state 
  *  @param state The current word (4 bytes)
