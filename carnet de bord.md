@@ -141,3 +141,20 @@
 ## Contenu de la séance
 - Ajout de la fonctionnalité de mode de cryptage CBC (tout le projet était en ECB par défaut jusqu'à présent)
 - Ajout du décryptage CBC
+- Codage de la fonctionnalité de chiffrement/déchiffrement de fichier BMP
+- Benchmark sur différents fichiers BMP :
+    - Fichier de 3.0Mo :
+
+    | Mode de cryptage | Chiffrement (s) | Vitesse (Mo/s) | Déchiffrement (s) | Vitesse (Mo/s) |
+    |------------------|-----------------|----------------|-------------------|----------------|
+    | ECB | 9.14s | 0.32Mo/s | 10.92s | 0.26Mo/s |
+    | CBC | 14.75s | 0.20Mo/s | 12.80s | 0.23Mo/s |
+    - Fichier de 53.7Mo :
+
+    | Mode de cryptage | Chiffrement (s) | Vitesse (Mo/s) | Déchiffrement (s) | Vitesse (Mo/s) |
+    |------------------|-----------------|----------------|-------------------|----------------|
+    | ECB | 212.88s | 0.24Mo/s | 203.64s | 0.25Mo/s |
+    | CBC | 207.51s | 0.25Mo/s | 202.68s | 0.25Mo/s |
+- Résultat de kcachegrind :
+
+![](./img_CdB/first_kcachegrind.png)
