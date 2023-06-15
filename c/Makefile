@@ -17,7 +17,8 @@ ifeq ($(CALLGRIND), yes)
 endif
 
 ifeq ($(OPTMIZE), yes)
-	FLAGS += -Ofast -march=native -flto
+	FLAGS += -O3 -march=native -flto
+	LINK += -flto
 endif
 
 aes: aes.o cipher.o tools.o
