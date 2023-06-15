@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int size) {
     FILE *f = fopen(filename, "wb");

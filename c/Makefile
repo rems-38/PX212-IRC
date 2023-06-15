@@ -1,11 +1,11 @@
 FLAGS = -Wall -Wextra -g -fsanitize=address -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=bounds-strict -fsanitize=bool -fsanitize=enum
 LINK = -lasan -lubsan
 
-OPTMIZE ?= no
+OPTMIZE ?= yes
 CALLGRIND ?= no
 
 ifeq ($(OPTMIZE), yes)
-	FLAGS += -O3
+	FLAGS += -Ofast -march=native -flto
 endif
 
 ifeq ($(CALLGRIND), yes)

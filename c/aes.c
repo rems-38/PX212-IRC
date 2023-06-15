@@ -99,7 +99,7 @@ int aes_decrypt (char *data, int size, char *key, int keysize, int cbc) {
         splitArr((byte*)data, temp, i*16, i*16+16);
         
         if (cbc) { memcpy(interVect, temp, 16); }
-        
+
         invCipher(temp, w, nr);
 
         if (cbc) {
@@ -115,30 +115,4 @@ int aes_decrypt (char *data, int size, char *key, int keysize, int cbc) {
     free(encrypted_data);
     free(w);
     return 0;
-}
-
-
-int main (void) {
-    char test_ebc[] = "JLTLxsIDTsZYmcbd-qbqsJnEZUpJxyRLryKYzbKLUwWHbFHe";
-    char test_cbc[] = "JLTLxsIDTsZYmcbd-qbqsJnEZUpJxyRLryKYzbKLUwWHbFHe";
-    char key[] = "xnlonrauzwvfqzbpiiewzlblonalhyxf";
-    
-    printf("test ebc : %s\n", test_ebc);
-    aes_encrypt(test_ebc, strlen(test_ebc), key, strlen(key), 0);
-    char *output_ecb = asciitohex(test_ebc);
-    printf("ebc-ed : %s\n", output_ecb);
-    aes_decrypt(test_ebc, strlen(test_ebc), key, strlen(key), 0);
-    printf("decrypted : %s\n", test_ebc);
-
-    printf("test cbc : %s\n", test_cbc);
-    aes_encrypt(test_cbc, strlen(test_cbc), key, strlen(key), 1);
-    char *output_cbc = asciitohex(test_cbc);
-    printf("cbc-ed : %s\n", output_cbc);
-    aes_decrypt(test_cbc, strlen(test_cbc), key, strlen(key), 1);
-    printf("decrypted : %s\n", test_cbc);
-
-    free(output_ecb);
-    free(output_cbc);
-
-    return 1;
 }
