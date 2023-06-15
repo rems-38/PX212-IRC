@@ -55,7 +55,6 @@ void chiffrerBMP(char* filename, char *output_name, int cbc) {
     printf("Temps de chiffrement : %fs\nVitesse : %fMo/s\n", elapsed_time, (size * 0.0000009537) / elapsed_time);
 
     ecrireBMP(output_name, info, data, size);
-    printf("Fichier chiffré en bitmap_files/bitmap_file_encrypted.bmp\n");
    
     fclose(f);
     free(data);
@@ -83,7 +82,6 @@ void dechiffrerBMP(char* filename, char *output_name, int cbc) {
     printf("Temps de déchiffrement : %fs\nVitesse : %fMo/s\n", elapsed_time, (size * 0.0000009537) / elapsed_time);
 
     ecrireBMP(output_name, info, data, size);
-    printf("Fichier déchiffré en bitmap_files/bitmap_file_decrypted.bmp\n");
    
     fclose(f);
     free(data);
@@ -91,13 +89,13 @@ void dechiffrerBMP(char* filename, char *output_name, int cbc) {
 
 int main(void)
 {
-    printf("CBC :\n");
+    printf("EBC :\n");
     chiffrerBMP("bitmap_files/bitmap_original.bmp", "bitmap_files/encrypt_ecb.bmp", 0);
-    dechiffrerBMP("bitmap_files/encrypt_ecb.bmp", "bitmap_files/decrypt_ecb.bmp", 0);
+    // dechiffrerBMP("bitmap_files/encrypt_ecb.bmp", "bitmap_files/decrypt_ecb.bmp", 0);
     
-    printf("\n\nECB :\n");
-    chiffrerBMP("bitmap_files/bitmap_original.bmp", "bitmap_files/encrypt_cbc.bmp", 1);
-    dechiffrerBMP("bitmap_files/encrypt_cbc.bmp", "bitmap_files/decrypt_cbc.bmp", 1);
+    // printf("\n\nCBC :\n");
+    // chiffrerBMP("bitmap_files/bitmap_file_2.bmp", "bitmap_files/encrypt_cbc.bmp", 1);
+    // dechiffrerBMP("bitmap_files/encrypt_cbc.bmp", "bitmap_files/decrypt_cbc.bmp", 1);
     
     return 0;
 }

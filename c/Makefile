@@ -2,21 +2,21 @@ FLAGS = -Wall -Wextra -g -fsanitize=address -fsanitize=undefined -fsanitize=shif
 LINK = -lasan -lubsan
 
 OPTMIZE ?= yes
-CALLGRIND ?= no
-
-ifeq ($(OPTMIZE), yes)
-	FLAGS += -Ofast -march=native -flto
-endif
+CALLGRIND ?= yes
 
 ifeq ($(CALLGRIND), yes)
 	FLAGS = -g
 	LINK =
 endif
 
+ifeq ($(OPTMIZE), yes)
+	FLAGS += -Ofast -march=native -flto
+endif
+
 aes: aes.o cipher.o tools.o
 	gcc $(FLAGS) $^ -o $@
 
-callgrind: aes.o cipher.o tools.o
+callgrind: bitmap.o cipher.o tools.o aes.o
 	gcc $(FLAGS) $^ -o $@
 	valgrind --tool=callgrind --callgrind-out-file=callgrind.out --dump-instr=yes --collect-jumps=yes ./callgrind
 
@@ -34,10 +34,10 @@ bitmap: bitmap.o cipher.o tools.o aes.o
 
 bitmap.o: bitmap.c cipher.h aes.h
 	gcc $(LINK) -c $^
-
+ 
 cipher.o: cipher.c cipher.h
 	gcc $(LINK) -c $^
-
+ 
 tools.o: tools.c tools.h
 	gcc $(LINK) -c $^
 
