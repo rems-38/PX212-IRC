@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -g -fsanitize=address -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=bounds-strict -fsanitize=bool -fsanitize=enum
 LINK = -lasan -lubsan
 
-COMPIL ?= gcc
+COMPIL ?= clang
 OPTMIZE ?= yes
 CALLGRIND ?= no
 
@@ -17,8 +17,8 @@ ifeq ($(CALLGRIND), yes)
 endif
 
 ifeq ($(OPTMIZE), yes)
-	FLAGS += -O3 -march=native -flto
-	LINK += -flto
+	FLAGS += -O2 -march=native
+	LINK += -O2 -march=native
 endif
 
 aes: aes.o cipher.o tools.o

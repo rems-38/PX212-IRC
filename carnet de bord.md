@@ -191,3 +191,26 @@
     | bitmap_file_2.bmp | 7.874685 |
     | bitmap_file_2_crypted_ecb.bmp | 7.999997 |
     | bitmap_file_2_crypted_cbc.bmp | 7.999997 |
+
+- En rajoutant des options d'optimisation de partout (on avait oublié de les mettre pour les .o). On a donc des résultats plus satisfaisant que nous allons détaillé ici (on montre ici une moyenne des 4 vitesses):
+    - GCC : 4.95Mo/s
+    - GCC + O1 : 10.02Mo/s
+    - GCC + O2 : 33.33Mo/s
+    - GCC + O3 : 40.75Mo/s
+    - GCC + Ofast : 41.80Mo/s
+    - GCC + march=native : 4.98Mo/s
+    - GCC + flto : 2.39Mo/s
+    - GCC + O3 + march=native : 43.47Mo/s
+    - GCC + Ofast + march=native : 43.09Mo/s
+    - CLANG : 4.50Mo/s
+    - CLANG + O1 : 34.90Mo/s
+    - CLANG + O2 : 52.68Mo/s
+    - CLANG + O3 : 46.22Mo/s
+    - CLANG + Ofast : 48.03Mo/s
+    - CLANG + march=native : 4.51Mo/s
+    - CLANG + flto : 5.54Mo/s
+    - CLANG + O2 + march=native : 57.34Mo/s
+    - CLANG + O3 + march=native : 47.14Mo/s
+    - CLANG + Ofast + march=native : 46.05Mo/s
+
+    On en conclu donc que la meilleure option d'optimisation est : `CLANG + O2 + march=native` avec un maximum calculé à 64.68Mo/s.
