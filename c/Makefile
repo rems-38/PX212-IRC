@@ -8,6 +8,7 @@ CALLGRIND ?= no
 
 ifeq ($(COMPIL), clang)
 	CC = clang
+	CALLGRIND = no
 endif
 
 ifeq ($(CALLGRIND), yes)
