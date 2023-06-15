@@ -87,14 +87,14 @@ void dechiffrerBMP(char* filename, char *output_name, int cbc) {
     free(data);
 }
 
-int main(void)
+int main(int argc, char** argv)
 {
     printf("ECB :\n");
-    chiffrerBMP("bitmap_files/bitmap_file_2.bmp", "bitmap_files/encrypt_ecb.bmp", 0);
+    chiffrerBMP(argv[1], "bitmap_files/encrypt_ecb.bmp", 0);
     dechiffrerBMP("bitmap_files/encrypt_ecb.bmp", "bitmap_files/decrypt_ecb.bmp", 0);
     
     printf("\n\nCBC :\n");
-    chiffrerBMP("bitmap_files/bitmap_file_2.bmp", "bitmap_files/encrypt_cbc.bmp", 1);
+    chiffrerBMP(argv[1], "bitmap_files/encrypt_cbc.bmp", 1);
     dechiffrerBMP("bitmap_files/encrypt_cbc.bmp", "bitmap_files/decrypt_cbc.bmp", 1);
     
     return 0;

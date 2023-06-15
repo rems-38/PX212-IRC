@@ -42,6 +42,12 @@ bitmap: bitmap.o cipher.o tools.o aes.o
 
 bitmap.o: bitmap.c cipher.h aes.h
 	$(CC) $(LINK) -c $^
+
+entropie: entropie.o
+	$(CC) $(FLAGS) $^ -o $@ -lm
+
+entropie.o: entropie.c
+	$(CC) $(LINK) -c $^
  
 cipher.o: cipher.c cipher.h
 	$(CC) $(LINK) -c $^

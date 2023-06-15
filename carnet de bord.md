@@ -167,7 +167,7 @@
     | CBC | 16.00s | 3.20Mo/s | 18.14s | 2.83Mo/s |
     
     Résultat de l'optimisation : nous sommes (environ) 17x plus rapide.
-    
+
     Résultat de kcachegrind :
 
 <p align="center"><img src="./img_CdB/opti_multi_kcachegrind.png" height="400"></p>
@@ -180,3 +180,10 @@
     | CBC | 8.35s | 6.14Mo/s | 13.03s | 3.94Mo/s |
     
     Résultat de l'optimisation : nous sommes (environ) 1.5x plus rapide.
+
+- Réalisation du calcul de l'entropie. Résultat
+
+    | Fichier | Entropie (bits) |
+    |------------------|-----------------|
+    | bitmap_original.bmp | 3.637326 |
+    | bitmap_file_2.bmp | 7.874685 |
