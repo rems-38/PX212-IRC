@@ -8,6 +8,8 @@
  *  @bug Fichiers illisibles sous Windows uniquement.
  */
 
+
+/* -- Includes -- */
 #include "cipher.h"
 #include "tools.h"
 #include "aes.h"
@@ -17,6 +19,15 @@
 #include <string.h>
 #include <time.h>
 
+
+/* -- Functions -- */
+/** @brief Create a BMP file
+ *  @param filename Filename of the output file
+ *  @param info The header of the BMP file
+ *  @param data The data of the BMP file
+ *  @param size The size of the data
+ *  @return Void
+ */
 void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int size) {
     FILE *f = fopen(filename, "wb");
     if (f == NULL) {
@@ -30,6 +41,12 @@ void ecrireBMP(char* filename, unsigned char* info, unsigned char* data, int siz
     fclose(f);
 }
 
+/** @brief Encrypt a BMP file
+ *  @param filename Filename of the input file
+ *  @param output_name Filename of the output file
+ *  @param cbc Enable the CBC mode (1 enabled and 0 for ECB mode)
+ *  @return Void
+ */
 void chiffrerBMP(char* filename, char *output_name, int cbc) {
     FILE *f = fopen(filename, "rb");
     if (f == NULL) {
@@ -61,6 +78,12 @@ void chiffrerBMP(char* filename, char *output_name, int cbc) {
     free(data);
 }
 
+/** @brief Decrypt a BMP file
+ *  @param filename Filename of the input file
+ *  @param output_name Filename of the output file
+ *  @param cbc Enable the CBC mode (1 enabled and 0 for ECB mode)
+ *  @return Void
+ */
 void dechiffrerBMP(char* filename, char *output_name, int cbc) {
     FILE *f = fopen(filename, "rb");
     if (f == NULL) {

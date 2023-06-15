@@ -1,4 +1,4 @@
-/** @file tests.C
+/** @file tests.c
  *  @brief Tests methods
  * 
  *  Réalise un ensemble de tests unitaires sur les fonctions de notre code

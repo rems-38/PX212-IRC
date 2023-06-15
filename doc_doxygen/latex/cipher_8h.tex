@@ -1,21 +1,21 @@
-\hypertarget{cipher_8h}{}\doxysection{Référence du fichier c/cipher.h}
-\label{cipher_8h}\index{c/cipher.h@{c/cipher.h}}
+\doxysection{Référence du fichier c/cipher.h}
+\hypertarget{cipher_8h}{}\label{cipher_8h}\index{c/cipher.h@{c/cipher.h}}
 
 
 Function prototypes of the cipher method.  
 
 
-\doxysubsection*{Définitions de type}
+\doxysubsubsection*{Définitions de type}
 \begin{DoxyCompactItemize}
 \item 
 typedef unsigned char \mbox{\hyperlink{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Fonctions}
+\doxysubsubsection*{Fonctions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df}{add\+Round\+Key}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} w\mbox{[}$\,$\mbox{]}, int round)
 \begin{DoxyCompactList}\small\item\em Add the key to the state (xor operation) \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{cipher_8h_aac3c0834e711fadbdb3a3f97a9c04f2a}{sub\+Bytes}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} box\mbox{[}256\mbox{]})
+void \mbox{\hyperlink{cipher_8h_a7f186365d9ddbecee03c3071817aff8a}{sub\+Bytes}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} box\mbox{[}256\mbox{]}, int length)
 \begin{DoxyCompactList}\small\item\em Substitute the bytes of the state with a box. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da}{shift\+One\+Row}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, int row, int direction, int shift)
 \begin{DoxyCompactList}\small\item\em Shift one row of the state. \end{DoxyCompactList}\item 
@@ -23,10 +23,8 @@ void \mbox{\hyperlink{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710}{shift\+Rows}}
 \begin{DoxyCompactList}\small\item\em Shift all the rows of the state. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2}{inv\+Shift\+Rows}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Inverse process of shift\+Rows. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{cipher_8h_a124ddff60d6aaa1fb3314ad90bf28021}{mix\+Columns}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} poly\+Mix\mbox{[}16\mbox{]})
+void \mbox{\hyperlink{cipher_8h_ae760f7377d258f09095e8658e7179d2c}{mix\+Columns}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}$\,$\mbox{]}, const int inv)
 \begin{DoxyCompactList}\small\item\em Mix the columns of the state. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{cipher_8h_a3a8412fc1ebec9ff5f0cc9188446135c}{sub\+Word}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}4\mbox{]})
-\begin{DoxyCompactList}\small\item\em Equivalent of sub\+Bytes for a 4 byte state. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459}{rot\+Word}} (\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} state\mbox{[}4\mbox{]})
 \begin{DoxyCompactList}\small\item\em 1 byte rigth rotation of a 4 byte state \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0}{rcon}} (int i, \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} out\mbox{[}4\mbox{]})
@@ -50,11 +48,11 @@ Mazzone Rémi (rems-\/38)
 Moussu Guillemot (guillemotmoussu) 
 \end{DoxyAuthor}
 \begin{DoxyRefDesc}{Bogue}
-\item[\mbox{\hyperlink{bug__bug000004}{Bogue}}]No known bugs. \end{DoxyRefDesc}
+\item[\mbox{\hyperlink{bug__bug000005}{Bogue}}]No known bugs. \end{DoxyRefDesc}
 
 
 \doxysubsection{Documentation des définitions de type}
-\mbox{\Hypertarget{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d}\label{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d}} 
+\Hypertarget{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d}\label{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d} 
 \index{cipher.h@{cipher.h}!byte@{byte}}
 \index{byte@{byte}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{byte}{byte}}
@@ -62,12 +60,8 @@ Moussu Guillemot (guillemotmoussu)
 
 
 
-Définition à la ligne 13 du fichier cipher.\+h.
-
-
-
 \doxysubsection{Documentation des fonctions}
-\mbox{\Hypertarget{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df}\label{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df}} 
+\Hypertarget{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df}\label{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df} 
 \index{cipher.h@{cipher.h}!addRoundKey@{addRoundKey}}
 \index{addRoundKey@{addRoundKey}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{addRoundKey()}{addRoundKey()}}
@@ -89,11 +83,7 @@ Add the key to the state (xor operation)
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 20 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_aad3f1be4a40281583bf72d0abf5904bd}\label{cipher_8h_aad3f1be4a40281583bf72d0abf5904bd}} 
+\Hypertarget{cipher_8h_aad3f1be4a40281583bf72d0abf5904bd}\label{cipher_8h_aad3f1be4a40281583bf72d0abf5904bd} 
 \index{cipher.h@{cipher.h}!cipher@{cipher}}
 \index{cipher@{cipher}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{cipher()}{cipher()}}
@@ -107,7 +97,7 @@ Cipher method.
 \begin{DoxyParams}{Paramètres}
 {\em in} & The input block (16 bytes) enlarged over the rounds \\
 \hline
-{\em w} & The expanded key (16$\ast$(Nr+1) bytes) \\
+{\em w} & The expanded key (16\texorpdfstring{$\ast$}{*}(Nr+1) bytes) \\
 \hline
 {\em nr} & The number of rounds \\
 \hline
@@ -115,11 +105,7 @@ Cipher method.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 135 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_af65978e61eb8b69b9415c52a9eb3fc05}\label{cipher_8h_af65978e61eb8b69b9415c52a9eb3fc05}} 
+\Hypertarget{cipher_8h_af65978e61eb8b69b9415c52a9eb3fc05}\label{cipher_8h_af65978e61eb8b69b9415c52a9eb3fc05} 
 \index{cipher.h@{cipher.h}!invCipher@{invCipher}}
 \index{invCipher@{invCipher}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{invCipher()}{invCipher()}}
@@ -133,7 +119,7 @@ Inverse cipher method.
 \begin{DoxyParams}{Paramètres}
 {\em in} & The input block (16 bytes) enlarged over the rounds \\
 \hline
-{\em w} & The expanded key (16$\ast$(Nr+1) bytes) \\
+{\em w} & The expanded key (16\texorpdfstring{$\ast$}{*}(Nr+1) bytes) \\
 \hline
 {\em nr} & The number of rounds \\
 \hline
@@ -141,11 +127,7 @@ Inverse cipher method.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 149 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2}\label{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2}} 
+\Hypertarget{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2}\label{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2} 
 \index{cipher.h@{cipher.h}!invShiftRows@{invShiftRows}}
 \index{invShiftRows@{invShiftRows}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{invShiftRows()}{invShiftRows()}}
@@ -163,11 +145,7 @@ Inverse process of shift\+Rows.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 59 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a798cd069aa5897b64edaac75d2b756d2}\label{cipher_8h_a798cd069aa5897b64edaac75d2b756d2}} 
+\Hypertarget{cipher_8h_a798cd069aa5897b64edaac75d2b756d2}\label{cipher_8h_a798cd069aa5897b64edaac75d2b756d2} 
 \index{cipher.h@{cipher.h}!keyExpansion@{keyExpansion}}
 \index{keyExpansion@{keyExpansion}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{keyExpansion()}{keyExpansion()}}
@@ -181,7 +159,7 @@ Key expansion method.
 \begin{DoxyParams}{Paramètres}
 {\em key} & The key (16, 24 or 32 bytes) \\
 \hline
-{\em w} & The expanded key generated (16$\ast$(Nr+1) bytes) \\
+{\em w} & The expanded key generated (16\texorpdfstring{$\ast$}{*}(Nr+1) bytes) \\
 \hline
 {\em nk} & The number of words in the key (4, 6 or 8 refering to the key size (16, 24 or 32 bytes))) \\
 \hline
@@ -191,15 +169,11 @@ Key expansion method.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 110 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a124ddff60d6aaa1fb3314ad90bf28021}\label{cipher_8h_a124ddff60d6aaa1fb3314ad90bf28021}} 
+\Hypertarget{cipher_8h_ae760f7377d258f09095e8658e7179d2c}\label{cipher_8h_ae760f7377d258f09095e8658e7179d2c} 
 \index{cipher.h@{cipher.h}!mixColumns@{mixColumns}}
 \index{mixColumns@{mixColumns}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{mixColumns()}{mixColumns()}}
-{\footnotesize\ttfamily void mix\+Columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}$\,$\mbox{]},  }\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{poly\+Mix\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void mix\+Columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}$\,$\mbox{]},  }\item[{const int}]{inv }\end{DoxyParamCaption})}
 
 
 
@@ -209,17 +183,13 @@ Mix the columns of the state.
 \begin{DoxyParams}{Paramètres}
 {\em state} & The current state (16 bytes) \\
 \hline
-{\em poly\+Mix} & Either the \char`\"{}a\+\_\+x-\/\+Mix-\/\+Columns\char`\"{} or \char`\"{}a\+\_\+x-\/\+Inverse-\/\+Mix-\/\+Columns\char`\"{} (16 bytes) \\
+{\em inv} & 1 for the Inverse Mix Columns, 0 for the Mix Columns \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 69 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0}\label{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0}} 
+\Hypertarget{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0}\label{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0} 
 \index{cipher.h@{cipher.h}!rcon@{rcon}}
 \index{rcon@{rcon}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{rcon()}{rcon()}}
@@ -239,11 +209,7 @@ Create the rcon polynome associated to the round.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 97 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459}\label{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459}} 
+\Hypertarget{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459}\label{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459} 
 \index{cipher.h@{cipher.h}!rotWord@{rotWord}}
 \index{rotWord@{rotWord}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{rotWord()}{rotWord()}}
@@ -261,11 +227,7 @@ Définition à la ligne 97 du fichier cipher.\+c.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 88 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da}\label{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da}} 
+\Hypertarget{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da}\label{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da} 
 \index{cipher.h@{cipher.h}!shiftOneRow@{shiftOneRow}}
 \index{shiftOneRow@{shiftOneRow}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{shiftOneRow()}{shiftOneRow()}}
@@ -289,11 +251,7 @@ Shift one row of the state.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 32 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710}\label{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710}} 
+\Hypertarget{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710}\label{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710} 
 \index{cipher.h@{cipher.h}!shiftRows@{shiftRows}}
 \index{shiftRows@{shiftRows}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{shiftRows()}{shiftRows()}}
@@ -311,15 +269,11 @@ Shift all the rows of the state.
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 49 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_aac3c0834e711fadbdb3a3f97a9c04f2a}\label{cipher_8h_aac3c0834e711fadbdb3a3f97a9c04f2a}} 
+\Hypertarget{cipher_8h_a7f186365d9ddbecee03c3071817aff8a}\label{cipher_8h_a7f186365d9ddbecee03c3071817aff8a} 
 \index{cipher.h@{cipher.h}!subBytes@{subBytes}}
 \index{subBytes@{subBytes}!cipher.h@{cipher.h}}
 \doxysubsubsection{\texorpdfstring{subBytes()}{subBytes()}}
-{\footnotesize\ttfamily void sub\+Bytes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}$\,$\mbox{]},  }\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{box\mbox{[}256\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void sub\+Bytes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}$\,$\mbox{]},  }\item[{const \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{box\mbox{[}256\mbox{]},  }\item[{int}]{length }\end{DoxyParamCaption})}
 
 
 
@@ -331,33 +285,9 @@ Substitute the bytes of the state with a box.
 \hline
 {\em box} & Either the S-\/\+Box or the inverse S-\/\+Box (256 bytes) \\
 \hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
-Void 
-\end{DoxyReturn}
-
-
-Définition à la ligne 26 du fichier cipher.\+c.
-
-\mbox{\Hypertarget{cipher_8h_a3a8412fc1ebec9ff5f0cc9188446135c}\label{cipher_8h_a3a8412fc1ebec9ff5f0cc9188446135c}} 
-\index{cipher.h@{cipher.h}!subWord@{subWord}}
-\index{subWord@{subWord}!cipher.h@{cipher.h}}
-\doxysubsubsection{\texorpdfstring{subWord()}{subWord()}}
-{\footnotesize\ttfamily void sub\+Word (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}]{state\mbox{[}4\mbox{]} }\end{DoxyParamCaption})}
-
-
-
-Equivalent of sub\+Bytes for a 4 byte state. 
-
-
-\begin{DoxyParams}{Paramètres}
-{\em state} & The current word (4 bytes) \\
+{\em length} & The length of the state (16 for sub\+Bytes and 4 for sub\+Word) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 Void 
 \end{DoxyReturn}
-
-
-Définition à la ligne 82 du fichier cipher.\+c.
-

@@ -1,0 +1,105 @@
+\doxysection{bitmap.\+c}
+\hypertarget{bitmap_8c_source}{}\label{bitmap_8c_source}\index{c/bitmap.c@{c/bitmap.c}}
+\mbox{\hyperlink{bitmap_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00012}00012\ \textcolor{comment}{/*\ -\/-\/\ Includes\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cipher_8h}{cipher.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{tools_8h}{tools.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{aes_8h}{aes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{entropie_8h}{entropie.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00023}00023\ \textcolor{comment}{/*\ -\/-\/\ Functions\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00031}\mbox{\hyperlink{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}{ecrireBMP}}(\textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ info,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ size)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00032}00032\ \ \ \ \ FILE\ *f\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}wb"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00034}00034\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ opening\ file\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00038}00038\ \ \ \ \ fwrite(info,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ 54,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00039}00039\ \ \ \ \ fwrite(data,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ size,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00041}00041\ \ \ \ \ fclose(f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00050}\mbox{\hyperlink{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}{00050}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}{chiffrerBMP}}(\textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{char}\ *output\_name,\ \textcolor{keywordtype}{int}\ cbc)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00051}00051\ \ \ \ \ FILE\ *f\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ opening\ file\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ info[54];}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00058}00058\ \ \ \ \ fread(info,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ 54,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{int}\ size\ =\ *(\textcolor{keywordtype}{int}*)\&info[34];}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data\ =\ malloc(size);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (data\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ allocating\ memory\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00066}00066\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00067}00067\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00068}00068\ \ \ \ \ fread(data,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ size,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00069}00069\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00070}00070\ \ \ \ \ clock\_t\ start\ =\ clock();}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00071}00071\ \ \ \ \ \mbox{\hyperlink{aes_8c_aff0b641a4c7e6c4d8a2ca08ac078eb68}{aes\_encrypt}}((\textcolor{keywordtype}{char}*)data,\ size,\ \textcolor{stringliteral}{"{}00112233445566778899aabbccddeeff"{}},\ 32,\ cbc);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{double}\ elapsed\_time\ =\ (double)(clock()\ -\/\ start)\ /\ CLOCKS\_PER\_SEC;}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00073}00073\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Temps\ de\ chiffrement\ :\ \%fs\(\backslash\)nVitesse\ :\ \%fMo/s\(\backslash\)n"{}},\ elapsed\_time,\ (size\ *\ 0.0000009537)\ /\ elapsed\_time);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}{ecrireBMP}}(output\_name,\ info,\ data,\ size);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00076}00076\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00077}00077\ \ \ \ \ fclose(f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00078}00078\ \ \ \ \ free(data);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00079}00079\ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00087}\mbox{\hyperlink{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}{00087}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}{dechiffrerBMP}}(\textcolor{keywordtype}{char}*\ filename,\ \textcolor{keywordtype}{char}\ *output\_name,\ \textcolor{keywordtype}{int}\ cbc)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00088}00088\ \ \ \ \ FILE\ *f\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ opening\ file\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00092}00092\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ info[54];}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00095}00095\ \ \ \ \ fread(info,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ 54,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00097}00097\ \ \ \ \ \textcolor{keywordtype}{int}\ size\ =\ *(\textcolor{keywordtype}{int}*)\&info[34];}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00099}00099\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data\ =\ malloc(size);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00100}00100\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00101}00101\ \ \ \ \ fread(data,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ size,\ f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00102}00102\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00103}00103\ \ \ \ \ clock\_t\ start\ =\ clock();}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00104}00104\ \ \ \ \ \mbox{\hyperlink{aes_8c_abb811bbae1e66e0d726d679c44cb4952}{aes\_decrypt}}((\textcolor{keywordtype}{char}*)data,\ size,\ \textcolor{stringliteral}{"{}00112233445566778899aabbccddeeff"{}},\ 32,\ cbc);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00105}00105\ \ \ \ \ \textcolor{keywordtype}{double}\ elapsed\_time\ =\ (double)(clock()\ -\/\ start)\ /\ CLOCKS\_PER\_SEC;}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00106}00106\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Temps\ de\ déchiffrement\ :\ \%fs\(\backslash\)nVitesse\ :\ \%fMo/s\(\backslash\)n"{}},\ elapsed\_time,\ (size\ *\ 0.0000009537)\ /\ elapsed\_time);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00108}00108\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}{ecrireBMP}}(output\_name,\ info,\ data,\ size);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00109}00109\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00110}00110\ \ \ \ \ fclose(f);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00111}00111\ \ \ \ \ free(data);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00114}\mbox{\hyperlink{bitmap_8c_a3c04138a5bfe5d72780bb7e82a18e627}{00114}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{tests_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00115}00115\ \{}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00116}00116\ \ \ \ \ printf(\textcolor{stringliteral}{"{}ECB\ :\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00117}00117\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}{chiffrerBMP}}(argv[1],\ \textcolor{stringliteral}{"{}bitmap\_files/encrypt\_ecb.bmp"{}},\ 0);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00118}00118\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}{dechiffrerBMP}}(\textcolor{stringliteral}{"{}bitmap\_files/encrypt\_ecb.bmp"{}},\ \textcolor{stringliteral}{"{}bitmap\_files/decrypt\_ecb.bmp"{}},\ 0);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{entropie}}(argv[1]);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00120}00120\ \ \ \ \ \mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{entropie}}(\textcolor{stringliteral}{"{}bitmap\_files/encrypt\_ecb.bmp"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00122}00122\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCBC\ :\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}{chiffrerBMP}}(argv[1],\ \textcolor{stringliteral}{"{}bitmap\_files/encrypt\_cbc.bmp"{}},\ 1);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00124}00124\ \ \ \ \ \mbox{\hyperlink{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}{dechiffrerBMP}}(\textcolor{stringliteral}{"{}bitmap\_files/encrypt\_cbc.bmp"{}},\ \textcolor{stringliteral}{"{}bitmap\_files/decrypt\_cbc.bmp"{}},\ 1);}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{entropie}}(\textcolor{stringliteral}{"{}bitmap\_files/encrypt\_cbc.bmp"{}});}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{bitmap_8c_source_l00128}00128\ \}}
+
+\end{DoxyCode}

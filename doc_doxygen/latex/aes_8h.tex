@@ -1,27 +1,27 @@
-\hypertarget{aes_8h}{}\doxysection{Référence du fichier c/aes.h}
-\label{aes_8h}\index{c/aes.h@{c/aes.h}}
+\doxysection{Référence du fichier c/aes.h}
+\hypertarget{aes_8h}{}\label{aes_8h}\index{c/aes.h@{c/aes.h}}
 
 
 Function prototypes of the aes method.  
 
 
-\doxysubsection*{Définitions de type}
+\doxysubsubsection*{Définitions de type}
 \begin{DoxyCompactItemize}
 \item 
 typedef unsigned char \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Fonctions}
+\doxysubsubsection*{Fonctions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ \mbox{\hyperlink{aes_8h_abc419296ee88c6e1293a710e07c0b8e2}{keyprocess}} (char $\ast$key, int keysize, int $\ast$nr)
+\mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{aes_8h_a35ec5bbc9ae4ecc41fcbb4a6bd484cfc}{keyprocess}} (char \texorpdfstring{$\ast$}{*}key, int keysize, int \texorpdfstring{$\ast$}{*}nr)
 \begin{DoxyCompactList}\small\item\em Process of key\+Expansion. \end{DoxyCompactList}\item 
-char $\ast$ \mbox{\hyperlink{aes_8h_adf259cfb6aff3ebc202a0a742e2db6b4}{hextoascii}} (const char $\ast$in)
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{aes_8h_a163574dec704d6975eb18d32e6d1e247}{hextoascii}} (const char \texorpdfstring{$\ast$}{*}in)
 \begin{DoxyCompactList}\small\item\em Convert a hexadecimal string to an ascii string. \end{DoxyCompactList}\item 
-char $\ast$ \mbox{\hyperlink{aes_8h_a91dd97f96f132dfef6381d6b3bee8e48}{asciitohex}} (const char $\ast$in)
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{aes_8h_afa20c4f18c2848922da9d8df4a69266d}{asciitohex}} (const char \texorpdfstring{$\ast$}{*}in)
 \begin{DoxyCompactList}\small\item\em Convert an ascii string to a hexadecimal string. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{aes_8h_afa7acd92e4fcf3635750aabf61d909f6}{aes\+\_\+encrypt}} (char $\ast$data, int size, char $\ast$key, int keysize)
+int \mbox{\hyperlink{aes_8h_aff0b641a4c7e6c4d8a2ca08ac078eb68}{aes\+\_\+encrypt}} (char \texorpdfstring{$\ast$}{*}data, int size, char \texorpdfstring{$\ast$}{*}key, int keysize, int cbc)
 \begin{DoxyCompactList}\small\item\em Encrypt data with AES. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{aes_8h_a0df9628b7ce502aa150529b84f080e56}{aes\+\_\+decrypt}} (char $\ast$data, int size, char $\ast$key, int keysize)
+int \mbox{\hyperlink{aes_8h_abb811bbae1e66e0d726d679c44cb4952}{aes\+\_\+decrypt}} (char \texorpdfstring{$\ast$}{*}data, int size, char \texorpdfstring{$\ast$}{*}key, int keysize, int cbc)
 \begin{DoxyCompactList}\small\item\em Decrypt data with AES. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -40,7 +40,7 @@ Moussu Guillemot (guillemotmoussu)
 
 
 \doxysubsection{Documentation des définitions de type}
-\mbox{\Hypertarget{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}\label{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}} 
+\Hypertarget{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}\label{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d} 
 \index{aes.h@{aes.h}!byte@{byte}}
 \index{byte@{byte}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{byte}{byte}}
@@ -48,16 +48,12 @@ Moussu Guillemot (guillemotmoussu)
 
 
 
-Définition à la ligne 13 du fichier aes.\+h.
-
-
-
 \doxysubsection{Documentation des fonctions}
-\mbox{\Hypertarget{aes_8h_a0df9628b7ce502aa150529b84f080e56}\label{aes_8h_a0df9628b7ce502aa150529b84f080e56}} 
+\Hypertarget{aes_8h_abb811bbae1e66e0d726d679c44cb4952}\label{aes_8h_abb811bbae1e66e0d726d679c44cb4952} 
 \index{aes.h@{aes.h}!aes\_decrypt@{aes\_decrypt}}
 \index{aes\_decrypt@{aes\_decrypt}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{aes\_decrypt()}{aes\_decrypt()}}
-{\footnotesize\ttfamily int aes\+\_\+decrypt (\begin{DoxyParamCaption}\item[{char $\ast$}]{data,  }\item[{int}]{size,  }\item[{char $\ast$}]{key,  }\item[{int}]{keysize }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int aes\+\_\+decrypt (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{size,  }\item[{char \texorpdfstring{$\ast$}{*}}]{key,  }\item[{int}]{keysize,  }\item[{int}]{cbc }\end{DoxyParamCaption})}
 
 
 
@@ -73,19 +69,17 @@ Decrypt data with AES.
 \hline
 {\em keysize} & The size of the key (16, 24, 32 bytes) \\
 \hline
+{\em cbc} & Enable the CBC mode (1 enabled and 0 for ECB mode) \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 0 if success, 1 if error 
 \end{DoxyReturn}
-
-
-Définition à la ligne 80 du fichier aes.\+c.
-
-\mbox{\Hypertarget{aes_8h_afa7acd92e4fcf3635750aabf61d909f6}\label{aes_8h_afa7acd92e4fcf3635750aabf61d909f6}} 
+\Hypertarget{aes_8h_aff0b641a4c7e6c4d8a2ca08ac078eb68}\label{aes_8h_aff0b641a4c7e6c4d8a2ca08ac078eb68} 
 \index{aes.h@{aes.h}!aes\_encrypt@{aes\_encrypt}}
 \index{aes\_encrypt@{aes\_encrypt}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{aes\_encrypt()}{aes\_encrypt()}}
-{\footnotesize\ttfamily int aes\+\_\+encrypt (\begin{DoxyParamCaption}\item[{char $\ast$}]{data,  }\item[{int}]{size,  }\item[{char $\ast$}]{key,  }\item[{int}]{keysize }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int aes\+\_\+encrypt (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{size,  }\item[{char \texorpdfstring{$\ast$}{*}}]{key,  }\item[{int}]{keysize,  }\item[{int}]{cbc }\end{DoxyParamCaption})}
 
 
 
@@ -101,19 +95,17 @@ Encrypt data with AES.
 \hline
 {\em keysize} & The size of the key (16, 24, 32 bytes) \\
 \hline
+{\em cbc} & Enable the CBC mode (1 enabled and 0 for ECB mode) \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 0 if success, 1 if error 
 \end{DoxyReturn}
-
-
-Définition à la ligne 55 du fichier aes.\+c.
-
-\mbox{\Hypertarget{aes_8h_a91dd97f96f132dfef6381d6b3bee8e48}\label{aes_8h_a91dd97f96f132dfef6381d6b3bee8e48}} 
+\Hypertarget{aes_8h_afa20c4f18c2848922da9d8df4a69266d}\label{aes_8h_afa20c4f18c2848922da9d8df4a69266d} 
 \index{aes.h@{aes.h}!asciitohex@{asciitohex}}
 \index{asciitohex@{asciitohex}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{asciitohex()}{asciitohex()}}
-{\footnotesize\ttfamily char$\ast$ asciitohex (\begin{DoxyParamCaption}\item[{const char $\ast$}]{in }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} asciitohex (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{in }\end{DoxyParamCaption})}
 
 
 
@@ -127,15 +119,11 @@ Convert an ascii string to a hexadecimal string.
 \begin{DoxyReturn}{Renvoie}
 The hexadecimal string 
 \end{DoxyReturn}
-
-
-Définition à la ligne 44 du fichier aes.\+c.
-
-\mbox{\Hypertarget{aes_8h_adf259cfb6aff3ebc202a0a742e2db6b4}\label{aes_8h_adf259cfb6aff3ebc202a0a742e2db6b4}} 
+\Hypertarget{aes_8h_a163574dec704d6975eb18d32e6d1e247}\label{aes_8h_a163574dec704d6975eb18d32e6d1e247} 
 \index{aes.h@{aes.h}!hextoascii@{hextoascii}}
 \index{hextoascii@{hextoascii}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{hextoascii()}{hextoascii()}}
-{\footnotesize\ttfamily char$\ast$ hextoascii (\begin{DoxyParamCaption}\item[{const char $\ast$}]{in }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} hextoascii (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{in }\end{DoxyParamCaption})}
 
 
 
@@ -149,15 +137,11 @@ Convert a hexadecimal string to an ascii string.
 \begin{DoxyReturn}{Renvoie}
 The ascii string 
 \end{DoxyReturn}
-
-
-Définition à la ligne 32 du fichier aes.\+c.
-
-\mbox{\Hypertarget{aes_8h_abc419296ee88c6e1293a710e07c0b8e2}\label{aes_8h_abc419296ee88c6e1293a710e07c0b8e2}} 
+\Hypertarget{aes_8h_a35ec5bbc9ae4ecc41fcbb4a6bd484cfc}\label{aes_8h_a35ec5bbc9ae4ecc41fcbb4a6bd484cfc} 
 \index{aes.h@{aes.h}!keyprocess@{keyprocess}}
 \index{keyprocess@{keyprocess}!aes.h@{aes.h}}
 \doxysubsubsection{\texorpdfstring{keyprocess()}{keyprocess()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}$\ast$ keyprocess (\begin{DoxyParamCaption}\item[{char $\ast$}]{key,  }\item[{int}]{keysize,  }\item[{int $\ast$}]{nr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} \texorpdfstring{$\ast$}{*} keyprocess (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key,  }\item[{int}]{keysize,  }\item[{int \texorpdfstring{$\ast$}{*}}]{nr }\end{DoxyParamCaption})}
 
 
 
@@ -177,7 +161,3 @@ Alloue la mémoire pour la clé étendue Calcule les valeurs de Nr et Nk Rempli 
 \begin{DoxyReturn}{Renvoie}
 The extended key 
 \end{DoxyReturn}
-
-
-Définition à la ligne 22 du fichier aes.\+c.
-

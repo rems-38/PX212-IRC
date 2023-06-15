@@ -1,20 +1,26 @@
 /** @file entropie.c
- *  @brief Entropie algorithm 
+ *  @brief Entropy algorithm 
  * 
- *  Calcule à quel point c\'est le "chaos" dans le fichier (grande répartition des octets)
+ *  Calcule à quel point c'est le "chaos" dans le fichier.
+ *  Observation de la répartition des octets : s'ils sont tout présent uniformément, l'entropie est maximale.
  *
  *  @author Mazzone Rémi (rems-38)
  *  @author Moussu Guillemot (guillemotmoussu)
  *  @bug No known bugs.
  */
 
+
+/* -- Includes -- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
+
+/* -- Defines -- */
 typedef unsigned char byte;
 
 
+/* -- Functions -- */
 void entropie(char *filename) {
     double proba[256] = {0};
 

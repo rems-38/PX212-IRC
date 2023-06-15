@@ -1,0 +1,33 @@
+\doxysection{cipher.\+h}
+\hypertarget{cipher_8h_source}{}\label{cipher_8h_source}\index{c/cipher.h@{c/cipher.h}}
+\mbox{\hyperlink{cipher_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ -\/-\/\ Defines\ -\/-\/\ */}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{cipher_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*\ -\/-\/\ Functions\ -\/-\/\ */}}
+\DoxyCodeLine{00023\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_add73b440e198b8d5d3a00a5b5da6c1df}{addRoundKey}}(\textcolor{keywordtype}{byte}\ state[],\ \textcolor{keywordtype}{byte}\ w[],\ \textcolor{keywordtype}{int}\ round);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_a7f186365d9ddbecee03c3071817aff8a}{subBytes}}(\textcolor{keywordtype}{byte}\ state[],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ box[256],\ \textcolor{keywordtype}{int}\ length);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_a1df73faddc51c7fb4c19aff963ab97da}{shiftOneRow}}(\textcolor{keywordtype}{byte}\ state[],\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ direction,\ \textcolor{keywordtype}{int}\ shift);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_afd5f84654806c6b56c2ad3ce2a340710}{shiftRows}}(\textcolor{keywordtype}{byte}\ state[]);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_ac2dda9f72b578609d660e5e27ebbc3a2}{invShiftRows}}(\textcolor{keywordtype}{byte}\ state[]);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00059\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_ae760f7377d258f09095e8658e7179d2c}{mixColumns}}(\textcolor{keywordtype}{byte}\ state[],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ inv);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_a142ba1cf8e7781e5eb166a6f4699d459}{rotWord}}(\textcolor{keywordtype}{byte}\ state[4]);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_a5807e73afdcfd43dabc98706d6a149c0}{rcon}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{byte}\ out[4]);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_a798cd069aa5897b64edaac75d2b756d2}{keyExpansion}}(\textcolor{keywordtype}{byte}\ key[],\ \textcolor{keywordtype}{byte}\ w[],\ \textcolor{keywordtype}{int}\ nk,\ \textcolor{keywordtype}{int}\ nr);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_aad3f1be4a40281583bf72d0abf5904bd}{cipher}}(\textcolor{keywordtype}{byte}\ in[],\ \textcolor{keywordtype}{byte}\ w[],\ \textcolor{keywordtype}{int}\ nr);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{cipher_8h_af65978e61eb8b69b9415c52a9eb3fc05}{invCipher}}(\textcolor{keywordtype}{byte}\ in[],\ \textcolor{keywordtype}{byte}\ w[],\ \textcolor{keywordtype}{int}\ nr);}
+
+\end{DoxyCode}

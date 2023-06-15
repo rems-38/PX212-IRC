@@ -1,0 +1,117 @@
+\doxysection{Référence du fichier c/bitmap.c}
+\hypertarget{bitmap_8c}{}\label{bitmap_8c}\index{c/bitmap.c@{c/bitmap.c}}
+
+
+BMP encryption and decryption.  
+
+
+{\ttfamily \#include \"{}cipher.\+h\"{}}\newline
+{\ttfamily \#include \"{}tools.\+h\"{}}\newline
+{\ttfamily \#include \"{}aes.\+h\"{}}\newline
+{\ttfamily \#include \"{}entropie.\+h\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}{ecrire\+BMP}} (char \texorpdfstring{$\ast$}{*}filename, unsigned char \texorpdfstring{$\ast$}{*}info, unsigned char \texorpdfstring{$\ast$}{*}data, int size)
+\begin{DoxyCompactList}\small\item\em Create a BMP file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}{chiffrer\+BMP}} (char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}output\+\_\+name, int cbc)
+\begin{DoxyCompactList}\small\item\em Encrypt a BMP file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}{dechiffrer\+BMP}} (char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}output\+\_\+name, int cbc)
+\begin{DoxyCompactList}\small\item\em Decrypt a BMP file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{bitmap_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+BMP encryption and decryption. 
+
+Contient les fonctions de chiffrement et de déchiffrement pour des fichiers BMP.
+
+\begin{DoxyAuthor}{Auteur}
+Mazzone Rémi (rems-\/38) 
+
+Moussu Guillemot (guillemotmoussu) 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Bogue}
+\item[\mbox{\hyperlink{bug__bug000003}{Bogue}}]Fichiers illisibles sous Windows uniquement. \end{DoxyRefDesc}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed}\label{bitmap_8c_a00b7989079808af72ef6fad3063bc1ed} 
+\index{bitmap.c@{bitmap.c}!chiffrerBMP@{chiffrerBMP}}
+\index{chiffrerBMP@{chiffrerBMP}!bitmap.c@{bitmap.c}}
+\doxysubsubsection{\texorpdfstring{chiffrerBMP()}{chiffrerBMP()}}
+{\footnotesize\ttfamily void chiffrer\+BMP (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename,  }\item[{char \texorpdfstring{$\ast$}{*}}]{output\+\_\+name,  }\item[{int}]{cbc }\end{DoxyParamCaption})}
+
+
+
+Encrypt a BMP file. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em filename} & Filename of the input file \\
+\hline
+{\em output\+\_\+name} & Filename of the output file \\
+\hline
+{\em cbc} & Enable the CBC mode (1 enabled and 0 for ECB mode) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+\Hypertarget{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8}\label{bitmap_8c_a1d0d079e96f1fe602ba8da74a67a2ea8} 
+\index{bitmap.c@{bitmap.c}!dechiffrerBMP@{dechiffrerBMP}}
+\index{dechiffrerBMP@{dechiffrerBMP}!bitmap.c@{bitmap.c}}
+\doxysubsubsection{\texorpdfstring{dechiffrerBMP()}{dechiffrerBMP()}}
+{\footnotesize\ttfamily void dechiffrer\+BMP (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename,  }\item[{char \texorpdfstring{$\ast$}{*}}]{output\+\_\+name,  }\item[{int}]{cbc }\end{DoxyParamCaption})}
+
+
+
+Decrypt a BMP file. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em filename} & Filename of the input file \\
+\hline
+{\em output\+\_\+name} & Filename of the output file \\
+\hline
+{\em cbc} & Enable the CBC mode (1 enabled and 0 for ECB mode) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+\Hypertarget{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a}\label{bitmap_8c_af032b1b9c5b3b9951ea35770527cc32a} 
+\index{bitmap.c@{bitmap.c}!ecrireBMP@{ecrireBMP}}
+\index{ecrireBMP@{ecrireBMP}!bitmap.c@{bitmap.c}}
+\doxysubsubsection{\texorpdfstring{ecrireBMP()}{ecrireBMP()}}
+{\footnotesize\ttfamily void ecrire\+BMP (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename,  }\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{info,  }\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Create a BMP file. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em filename} & Filename of the output file \\
+\hline
+{\em info} & The header of the BMP file \\
+\hline
+{\em data} & The data of the BMP file \\
+\hline
+{\em size} & The size of the data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
+\Hypertarget{bitmap_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{bitmap_8c_a3c04138a5bfe5d72780bb7e82a18e627} 
+\index{bitmap.c@{bitmap.c}!main@{main}}
+\index{main@{main}!bitmap.c@{bitmap.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+

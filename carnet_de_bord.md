@@ -214,3 +214,6 @@
     - CLANG + Ofast + march=native : 46.05Mo/s
 
     On en conclu donc que la meilleure option d'optimisation est : `CLANG + O2 + march=native` avec un maximum calculé à 64.68Mo/s.
+
+- Mise à jour de la documentation pour les nouvelles fonctions.
+- Rédaction du [README.md](README.md).

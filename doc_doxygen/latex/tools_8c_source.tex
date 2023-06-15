@@ -1,0 +1,65 @@
+\doxysection{tools.\+c}
+\hypertarget{tools_8c_source}{}\label{tools_8c_source}\index{c/tools.c@{c/tools.c}}
+\mbox{\hyperlink{tools_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00013}00013\ \textcolor{comment}{/*\ -\/-\/\ Includes\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00018}00018\ \textcolor{comment}{/*\ -\/-\/\ Defines\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00019}\mbox{\hyperlink{tools_8c_a0c8186d9b9b7880309c27230bbb5e69d}{00019}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{tools_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}};}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00022}00022\ \textcolor{comment}{/*\ -\/-\/\ Functions\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00023}\mbox{\hyperlink{tools_8c_a4b416ddeb2e8c87de157442c2f2cf7f6}{00023}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tools_8c_a4b416ddeb2e8c87de157442c2f2cf7f6}{byteXor}}(\textcolor{keywordtype}{byte}\ a[],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ b[],\ \textcolor{keywordtype}{int}\ length)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ length;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ a[i]\ \string^=\ b[i];}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00026}00026\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00029}\mbox{\hyperlink{tools_8c_a7b6e3e551eddedaeb7fea32a19353b2d}{00029}}\ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{tools_8c_a7b6e3e551eddedaeb7fea32a19353b2d}{multi}}\ (\textcolor{keywordtype}{byte}\ a,\ \textcolor{keywordtype}{byte}\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{byte}\ res\ =\ 0,\ carry;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (b\ \&\ 1)\ res\ \string^=\ a;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00034}00034\ \ \ \ \ \ \ \ \ carry\ =\ a\ \&\ 0x80;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00035}00035\ \ \ \ \ \ \ \ \ a\ <<=\ 1;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (carry)\ a\ \string^=\ 0x1b;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ b\ >>=\ 1;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00038}00038\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00043}\mbox{\hyperlink{tools_8c_a6ddc68471223d103c04b5b101e0da580}{00043}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tools_8c_a6ddc68471223d103c04b5b101e0da580}{printByte}}\ (\textcolor{keywordtype}{byte}\ in[],\ \textcolor{keywordtype}{int}\ length)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ length;\ i++)\ \{\ printf(\textcolor{stringliteral}{"{}\%x\ "{}},\ in[i]);\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00045}00045\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00046}00046\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00048}\mbox{\hyperlink{tools_8c_a0e872c7674e8ae14a37136a66d25168c}{00048}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tools_8c_a0e872c7674e8ae14a37136a66d25168c}{switchColRows}}(\textcolor{keywordtype}{byte}\ state[])\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{byte}\ temp[16];}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00050}00050\ \ \ \ \ memcpy(temp,\ state,\ 16);}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ state[i]\ =\ temp[(i\ \%\ 4)\ *\ 4\ +\ (i\ /\ 4)];}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00057}\mbox{\hyperlink{tools_8c_a325b9e54c336734b6cd47f938c83ce69}{00057}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tools_8c_a325b9e54c336734b6cd47f938c83ce69}{splitArr}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ in[],\ \textcolor{keywordtype}{byte}\ out[],\ \textcolor{keywordtype}{int}\ start,\ \textcolor{keywordtype}{int}\ end)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ start;\ i\ <\ end;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ out[j]\ =\ in[i];}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ j++;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00064}\mbox{\hyperlink{tools_8c_a68ff3fd53498a5bad4692fffd381bc74}{00064}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tools_8c_a68ff3fd53498a5bad4692fffd381bc74}{mergeArr}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ in[],\ \textcolor{keywordtype}{byte}\ out[],\ \textcolor{keywordtype}{int}\ start,\ \textcolor{keywordtype}{int}\ end)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ start;\ i\ <\ end;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ out[i]\ =\ in[j];}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ j++;}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tools_8c_source_l00070}00070\ \}}
+
+\end{DoxyCode}

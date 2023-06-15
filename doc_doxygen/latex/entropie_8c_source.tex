@@ -1,0 +1,55 @@
+\doxysection{entropie.\+c}
+\hypertarget{entropie_8c_source}{}\label{entropie_8c_source}\index{c/entropie.c@{c/entropie.c}}
+\mbox{\hyperlink{entropie_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00013}00013\ \textcolor{comment}{/*\ -\/-\/\ Includes\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00019}00019\ \textcolor{comment}{/*\ -\/-\/\ Defines\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00020}\mbox{\hyperlink{entropie_8c_a0c8186d9b9b7880309c27230bbb5e69d}{00020}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{entropie_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}};}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00023}00023\ \textcolor{comment}{/*\ -\/-\/\ Functions\ -\/-\/\ */}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00024}\mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{00024}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{entropie}}(\textcolor{keywordtype}{char}\ *filename)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{double}\ proba[256]\ =\ \{0\};}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00027}00027\ \ \ \ \ FILE\ *f\ =\ fopen(filename,\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ opening\ file\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ info[54];}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00033}00033\ \ \ \ \ fread(info,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ 54,\ f);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{int}\ size\ =\ *(\textcolor{keywordtype}{int}*)\&info[34];}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data\ =\ malloc(size);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (data\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Error\ allocating\ memory\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00040}00040\ \ \ \ \ fread(data,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}),\ size,\ f);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ size;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00044}00044\ \ \ \ \ \ \ \ \ proba[data[j]]++;\ \ \ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00045}00045\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 256;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00048}00048\ \ \ \ \ \ \ \ \ proba[i]\ =\ (double)proba[i]/size\ *\ log2(1/((\textcolor{keywordtype}{double})proba[i]/size));}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 256;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ sum\ +=\ proba[i];}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00056}00056\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Entropie\ (\%s):\ \%f\(\backslash\)n"{}},\ filename,\ sum);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00058}00058\ \ \ \ \ fclose(f);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00059}00059\ \ \ \ \ free(data);}
+\DoxyCodeLine{\Hypertarget{entropie_8c_source_l00060}00060\ \}}
+
+\end{DoxyCode}

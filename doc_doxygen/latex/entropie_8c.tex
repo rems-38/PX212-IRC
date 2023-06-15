@@ -1,0 +1,64 @@
+\doxysection{Référence du fichier c/entropie.c}
+\hypertarget{entropie_8c}{}\label{entropie_8c}\index{c/entropie.c@{c/entropie.c}}
+
+
+Entropy algorithm.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+\doxysubsubsection*{Définitions de type}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \mbox{\hyperlink{entropie_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}{entropie}} (char \texorpdfstring{$\ast$}{*}filename)
+\begin{DoxyCompactList}\small\item\em Calculate the entropy of a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Entropy algorithm. 
+
+Calcule à quel point c\textquotesingle{}est le \"{}chaos\"{} dans le fichier. Observation de la répartition des octets \+: s\textquotesingle{}ils sont tout présent uniformément, l\textquotesingle{}entropie est maximale.
+
+\begin{DoxyAuthor}{Auteur}
+Mazzone Rémi (rems-\/38) 
+
+Moussu Guillemot (guillemotmoussu) 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Bogue}
+\item[\mbox{\hyperlink{bug__bug000006}{Bogue}}]No known bugs. \end{DoxyRefDesc}
+
+
+\doxysubsection{Documentation des définitions de type}
+\Hypertarget{entropie_8c_a0c8186d9b9b7880309c27230bbb5e69d}\label{entropie_8c_a0c8186d9b9b7880309c27230bbb5e69d} 
+\index{entropie.c@{entropie.c}!byte@{byte}}
+\index{byte@{byte}!entropie.c@{entropie.c}}
+\doxysubsubsection{\texorpdfstring{byte}{byte}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{aes_8h_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}}
+
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208}\label{entropie_8c_a0d6b5b6dcae37f8667b85ee0bbd9e208} 
+\index{entropie.c@{entropie.c}!entropie@{entropie}}
+\index{entropie@{entropie}!entropie.c@{entropie.c}}
+\doxysubsubsection{\texorpdfstring{entropie()}{entropie()}}
+{\footnotesize\ttfamily void entropie (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename }\end{DoxyParamCaption})}
+
+
+
+Calculate the entropy of a file. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em filename} & The filename of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Void 
+\end{DoxyReturn}
