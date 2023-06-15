@@ -29,6 +29,12 @@ tests: tests.o cipher.o tools.o aes.o
 tests.o: tests.c cipher.h aes.h
 	gcc $(LINK) -c $^
 
+bitmap: bitmap.o cipher.o tools.o aes.o
+	gcc $(FLAGS) $^ -o $@
+
+bitmap.o: bitmap.c cipher.h aes.h
+	gcc $(LINK) -c $^
+
 cipher.o: cipher.c cipher.h
 	gcc $(LINK) -c $^
 
@@ -36,4 +42,4 @@ tools.o: tools.c tools.h
 	gcc $(LINK) -c $^
 
 clean:
-	rm *.o *.h.gch aes tests callgrind callgrind.out
+	rm *.o *.h.gch aes tests callgrind callgrind.out bitmap
